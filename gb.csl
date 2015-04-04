@@ -139,8 +139,8 @@
   </macro>
 
   <macro name="full">
-    <group delimiter=", ">
-      <text macro="juris-title"/>
+    <group delimiter=" ">
+      <text macro="juris-title" font-style="italic"/>
       <group delimiter=" ">
         <group delimiter=", ">
           <text macro="juris-main"/>
@@ -157,13 +157,13 @@
       <choose>
         <if position="ibid-with-locator">
           <group delimiter=" ">
-            <text term="ibid" text-case="lowercase"/>
+            <text term="ibid" text-case="lowercase" strip-periods="true"/>
             <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
             <text macro="juris-locator"/>
           </group>
         </if>
         <else-if position="ibid">
-          <text term="ibid" text-case="lowercase"/>
+          <text term="ibid" text-case="lowercase" strip-periods="true"/>
         </else-if>
         <else-if position="near-note" match="none">
           <text macro="full"/>

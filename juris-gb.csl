@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States (8)</title>
-    <id>http://citationstylist.org/modules/us</id>
-    <link href="http://citationstylist/modules/us" rel="self"/>
+    <title>United Kingdom</title>
+    <id>http://citationstylist.org/modules/juris-uk</id>
+    <link href="http://citationstylist/modules/juris-uk" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>CSL-m style module for the United States</summary>
+    <summary>Juris-M style module for the United Kingdom</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
@@ -139,8 +139,8 @@
   </macro>
 
   <macro name="full">
-    <group delimiter=", ">
-      <text macro="juris-title"/>
+    <group delimiter=" ">
+      <text macro="juris-title" font-style="italic"/>
       <group delimiter=" ">
         <group delimiter=", ">
           <text macro="juris-main"/>
@@ -157,19 +157,19 @@
       <choose>
         <if position="ibid-with-locator">
           <group delimiter=" ">
-            <text term="ibid"/>
+            <text term="ibid" text-case="lowercase" strip-periods="true"/>
             <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
             <text macro="juris-locator"/>
           </group>
         </if>
         <else-if position="ibid">
-          <text term="ibid"/>
+          <text term="ibid" text-case="lowercase" strip-periods="true"/>
         </else-if>
         <else-if position="near-note" match="none">
           <text macro="full"/>
         </else-if>
         <else>
-          <group delimiter=", ">
+          <group delimiter=" ">
             <text macro="juris-title-short" font-style="italic"/>
             <group delimiter=" ">
               <text macro="juris-main-short"/>

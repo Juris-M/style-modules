@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Cambodia (xx)</title>
-    <id>http://citationstylist.org/modules/juris-kh</id>
-    <link href="http://citationstylist/modules/juris-kh" rel="self"/>
+    <title>Kambodia</title>
+    <id>http://citationstylist.org/modules/juris-undefined</id>
+    <link href="http://citationstylist/modules/juris-undefined" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>YOUR-NAME-HERE</name>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Cambodia</summary>
+    <summary>Juris-M style module for </summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>

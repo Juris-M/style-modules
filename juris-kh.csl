@@ -18,7 +18,6 @@
   <macro name="juris-title">
     <text form="short" variable="title"/>
   </macro>
-
   <macro name="juris-title-short">
     <text form="short" variable="title-short"/>
   </macro>

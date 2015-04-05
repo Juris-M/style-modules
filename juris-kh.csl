@@ -21,7 +21,6 @@
   <macro name="juris-title-short">
     <text form="short" variable="title-short"/>
   </macro>
-
   <macro name="juris-main">
     <group delimiter=" ">
       <text macro="juris-main-short"/>
@@ -61,7 +60,6 @@
       </group>
     </group>
   </macro>
-
   <macro name="juris-main-short">
     <choose>
       <if>
@@ -90,7 +88,6 @@
       </else>
     </choose>
   </macro>
-
   <macro name="juris-space-locator">
     <group delimiter=" ">
         <text macro="juris-locator-label"/>

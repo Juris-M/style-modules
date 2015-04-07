@@ -16,7 +16,14 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="juris-title">
-    <text form="short" variable="title"/>
+    <choose>
+            <if position="first">
+                <text form="short" variable="title" font-weight="bold"/>
+            </if>
+            <else>
+                <text form="short" variable="title"/>
+            </else>
+    </choose>
   </macro>
   <macro name="juris-title-short">
     <text form="short" variable="title-short"/>

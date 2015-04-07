@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Cambodia</title>
+    <title>Cambodia (200)</title>
     <id>http://citationstylist.org/modules/juris-kh</id>
     <link href="http://citationstylist/modules/juris-kh" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
@@ -16,7 +16,14 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="juris-title">
-    <text form="short" variable="title"/>
+    <choose>
+            <if position="first">
+                <text form="short" variable="title" font-weight="bold"/>
+            </if>
+            <else>
+                <text form="short" variable="title"/>
+            </else>
+    </choose>
   </macro>
   <macro name="juris-title-short">
     <text form="short" variable="title-short"/>

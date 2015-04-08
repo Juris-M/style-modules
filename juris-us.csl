@@ -42,6 +42,24 @@
           </group>
         </if>
       </choose>
+      <group delimiter=" " prefix="(" suffix=")">
+        <!-- text variable="jurisdiction"/ -->
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="any" type="legal_case"/>
+                <condition match="none" variable="container-title collection-number"/>
+              </conditions>
+              <date variable="issued" date-parts="year-month-day" form="text"/>
+            </if>
+          </choose>
+        </group>
+      </group>
     </group>
   </macro>
 
@@ -56,17 +74,6 @@
       <else>
         <!-- reporters, neutral, and looseleaf reports -->
         <group delimiter=" ">
-          <choose>
-            <if variable="collection-number">
-              <group delimiter=" " prefix="[" suffix="]">
-                <number variable="collection-number"/>
-                <text form="short" variable="genre"/>
-              </group>
-            </if>
-            <else>
-               <date variable="issued" form="text" date-parts="year" prefix="(" suffix=")"/>
-            </else>
-          </choose>
           <number variable="volume"/>
           <text form="short" variable="container-title"/>
         </group>
@@ -109,14 +116,7 @@
   </macro>
 
   <macro name="juris-tail">
-    <group delimiter=", " prefix="(" suffix=")">
-        <text variable="jurisdiction"/>
-        <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-        </names>
-        <date variable="issued" date-parts="year" form="text"/>    
-     </group>
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">

@@ -74,6 +74,17 @@
       <else>
         <!-- reporters, neutral, and looseleaf reports -->
         <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <group delimiter=" " prefix="[" suffix="]">
+                <number variable="collection-number"/>
+                <text form="short" variable="genre"/>
+              </group>
+            </if>
+            <else>
+               <date variable="issued" form="text" date-parts="year" prefix="(" suffix=")"/>
+            </else>
+          </choose>
           <number variable="volume"/>
           <text form="short" variable="container-title"/>
         </group>
@@ -116,7 +127,14 @@
   </macro>
 
   <macro name="juris-tail">
-    <text value=""/>
+    <group delimiter=", ">
+        <text variable="jurisdiction"/>
+        <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+        </names>
+        <date variable="issued" date-parts="year" form="text"/>    
+     </group>
   </macro>
 
   <macro name="juris-tail-short">

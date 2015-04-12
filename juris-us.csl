@@ -51,19 +51,23 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if>
-        <conditions match="all">
-          <condition match="any" type="legal_case"/>
-          <condition match="none" variable="container-title collection-number"/>
-        </conditions>
+      <if type="legal_case">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="any" type="legal_case"/>
+              <condition match="none" variable="container-title collection-number"/>
+            </conditions>
+          </if>
+          <else>
+            <!-- reporters, neutral, and looseleaf reports -->
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text form="short" variable="container-title"/>
+            </group>
+          </else>
+        </choose>
       </if>
-      <else>
-        <!-- reporters, neutral, and looseleaf reports -->
-        <group delimiter=" ">
-          <number variable="volume"/>
-          <text form="short" variable="container-title"/>
-        </group>
-      </else>
     </choose>
   </macro>
 
@@ -89,42 +93,51 @@
   <macro name="juris-locator-label">
     <choose>
       <if locator="page" match="none">
-        <label variable="locator" form="symbol"/>
+        <label variable="locator"/>
       </if>
     </choose>
   </macro>
 
   <macro name="juris-tail">
-      <group delimiter=" " prefix="(" suffix=")">
-        <!-- text variable="jurisdiction"/ -->
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
-            <text variable="jurisdiction"/>
+    <choose>
+      <if type="legal_case">
+          <group delimiter=" " prefix="(" suffix=")">
+            <!-- text variable="jurisdiction"/ -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+                <text variable="jurisdiction"/>
+              </group>
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="any" type="legal_case"/>
+                    <condition match="none" variable="container-title collection-number"/>
+                  </conditions>
+                  <date variable="issued" date-parts="year-month-day" form="text"/>
+                </if>
+                <else>
+                  <date variable="issued" date-parts="year" form="text"/>
+                </else>
+              </choose>
+            </group>
           </group>
-          <choose>
-            <if>
-              <conditions match="all">
-                <condition match="any" type="legal_case"/>
-                <condition match="none" variable="container-title collection-number"/>
-              </conditions>
-              <date variable="issued" date-parts="year-month-day" form="text"/>
-            </if>
-            <else>
-              <date variable="issued" date-parts="year" form="text"/>
-            </else>
-          </choose>
-        </group>
-      </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <text value=""/>
+      </if>
+    </choose>
   </macro>
 
+  <!-- Local macros (non-modular) -->
   <macro name="at-locator-label">
     <text value="at"/>
   </macro>
@@ -135,9 +148,9 @@
       <group delimiter=" ">
         <group delimiter=", ">
           <text macro="juris-main"/>
-          <text macro="juris-comma-locator"/>
+          <text macro="juris-comma-locator" label-form="symbol"/>
         </group>
-        <text macro="juris-space-locator"/>
+        <text macro="juris-space-locator" label-form="symbol"/>
         <text macro="juris-tail"/>
       </group>
     </group>
@@ -149,8 +162,8 @@
         <if position="ibid-with-locator">
           <group delimiter=" ">
             <text term="ibid"/>
-            <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-            <text macro="juris-locator"/>
+            <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+            <text macro="juris-locator" label-form="symbol"/>
           </group>
         </if>
         <else-if position="ibid">
@@ -164,8 +177,8 @@
             <text macro="juris-title-short" font-style="italic"/>
             <group delimiter=" ">
               <text macro="juris-main-short"/>
-              <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-              <text macro="juris-locator"/>
+              <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+              <text macro="juris-locator" label-form="symbol"/>
             </group>
           </group>
         </else>

@@ -24,25 +24,29 @@
   </macro>
 
   <macro name="juris-main">
-    <group delimiter=" ">
-      <text macro="juris-main-short"/>
-      <choose>
-        <if>
-          <conditions match="any">
-            <condition match="all" type="legal_case" variable="container-title"/>
-            <condition match="all" type="legal_case" variable="collection-number"/>
-          </conditions>
-          <group delimiter=" ">
-            <choose>
-              <if match="none" page="page">
-                <label form="symbol" variable="page"/>
-              </if>
-            </choose>
-            <number variable="page-first"/>
-          </group>
-        </if>
-      </choose>
-    </group>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <text macro="juris-main-short"/>
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition match="all" type="legal_case" variable="container-title"/>
+                <condition match="all" type="legal_case" variable="collection-number"/>
+              </conditions>
+              <group delimiter=" ">
+                <choose>
+                  <if match="none" page="page">
+                    <label form="symbol" variable="page"/>
+                  </if>
+                </choose>
+                <number variable="page-first"/>
+              </group>
+            </if>
+          </choose>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">

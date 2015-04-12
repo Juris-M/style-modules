@@ -15,6 +15,15 @@
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
+  
+  <locale>
+    <date form="text">
+      <date-part name="month" form="short" suffix=" "/>
+      <date-part name="day" form="numeric" suffix=", "/>
+      <date-part name="year" form="long"/>
+    </date>
+  </locale>
+  
   <macro name="juris-title">
     <text form="short" variable="title"/>
   </macro>
@@ -24,16 +33,12 @@
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <text macro="juris-main-short"/>
+    <group delimiter=" ">
+      <text macro="juris-main-short"/>
+      <choose>
+        <if type="legal_case">
           <choose>
-            <if>
-              <conditions match="any">
-                <condition match="all" type="legal_case" variable="container-title"/>
-                <condition match="all" type="legal_case" variable="collection-number"/>
-              </conditions>
+            <if match="any" variable="container-title">
               <group delimiter=" ">
                 <choose>
                   <if match="none" page="page">
@@ -43,10 +48,13 @@
                 <number variable="page-first"/>
               </group>
             </if>
+            <else>
+              <number variable="number"/>
+            </else>
           </choose>
-        </group>
-      </if>
-    </choose>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-main-short">
@@ -71,6 +79,18 @@
     </choose>
   </macro>
 
+  <macro name="juris-locator-label">
+    <choose>
+      <if locator="page" match="none">
+        <label variable="locator"/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-locator">
+    <number variable="locator"/>
+  </macro>
+
   <macro name="juris-space-locator">
     <group delimiter=" ">
         <text macro="juris-locator-label"/>
@@ -82,18 +102,6 @@
     <choose>
       <if position="first" locator="page" match="all">
         <text macro="juris-locator"/>
-      </if>
-    </choose>
-  </macro>
-
-  <macro name="juris-locator">
-    <number variable="locator"/>
-  </macro>
-
-  <macro name="juris-locator-label">
-    <choose>
-      <if locator="page" match="none">
-        <label variable="locator"/>
       </if>
     </choose>
   </macro>

@@ -103,7 +103,7 @@
       <choose>
         <if>
           <conditions match="all">
-            <condition match="any" position="first"/>
+            <condition match="none" position="near-note"/>
             <condition match="none" variable="container-title"/>
           </conditions>
           <group delimiter=" ">

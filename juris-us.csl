@@ -25,7 +25,14 @@
   </locale>
   
   <macro name="juris-title">
-    <text form="short" variable="title"/>
+    <choose>
+      <if type="legal_case">
+        <text form="short" variable="title"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-title-short">

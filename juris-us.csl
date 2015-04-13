@@ -99,11 +99,25 @@
   </macro>
 
   <macro name="juris-comma-locator">
-    <choose>
-      <if position="first" locator="page" match="all">
-        <text macro="juris-locator"/>
-      </if>
-    </choose>
+    <group delimiter=", ">
+      <choose>
+        <if>
+          <conditions match="all">
+            <condition match="any" position="first"/>
+            <condition match="none" variable="container-title"/>
+          </conditions>
+          <group delimiter=" ">
+            <text value="slip op."/>
+            <number variable="page-first"/>
+          </group>
+        </if>
+      </choose>
+      <choose>
+        <if position="first" locator="page" match="all">
+          <text macro="juris-locator"/>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail">
@@ -150,20 +164,6 @@
     <text value="at"/>
   </macro>
 
-  <macro name="full">
-    <group delimiter=", ">
-      <text macro="juris-title"/>
-      <group delimiter=" ">
-        <group delimiter=", ">
-          <text macro="juris-main"/>
-          <text macro="juris-comma-locator" label-form="symbol"/>
-        </group>
-        <text macro="juris-space-locator" label-form="symbol"/>
-        <text macro="juris-tail"/>
-      </group>
-    </group>
-  </macro>
-
   <citation>
     <layout>
       <choose>
@@ -178,9 +178,21 @@
           <text term="ibid"/>
         </else-if>
         <else-if position="near-note" match="none">
-          <text macro="full"/>
+          <!-- full form -->
+          <group delimiter=", ">
+            <text macro="juris-title"/>
+            <group delimiter=" ">
+              <group delimiter=", ">
+                <text macro="juris-main"/>
+                <text macro="juris-comma-locator" label-form="symbol"/>
+              </group>
+              <text macro="juris-space-locator" label-form="symbol"/>
+              <text macro="juris-tail"/>
+            </group>
+          </group>
         </else-if>
         <else>
+          <!-- short form -->
           <group delimiter=", ">
             <text macro="juris-title-short" font-style="italic"/>
             <group delimiter=" ">

@@ -66,7 +66,7 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if type="legal_case legislation" match="any">
+      <if type="legal_case gazette legislation" match="any">
         <choose>
           <if>
             <conditions match="all">
@@ -74,13 +74,18 @@
               <condition match="none" variable="container-title collection-number"/>
             </conditions>
           </if>
-          <else>
-            <!-- reporters, neutral, and looseleaf reports -->
+          <else-if type="legislation">
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text form="short" variable="container-title" font-variant="small-caps"/>
+            </group>
+          </else-if>
+          <else-if type="gazette">
             <group delimiter=" ">
               <number variable="volume"/>
               <text form="short" variable="container-title"/>
             </group>
-          </else>
+          </else-if>
         </choose>
       </if>
     </choose>
@@ -110,6 +115,7 @@
       <choose>
         <if>
           <conditions match="all">
+            <condition match="all" type="legal_case"/>
             <condition match="none" position="near-note"/>
             <condition match="none" variable="container-title"/>
           </conditions>
@@ -120,7 +126,7 @@
         </if>
       </choose>
       <choose>
-        <if position="first" locator="page" match="all">
+        <if position="first" variable="section" locator="page" match="all">
           <text macro="juris-locator"/>
         </if>
       </choose>

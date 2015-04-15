@@ -26,9 +26,10 @@
   
   <macro name="juris-title">
     <choose>
-      <if type="legal_case">
+      <if type="bill"/>
+      <else-if type="legal_case">
         <text form="short" variable="title"/>
-      </if>
+      </else-if>
       <else>
         <text variable="title"/>
       </else>
@@ -36,14 +37,19 @@
   </macro>
 
   <macro name="juris-title-short">
-    <text form="short" variable="title-short"/>
+    <choose>
+      <if type="bill"/>
+      <else>
+        <text form="short" variable="title-short"/>
+      </else>  
+    </choose>
   </macro>
 
   <macro name="juris-main">
     <group delimiter=" ">
       <text macro="juris-main-short"/>
       <choose>
-        <if type="legal_case">
+        <if type="legal_case gazette">
           <choose>
             <if match="any" variable="container-title">
               <group delimiter=" ">
@@ -66,7 +72,7 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if type="legal_case gazette legislation" match="any">
+      <if type="legal_case gazette legislation bill" match="any">
         <choose>
           <if>
             <conditions match="all">
@@ -80,10 +86,25 @@
               <text form="short" variable="container-title" font-variant="small-caps"/>
             </group>
           </else-if>
-          <else-if type="gazette">
+          <else-if type="gazette legal_case">
             <group delimiter=" ">
               <number variable="volume"/>
               <text form="short" variable="container-title"/>
+            </group>
+          </else-if>
+          <else-if type="bill" variable="event" match="all">
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <text variable="event" form="short"/>
+                <number variable="number"/>
+              </group>
+              <group delimiter=" ">
+                <number variable="collection-number" form="ordinal"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="long" use-first="1"/>
+                </names>
+              </group>
             </group>
           </else-if>
         </choose>
@@ -96,6 +117,9 @@
       <if locator="page" match="none">
         <label variable="locator"/>
       </if>
+      <else-if type="legal_case" position="near-note" locator="page" match="all">
+        <text value="at"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -105,8 +129,8 @@
 
   <macro name="juris-space-locator">
     <group delimiter=" ">
-        <text macro="juris-locator-label"/>
-        <text macro="juris-locator"/>
+      <text macro="juris-locator-label"/>
+      <text macro="juris-locator"/>
     </group>
   </macro>
 
@@ -126,9 +150,19 @@
         </if>
       </choose>
       <choose>
-        <if position="first" variable="section" locator="page" match="all">
+        <if>
+          <conditions match="any">
+            <condition type="legislation gazette" position="first" variable="section" locator="page" match="all"/>
+            <condition type="legal_case" position="first" variable="page-first" locator="page" match="all"/>
+          </conditions>
           <text macro="juris-locator"/>
         </if>
+        <else-if type="bill" variable="event" locator="page" match="all">
+          <group delimiter=" ">
+            <text value="at"/>
+            <text macro="juris-locator"/>
+          </group>
+        </else-if>
       </choose>
     </group>
   </macro>
@@ -161,6 +195,9 @@
             </group>
           </group>
       </if>
+      <else-if type="bill" variable="event" match="all">
+        <date variable="issued" date-parts="year" form="text" prefix="(" suffix=")"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -209,9 +246,11 @@
           <group delimiter=", ">
             <text macro="juris-title-short" font-style="italic"/>
             <group delimiter=" ">
-              <text macro="juris-main-short"/>
-              <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-              <text macro="juris-locator" label-form="symbol"/>
+              <group delimiter=", ">
+                <text macro="juris-main-short"/>
+                <text macro="juris-comma-locator" label-form="symbol"/>
+              </group>
+              <text macro="juris-space-locator" label-form="symbol"/>
             </group>
           </group>
         </else>

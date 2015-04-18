@@ -20,7 +20,7 @@
   </macro>
 
   <macro name="juris-title-short">
-    <text form="short" variable="title-short"/>
+    <text value="JURIS-TITLE-SHORT"/>
   </macro>
 
   <macro name="juris-main">

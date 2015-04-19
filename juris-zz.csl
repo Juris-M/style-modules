@@ -16,7 +16,7 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="juris-title">
-    <text value="TEST4"/>
+    <text value="TEST5"/>
   </macro>
 
   <macro name="juris-title-short">

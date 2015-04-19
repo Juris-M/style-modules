@@ -53,7 +53,7 @@
     <group delimiter=", ">
       <choose>
         <if type="gazette">
-          <number variable="number"/>
+          <number label-form="short" variable="number"/>
         </if>
       </choose>
       <group delimiter=" ">

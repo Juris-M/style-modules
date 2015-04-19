@@ -46,20 +46,22 @@
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <number variable="volume"/>
-          <text variable="container-title"/>
-          <number variable="page-first"/>
-        </group>
-      </if>
-    </choose>
+    <text macro="juris-main-short"/>
   </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-    <text value="[JURIS-MAIN-SHORT]"/>
+    <group delimiter=", ">
+      <choose>
+        <if type="gazette">
+          <number variable="number"/>
+        </if>
+      </choose>
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+        <number variable="page-first"/>
+      </group>
+    </group>
   </macro>
 
   <macro name="juris-locator-label">

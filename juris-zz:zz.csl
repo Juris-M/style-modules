@@ -94,6 +94,12 @@
   </macro>
 
   <macro name="juris-space-locator">
+    <choose>
+      <if type="gazette"/>
+      <else>
+        <text value="[FIXME]"/>
+      </else>
+    </choose>
     <!-- Complete pinpoint locator forms (with label) that are preceded by a space -->
     <text value="[JURIS-SPACE-LOCATOR]"/>
   </macro>

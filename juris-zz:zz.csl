@@ -93,42 +93,52 @@
   </macro>
 
   <macro name="juris-locator">
-    <number variable="locator" label-form="symbol"/>
+    <number variable="locator"/>
   </macro>
 
   <macro name="juris-space-locator">
     <group delimiter=" ">
-      <label variable="locator" form="symbol"/>
-      <number variable="locator"/>
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator" form="symbol"/>
+        </else>
+      </choose>
+      <text macro="juris-locator"/>
     </group>
   </macro>
 
   <macro name="juris-comma-locator">
+    <group>
     <choose>
       <if>
         <conditions match="all">
           <condition match="all" type="gazette" variable="container-title"/>
           <condition match="none" position="near-note"/>
         </conditions>
-        <group delimiter=" " suffix=",">
-          <label variable="locator" form="symbol"/>
-          <number variable="locator"/>
-        </group>
+        <text macro="juris-space-locator" suffix=","/>
       </if>
+      <else-if match="none" type="gazette">
+        <group delimiter=" ">
+          <text macro="juris-locator-label"/>
+          <text macro="juris-locator"/>
+        </group>
+      </else-if>
     </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail">
-    <choose>
-      <if type="gazette">
-        <group delimiter=" ">
+    <group delimiter=" ">
+      <choose>
+        <if type="gazette">
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
           <number variable="page-first"/>
-          <date form="text" date-parts="year" variable="issued" prefix="(" suffix=")"/>
-        </group>
-      </if>
-    </choose>
+        </if>
+      </choose>
+      <date form="text" date-parts="year" variable="issued" prefix="(" suffix=")"/>
+    </group>
   </macro>
 
   <macro name="juris-tail-short">

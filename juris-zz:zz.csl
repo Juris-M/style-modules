@@ -56,7 +56,7 @@
             </group>
           </if>
           <else>
-            <number label-form="short" variable="number"/>
+            <number label-form="symbol" variable="number"/>
           </else>
         </choose>
       </if>
@@ -84,13 +84,16 @@
   </macro>
 
   <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <text value="[JURIS-LOCATOR-LABEL]"/>
+    <choose>
+      <if locator="page"/>
+      <else>
+        <label variable="locator" form="symbol"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-locator">
-    <!-- The pinpoint label (including affixes, if required) -->
-    <text value="[JURIS-LOCATOR]"/>
+    <number variable="locator" label-form="symbol"/>
   </macro>
 
   <macro name="juris-space-locator">
@@ -102,7 +105,6 @@
 
   <macro name="juris-comma-locator">
     <choose>
-      <!-- also: only if first, or not near-note -->
       <if>
         <conditions match="all">
           <condition match="all" type="gazette" variable="container-title"/>

@@ -46,7 +46,15 @@
   </macro>
 
   <macro name="juris-main">
-    <text macro="juris-main-short"/>
+    <choose>
+      <if type="gazette">
+        <choose>
+          <if number="number"/>
+        </choose>
+      </if>
+    </choose>
+<number label-form="short" variable="number"/>
+
   </macro>
 
   <macro name="juris-main-short">

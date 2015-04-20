@@ -46,22 +46,21 @@
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if type="gazette">
-        <choose>
-          <if number="number"/>
-        </choose>
-      </if>
-    </choose>
-<number label-form="short" variable="number"/>
-
-  </macro>
-
-  <macro name="juris-main-short">
     <group delimiter=", ">
       <choose>
         <if type="gazette">
-          <number label-form="short" variable="number"/>
+          <choose>
+            <if number="number">
+              <group delimiter=" ">
+                <text value="Pub. L. No."/>
+                <number variable="number"/>
+              </group>
+            </if>
+            <else-if type="gazette">
+              <number label-form="short" variable="number"/>
+            </else-if>
+          </choose>
+          <number label-form="short" variable="locator"/>
         </if>
       </choose>
       <group delimiter=" ">
@@ -70,6 +69,21 @@
         <number variable="page-first"/>
       </group>
     </group>
+  </macro>
+
+  <macro name="juris-main-short">
+    <choose>
+      <if type="gazette">
+        <number label-form="short" variable="locator"/>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-locator-label">

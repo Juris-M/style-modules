@@ -55,9 +55,9 @@
               <number variable="number"/>
             </group>
           </if>
-          <else-if type="gazette">
+          <else>
             <number label-form="short" variable="number"/>
-          </else-if>
+          </else>
         </choose>
       </if>
       <else>
@@ -97,16 +97,24 @@
     <choose>
       <if type="gazette"/>
       <else>
-        <text value="[FIXME]"/>
+        <group delimiter=" ">
+          <label variable="locator" form="symbol"/>
+          <text variable="locator"/>
+        </group>
       </else>
     </choose>
-    <!-- Complete pinpoint locator forms (with label) that are preceded by a space -->
-    <text value="[JURIS-SPACE-LOCATOR]"/>
   </macro>
 
   <macro name="juris-comma-locator">
-    <!-- Complete pinpoint locator forms (with label) that are preceded by a comma -->
-    <text value="[JURIS-COMMA-LOCATOR]"/>
+    <choose>
+      <!-- also: only if first, or not near-note -->
+      <if match="all" type="gazette" variable="container-title">
+        <group delimiter=" " suffix=",">
+          <label variable="locator" form="symbol"/>
+          <text variable="locator"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail">

@@ -94,24 +94,23 @@
   </macro>
 
   <macro name="juris-space-locator">
-    <choose>
-      <if type="gazette"/>
-      <else>
-        <group delimiter=" ">
-          <label variable="locator" form="symbol"/>
-          <text variable="locator"/>
-        </group>
-      </else>
-    </choose>
+    <group delimiter=" ">
+      <label variable="locator" form="symbol"/>
+      <number variable="locator"/>
+    </group>
   </macro>
 
   <macro name="juris-comma-locator">
     <choose>
       <!-- also: only if first, or not near-note -->
-      <if match="all" type="gazette" variable="container-title">
+      <if>
+        <conditions match="all">
+          <condition match="all" type="gazette" variable="container-title"/>
+          <condition match="none" position="near-note"/>
+        </conditions>
         <group delimiter=" " suffix=",">
           <label variable="locator" form="symbol"/>
-          <text variable="locator"/>
+          <number variable="locator"/>
         </group>
       </if>
     </choose>
@@ -124,6 +123,7 @@
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
           <number variable="page-first"/>
+          <date form="text" date-parts="year" variable="issued" prefix="(" suffix=")"/>
         </group>
       </if>
     </choose>

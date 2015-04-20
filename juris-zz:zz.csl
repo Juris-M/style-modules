@@ -46,36 +46,33 @@
   </macro>
 
   <macro name="juris-main">
-    <group delimiter=", ">
-      <choose>
-        <if type="gazette">
-          <choose>
-            <if number="number">
-              <group delimiter=" ">
-                <text value="Pub. L. No."/>
-                <number variable="number"/>
-              </group>
-            </if>
-            <else-if type="gazette">
-              <number label-form="short" variable="number"/>
-            </else-if>
-          </choose>
-          <number label-form="short" variable="locator"/>
-        </if>
-      </choose>
-      <group delimiter=" ">
-        <number variable="volume"/>
-        <text variable="container-title" form="short"/>
-        <number variable="page-first"/>
-      </group>
-    </group>
+    <choose>
+      <if type="gazette">
+        <choose>
+          <if number="number">
+            <group delimiter=" ">
+              <text value="Pub. L. No."/>
+              <number variable="number"/>
+            </group>
+          </if>
+          <else-if type="gazette">
+            <number label-form="short" variable="number"/>
+          </else-if>
+        </choose>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
     <choose>
-      <if type="gazette">
-        <number label-form="short" variable="locator"/>
-      </if>
+      <if type="gazette"/>
       <else>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -107,13 +104,19 @@
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[JURIS-TAIL]"/>
+    <choose>
+      <if type="gazette">
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[JURIS-TAIL-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <!-- 

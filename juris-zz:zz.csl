@@ -55,15 +55,15 @@
       <if type="gazette">
         <choose>
           <if number="number">
-            <group delimiter=" ">
+            <group delimiter=" " suffix=",">
               <text value="Pub. L. No."/>
               <number variable="number"/>
             </group>
           </if>
           <else>
-            <group delimiter=" ">
+            <group delimiter=" " suffix=",">
               <label variable="number" form="symbol"/>
-              <number label-form="symbol" variable="number"/>
+              <number variable="number"/>
             </group>
           </else>
         </choose>
@@ -104,19 +104,29 @@
   </macro>
 
   <macro name="juris-space-locator">
-    <group delimiter=" ">
-      <choose>
-        <if locator="page"/>
-        <else>
-          <label variable="locator" form="symbol"/>
-        </else>
-      </choose>
-      <text macro="juris-locator"/>
-    </group>
+    <choose>
+      <if>
+        <conditions match="all">
+          <condition match="all" position="near-note"/>
+          <condition match="none" variable="locator"/>
+        </conditions>
+        <number variable="page-first"/>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <choose>
+            <if locator="page"/>
+            <else>
+              <label variable="locator" form="symbol"/>
+            </else>
+          </choose>
+          <text macro="juris-locator"/>
+        </group>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-comma-locator">
-    <group>
     <choose>
       <if>
         <conditions match="all">
@@ -135,7 +145,6 @@
         </group>
       </else-if>
     </choose>
-    </group>
   </macro>
 
   <macro name="juris-tail">
@@ -146,7 +155,7 @@
           <text variable="container-title" form="short"/>
           <group delimiter=", ">
             <number variable="page-first"/>
-            <text variable="locator-revision"/>
+            <text variable="locator-extra"/>
           </group>
         </if>
       </choose>

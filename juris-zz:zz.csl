@@ -55,13 +55,15 @@
         <choose>
           <if number="number">
             <group delimiter=" ">
-              <label variable="number"/>
               <text value="Pub. L. No."/>
               <number variable="number"/>
             </group>
           </if>
           <else>
-            <number label-form="symbol" variable="number"/>
+            <group delimiter=" ">
+              <label variable="number"/>
+              <number label-form="symbol" variable="number"/>
+            </group>
           </else>
         </choose>
       </if>

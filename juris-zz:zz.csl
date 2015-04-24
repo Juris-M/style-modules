@@ -18,7 +18,7 @@
   </info>
   <locale>
     <terms>
-      <term form="short" name="chapter">ch.</term>
+      <term form="symbol" name="chapter">ch.</term>
     </terms>
   </locale>
   <macro name="juris-title">
@@ -61,7 +61,7 @@
           </if>
           <else>
             <group delimiter=" ">
-              <label variable="number"/>
+              <label variable="number" form="symbol"/>
               <number label-form="symbol" variable="number"/>
             </group>
           </else>

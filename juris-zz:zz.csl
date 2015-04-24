@@ -77,7 +77,6 @@
         <group delimiter=" ">
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
-          <number variable="page-first"/>
         </group>
       </else>
     </choose>
@@ -118,7 +117,10 @@
         </conditions>
         <text macro="juris-space-locator" suffix=","/>
       </if>
-      <else-if match="none" type="gazette">
+      <else-if>
+        <conditions match="all">
+          <condition match="none" position="near-note"/>
+        </conditions>
         <group delimiter=" ">
           <text macro="juris-locator-label"/>
           <text macro="juris-locator"/>
@@ -134,7 +136,10 @@
         <if type="gazette">
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
-          <number variable="page-first"/>
+          <group delimiter=", ">
+            <number variable="page-first"/>
+            <text variable="locator-revision"/>
+          </group>
         </if>
       </choose>
       <date form="text" date-parts="year" variable="issued" prefix="(" suffix=")"/>
@@ -195,7 +200,17 @@
                 <text macro="juris-main-short"/>
                 <text macro="juris-comma-locator" label-form="symbol"/>
               </group>
-              <text macro="juris-space-locator" label-form="symbol"/>
+              <choose>
+                <if variable="locator">
+                  <group delimiter=" ">
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+                    <text macro="juris-locator"/>
+                  </group>
+                </if>
+                <else>
+                  <text macro="juris-space-locator" label-form="symbol"/>
+                </else>
+              </choose>
               <text macro="juris-tail-short"/>
             </group>
           </group>

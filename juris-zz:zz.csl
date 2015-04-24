@@ -55,6 +55,7 @@
         <choose>
           <if number="number">
             <group delimiter=" ">
+              <label variable="number"/>
               <text value="Pub. L. No."/>
               <number variable="number"/>
             </group>

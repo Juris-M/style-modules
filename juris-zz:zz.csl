@@ -28,8 +28,20 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if match="all" type="legal_case" variable="title-short">
+        <text variable="title-short" form="short"/>
+      </if>
+      <else-if type="legal_case">
+        <text variable="title" form="short"/>
+      </else-if>
+      <else-if variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-main">

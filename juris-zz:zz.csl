@@ -14,6 +14,7 @@
     <summary>Juris-M style module for ZZ, Atlantis</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case gazette"/>
   </info>
   
   <macro name="juris-title">
@@ -128,7 +129,14 @@
         <else>
           <!-- short form -->
           <group delimiter=", ">
-            <text macro="juris-title-short" font-style="italic"/>
+            <choose>
+              <if type="legal_case">
+                  <text macro="juris-title-short" font-style="italic"/>
+                </if>
+              <else>
+                <text macro="juris-title-short"/>
+              </else>
+            </choose>
             <group delimiter=" ">
               <group delimiter=", ">
                 <text macro="juris-main-short"/>

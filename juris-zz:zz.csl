@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>ZZ, Atlantis</title>
+    <id>http://citationstylist.org/modules/juris-zz:zz</id>
+    <link href="http://citationstylist/modules/juris-zz:zz" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@nagoya-u.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for ZZ, Atlantis</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  
+  <macro name="juris-title">
+    <!-- The title form for full citations (of all types) -->
+    <text value="[TITLE]"/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <!-- The title form for subsequent citations (of all types) -->
+    <text value="[TITLE-SHORT]"/>
+  </macro>
+
+  <macro name="juris-main">
+    <!-- The body of full citations (of all types) -->
+    <text value="[MAIN]"/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <!-- The body of subsequent citations (of all types) -->
+    <text value="[MAIN-SHORT]"/>
+  </macro>
+
+  <macro name="juris-locator-label">
+    <!-- The label applied to pinpoint locators -->
+    <text value="[LOCATOR-LABEL]"/>
+  </macro>
+
+  <macro name="juris-locator">
+    <!-- The pinpoint label (including affixes, if required) -->
+    <text value="[LOCATOR]"/>
+  </macro>
+
+  <macro name="juris-space-locator">
+    <!-- Complete pinpoint locator forms (with label) that are preceded by a space -->
+    <text value="[SPACE-LOCATOR]"/>
+  </macro>
+
+  <macro name="juris-comma-locator">
+    <!-- Complete pinpoint locator forms (with label) that are preceded by a comma -->
+    <text value="[COMMA-LOCATOR]"/>
+  </macro>
+
+  <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value="[TAIL]"/>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value="[TAIL-SHORT]"/>
+  </macro>
+
+  <!-- 
+       Local macro called by the scaffolding below (this macro is not
+       part of the modular code, and will be ignored by the calling
+       style).
+  -->
+  <macro name="at-locator-label">
+    <text value="at"/>
+  </macro>
+
+  <!-- 
+       Punctuation scaffolding for Bluebook citations (you do not need
+       to change this - punctuation scaffolding is applied by the
+       style that calls the module)
+  -->
+  <citation>
+    <layout>
+      <choose>
+        <if position="ibid-with-locator">
+          <group delimiter=" ">
+            <text term="ibid"/>
+            <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+            <text macro="juris-locator" label-form="symbol"/>
+          </group>
+        </if>
+        <else-if position="ibid">
+          <text term="ibid"/>
+        </else-if>
+        <else-if position="near-note" match="none">
+          <!-- full form -->
+          <group delimiter=", ">
+            <text macro="juris-title"/>
+            <group delimiter=" ">
+              <group delimiter=", ">
+                <text macro="juris-main"/>
+                <text macro="juris-comma-locator" label-form="symbol"/>
+              </group>
+              <text macro="juris-space-locator" label-form="symbol"/>
+              <text macro="juris-tail"/>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <!-- short form -->
+          <group delimiter=", ">
+            <text macro="juris-title-short" font-style="italic"/>
+            <group delimiter=" ">
+              <group delimiter=", ">
+                <text macro="juris-main-short"/>
+                <text macro="juris-comma-locator" label-form="symbol"/>
+              </group>
+              <choose>
+                <if variable="locator">
+                  <group delimiter=" ">
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+                    <text macro="juris-locator"/>
+                  </group>
+                </if>
+                <else>
+                  <text macro="juris-space-locator" label-form="symbol"/>
+                </else>
+              </choose>
+              <text macro="juris-tail-short"/>
+            </group>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+</style>

@@ -17,8 +17,14 @@
   </info>
   
   <macro name="juris-title">
-    <!-- The title form for full citations (of all types) -->
-    <text value="[TITLE]"/>
+    <choose>
+      <if type="legal_case">
+        <text variable="title" form="short"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-title-short">

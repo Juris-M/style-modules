@@ -117,14 +117,18 @@
 </macro>
 
 <macro name="juris-space-locator">
-  <choose>
-    <if variable="locator">
-      <group delimiter=" ">
+  <group delimiter=" ">
+    <choose>
+      <if>
+        <conditions match="all">
+          <condition match="none" locator="page"/>
+          <condition variable="locator"/>
+        </conditions>
         <label variable="locator"/>
-        <text macro="juris-locator"/>
-      </group>
-    </if>
-  </choose>
+      </if>
+    </choose>
+    <text macro="juris-locator"/>
+  </group>
 </macro>
 
 <macro name="juris-space-locator-short">

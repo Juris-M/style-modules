@@ -103,18 +103,12 @@
 <macro name="juris-comma-locator">
   <choose>
     <if match="all" type="gazette" 
-        variable="container-title">
-      <group delimiter=" " suffix=",">
-        <text macro="juris-locator-label"/>
-        <text macro="juris-locator"/>
-      </group>
+        variable="container-title locator">
+      <text macro="juris-space-locator" suffix=","/>
     </if>
-    <else>
-      <group delimiter=" ">
-        <text macro="juris-locator-label"/>
-        <text macro="juris-locator"/>
-      </group>
-    </else>
+    <else-if variable="locator">
+      <text macro="juris-space-locator"/>
+    </else-if>
   </choose>
 </macro>
 
@@ -123,10 +117,14 @@
 </macro>
 
 <macro name="juris-space-locator">
-  <group delimiter=" ">
-    <text macro="juris-locator-label"/>
-    <text macro="juris-locator"/>
-  </group>
+  <choose>
+    <if variable="locator">
+      <group delimiter=" ">
+        <label variable="locator"/>
+        <text macro="juris-locator"/>
+      </group>
+    </if>
+  </choose>
 </macro>
 
 <macro name="juris-space-locator-short">
@@ -135,10 +133,7 @@
       <number variable="page-first"/>
     </if>
     <else>
-      <group delimiter=" ">
-        <text macro="juris-locator-label"/>
-        <text macro="juris-locator"/>
-      </group>
+      <text macro="juris-space-locator"/>
     </else>
   </choose>
 </macro>
@@ -217,7 +212,7 @@
             <group delimiter=" ">
               <group delimiter=", ">
                 <text macro="juris-main-short"/>
-                <text macro="juris-comma-locator" label-form="symbol"/>
+                <text macro="juris-comma-locator-short" label-form="symbol"/>
               </group>
               <choose>
                 <if variable="locator">
@@ -227,7 +222,7 @@
                   </group>
                 </if>
                 <else>
-                  <text macro="juris-space-locator" label-form="symbol"/>
+                  <text macro="juris-space-locator-short" label-form="symbol"/>
                 </else>
               </choose>
               <text macro="juris-tail-short"/>

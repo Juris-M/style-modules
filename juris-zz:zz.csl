@@ -28,10 +28,22 @@
   </choose>
 </macro>
 
-  <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
-  </macro>
+<macro name="juris-title-short">
+  <choose>
+    <if match="all" type="legal_case" variable="title-short">
+      <text variable="title-short" form="short"/>
+    </if>
+    <else-if type="legal_case">
+      <text variable="title" form="short"/>
+    </else-if>
+    <else-if variable="title-short">
+      <text variable="title-short"/>
+    </else-if>
+    <else>
+      <text variable="title"/>
+    </else>
+  </choose>
+</macro>
 
 <macro name="juris-main">
   <choose>
@@ -63,10 +75,17 @@
   </choose>
 </macro>
 
-  <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
-  </macro>
+<macro name="juris-main-short">
+  <choose>
+    <if type="gazette"/>
+    <else>
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+      </group>
+    </else>
+  </choose>
+</macro>
 
 <macro name="juris-locator-label">
   <choose>
@@ -99,11 +118,29 @@
   </choose>
 </macro>
 
+<macro name="juris-comma-locator-short">
+  <text value=""/>
+</macro>
+
 <macro name="juris-space-locator">
   <group delimiter=" ">
     <text macro="juris-locator-label"/>
     <text macro="juris-locator"/>
   </group>
+</macro>
+
+<macro name="juris-space-locator-short">
+  <choose>
+    <if match="none" variable="locator">
+      <number variable="page-first"/>
+    </if>
+    <else>
+      <group delimiter=" ">
+        <text macro="juris-locator-label"/>
+        <text macro="juris-locator"/>
+      </group>
+    </else>
+  </choose>
 </macro>
 
 <macro name="juris-tail">
@@ -128,10 +165,9 @@
   </group>
 </macro>
 
-  <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
-  </macro>
+<macro name="juris-tail-short">
+  <text value=""/>
+</macro>
 
   <!-- 
        Local macro called by the scaffolding below (this macro is not

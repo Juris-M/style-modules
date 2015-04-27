@@ -18,10 +18,10 @@
   </info>
   
   <locale>
-  <terms>
-    <term form="symbol" name="chapter">ch.</term>
-  </terms>
-</locale>
+    <terms>
+      <term form="symbol" name="chapter">ch.</term>
+    </terms>
+  </locale>
   
 <macro name="juris-title">
   <choose>

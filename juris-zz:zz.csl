@@ -67,7 +67,7 @@
 <macro name="juris-comma-spotter">
   <choose>
     <if match="all" type="gazette" 
-        variable="container-title locator">
+        variable="container-title">
       <text macro="juris-default-spotter" suffix=","/>
     </if>
     <else>

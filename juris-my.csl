@@ -6,14 +6,15 @@
     <link href="http://citationstylist/modules/juris-@@KEY@@" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>YOUR-NAME-HERE</name>
-      <email>YOUR-EMAIL-ADDRESS-HERE</email>
+      <name>Azfar Rosehaizat</name>
+      <email>aaroseha@gmail.com</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for @@NAME@@</summary>
+    <summary>Juris-M style module for the Judiciary of Malaysia</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
   </info>
   <macro name="juris-title">
     <text form="short" variable="title"/>

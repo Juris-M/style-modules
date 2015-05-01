@@ -174,7 +174,7 @@
             <text macro="juris-title-short" font-style="italic"/>
             <group delimiter=" ">
               <text macro="juris-main-short"/>
-              <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+              <text macro="juris-locator-label" alternative-macro="my-at-label"/>
               <text macro="juris-locator"/>
             </group>
           </group>

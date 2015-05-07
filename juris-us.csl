@@ -35,7 +35,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if type="legal_case">
+      <if match="all" type="legal_case" variable="container-title">
         <group delimiter=" ">
           <number variable="volume"/>
           <text variable="container-title" 
@@ -43,7 +43,33 @@
           <number variable="page-first"/>
         </group>
       </if>
-      <else>
+      <else-if type="legal_case" variable="number">
+        <group delimiter=", ">
+          <choose>
+            <if number="number">
+              <group delimiter=" ">
+                <text value="No" suffix="."/>
+                <number variable="number"/>
+              </group>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <label variable="number" form="symbol"/>
+                <number variable="number"/>
+              </group>
+            </else>
+          </choose>
+          <choose>
+            <if variable="locator">
+              <group delimiter=" ">
+                <text value="slip op."/>
+                <number variable="page"/>
+              </group>
+            </if>
+          </choose>
+        </group>
+      </else-if>
+      <else-if type="gazette">
         <choose>
           <if number="number">
             <group delimiter=" " suffix=",">
@@ -59,16 +85,26 @@
             </group>
           </else>
         </choose>
-      </else>
+      </else-if>
     </choose>
   </macro>
 
   <macro name="juris-comma-spotter">
     <choose>
-      <if match="all" type="gazette" 
+      <if>
+        <conditions match="all">
+          <condition match="any" type="legal_case"/>
+          <condition match="none" variable="page container-title"/>
+        </conditions>
+        <group delimiter=" ">
+          <text value="slip op. at"/>
+          <number variable="locator"/>
+        </group>
+      </if>
+      <else-if match="all" type="gazette" 
           variable="container-title locator">
         <text macro="juris-default-spotter" suffix=","/>
-      </if>
+      </else-if>
       <else>
         <text macro="juris-default-spotter"/>
       </else>
@@ -102,6 +138,7 @@
         </if>
       </choose>
       <group delimiter=" " prefix="(" suffix=")">
+        <text variable="jurisdiction" form="short"/>
         <names variable="authority">
           <name/>
           <institution institution-parts="short"/>
@@ -146,7 +183,11 @@
 
   <macro name="juris-default-spotter-short">
     <choose>
-      <if match="none" variable="locator">
+      <if>
+        <conditions match="none">
+          <condition match="all" variable="locator" type="legal_case"/>
+          <condition match="none" variable="container-title"/>
+        </conditions>
         <number variable="page-first"/>
       </if>
       <else>

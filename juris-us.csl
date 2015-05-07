@@ -69,19 +69,29 @@
           </choose>
         </group>
       </else-if>
-      <else-if type="gazette">
+      <else-if match="any" type="gazette legislation">
         <choose>
-          <if number="number">
-            <group delimiter=" " suffix=",">
-              <text value="Pub. L. No."/>
-              <number variable="number"/>
-            </group>
+          <if variable="title">
+            <choose>
+              <if number="number">
+                <group delimiter=" " suffix=",">
+                  <text value="Pub. L. No."/>
+                  <number variable="number"/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=" " suffix=",">
+                  <label variable="number" 
+                         form="symbol"/>
+                  <number variable="number"/>
+                </group>
+              </else>
+            </choose>
           </if>
           <else>
-            <group delimiter=" " suffix=",">
-              <label variable="number" 
-                     form="symbol"/>
-              <number variable="number"/>
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
             </group>
           </else>
         </choose>
@@ -101,9 +111,18 @@
           <number variable="locator"/>
         </group>
       </if>
-      <else-if match="all" type="gazette" 
-          variable="container-title locator">
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="gazette legislation"/>
+          <condition match="all" variable="title container-title locator"/>
+        </conditions>
         <text macro="juris-default-spotter" suffix=","/>
+      </else-if>
+      <else-if>
+        <conditions>
+          <condition match="any" type="gazette legislation"/>
+          <condition match="none" variable="title"/>
+        </conditions>
       </else-if>
       <else>
         <text macro="juris-default-spotter"/>
@@ -128,7 +147,11 @@
   <macro name="juris-tail">
     <group delimiter=" ">
       <choose>
-        <if type="gazette">
+        <if>
+          <conditions match="all">
+            <condition match="any" type="gazette legislation"/>
+            <condition match="all" variable="title"/>
+          </conditions>
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
           <group delimiter=", ">

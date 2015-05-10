@@ -148,7 +148,7 @@
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
-      <else-if type="bill"/>
+      <else-if match="any" type="bill regulation"/>
       <else>
         <text macro="juris-default-spotter"/>
       </else>
@@ -191,7 +191,7 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
-          <else-if type="bill"/>
+          <else-if match="any" type="bill regulation"/>
           <else>
             <text variable="jurisdiction" form="short"/>
             <names variable="authority">

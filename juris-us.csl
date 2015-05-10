@@ -27,6 +27,12 @@
       <if type="legal_case">
         <text variable="title" form="short"/>
       </if>
+      <else-if type="bill">
+        <group delimiter=" of ">
+          <text variable="title"/>
+          <date variable="issued" form="text" date-parts="year"/>          
+        </group>
+      </else-if>
       <else>
         <text variable="title"/>
       </else>
@@ -96,6 +102,18 @@
           </else>
         </choose>
       </else-if>
+      <else-if type="bill">
+        <group delimiter=", ">
+          <text macro="juris-main-short"/>
+          <group delimiter=" ">
+            <number variable="collection-number" form="ordinal"/>
+            <names variable="authority">
+              <name/>
+              <institution use-last="1" institution-parts="short"/>
+            </names>
+          </group>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -119,11 +137,12 @@
         <text macro="juris-default-spotter" suffix=","/>
       </else-if>
       <else-if>
-        <conditions>
+        <conditions match="all">
           <condition match="any" type="gazette legislation"/>
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
+      <else-if type="bill"/>
       <else>
         <text macro="juris-default-spotter"/>
       </else>
@@ -161,11 +180,20 @@
         </if>
       </choose>
       <group delimiter=" " prefix="(" suffix=")">
-        <text variable="jurisdiction" form="short"/>
-        <names variable="authority">
-          <name/>
-          <institution institution-parts="short"/>
-        </names>
+        <choose>
+          <if type="bill" variable="chapter-number">
+            <number variable="chapter-number" form="ordinal"/>
+            <text value="Sess" suffix="."/>
+          </if>
+          <else-if type="bill"/>
+          <else>
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </else>
+        </choose>
         <date form="text" date-parts="year" variable="issued"/>
       </group>
     </group>
@@ -179,6 +207,7 @@
       <else-if type="legal_case">
         <text variable="title" form="short"/>
       </else-if>
+      <else-if type="bill"/>
       <else-if variable="title-short">
         <text variable="title-short"/>
       </else-if>
@@ -191,6 +220,15 @@
   <macro name="juris-main-short">
     <choose>
       <if type="gazette"/>
+      <else-if type="bill">
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution use-first="1" institution-parts="short"/>
+          </names>
+          <number variable="number"/>
+        </group>
+      </else-if>
       <else>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -201,7 +239,11 @@
   </macro>
 
   <macro name="juris-comma-spotter-short">
-    <text value=""/>
+    <choose>
+      <if match="all" type="bill" variable="number">
+        <text macro="juris-default-spotter"/>        
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
@@ -227,7 +269,7 @@
     <choose>
       <if locator="page"/>
       <else>
-        <label variable="locator" form="symbol"/>
+        <label variable="locator" form="symbol" prefix="x"/>
       </else>
     </choose>
   </macro>

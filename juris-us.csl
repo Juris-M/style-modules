@@ -118,7 +118,6 @@
         <group delimiter=" ">
           <number variable="volume"/>
           <text variable="container-title"/>
-          <text macro="juris-default-spotter"/>
         </group>
       </else-if>
     </choose>
@@ -149,7 +148,7 @@
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
-      <else-if match="any" type="bill regulation"/>
+      <else-if type="bill"/>
       <else>
         <text macro="juris-default-spotter"/>
       </else>

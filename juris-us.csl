@@ -269,7 +269,7 @@
     <choose>
       <if locator="page"/>
       <else>
-        <label variable="locator" form="symbol" prefix="x"/>
+        <label variable="locator" form="symbol"/>
       </else>
     </choose>
   </macro>

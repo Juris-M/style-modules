@@ -77,7 +77,11 @@
       </else-if>
       <else-if match="any" type="gazette legislation">
         <choose>
-          <if variable="title">
+          <if>
+            <conditions match="all">
+              <condition variable="title"/>
+              <condition match="none" type="gazette" variable="number"/>
+            </conditions>          
             <choose>
               <if number="number">
                 <group delimiter=" " suffix=",">
@@ -138,13 +142,14 @@
       <else-if>
         <conditions match="all">
           <condition match="any" type="gazette legislation"/>
-          <condition match="all" variable="title container-title locator"/>
+          <condition match="all" variable="title container-title locator number"/>
         </conditions>
         <text macro="juris-default-spotter" suffix=","/>
       </else-if>
       <else-if>
         <conditions match="all">
           <condition match="any" type="gazette legislation"/>
+          <condition match="all" variable="number"/>
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>

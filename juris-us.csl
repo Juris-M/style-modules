@@ -80,8 +80,7 @@
           <if>
             <conditions match="all">
               <condition match="any" type="gazette"/>
-              <condition match="none" number="number"/>
-              <condition match="none" number="chapter"/>
+              <condition match="none" variable="number"/>
             </conditions>
           </if>
           <else-if>
@@ -187,7 +186,7 @@
           <conditions match="all">
             <condition match="any" type="gazette legislation"/>
             <condition match="all" variable="title"/>
-            <condition match="none" type="gazette" variable="number"/>
+            <condition match="any" number="number chapter" variable="number"/>
           </conditions>
           <number variable="volume"/>
           <text variable="container-title" form="short"/>

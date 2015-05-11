@@ -181,6 +181,7 @@
           <conditions match="all">
             <condition match="any" type="gazette legislation"/>
             <condition match="all" variable="title"/>
+            <condition match="none" type="gazette" variable="number"/>
           </conditions>
           <number variable="volume"/>
           <text variable="container-title" form="short"/>

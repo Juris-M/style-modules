@@ -77,7 +77,16 @@
       </else-if>
       <else-if match="any" type="gazette legislation">
         <choose>
-          <if variable="title">
+          <if>
+            <conditions match="all">
+              <condition match="any" type="gazette"/>
+              <condition match="none" variable="number"/>
+            </conditions>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition variable="title"/>
+            </conditions>          
             <choose>
               <if number="number">
                 <group delimiter=" " suffix=",">
@@ -93,7 +102,7 @@
                 </group>
               </else>
             </choose>
-          </if>
+          </else-if>
           <else>
             <group delimiter=" ">
               <number variable="volume"/>
@@ -114,6 +123,12 @@
           </group>
         </group>
       </else-if>
+      <else-if type="regulation">
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -132,17 +147,18 @@
       <else-if>
         <conditions match="all">
           <condition match="any" type="gazette legislation"/>
-          <condition match="all" variable="title container-title locator"/>
+          <condition match="all" variable="title container-title locator number"/>
         </conditions>
         <text macro="juris-default-spotter" suffix=","/>
       </else-if>
       <else-if>
         <conditions match="all">
           <condition match="any" type="gazette legislation"/>
+          <condition match="all" variable="number"/>
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
-      <else-if type="bill"/>
+      <else-if match="any" type="bill regulation"/>
       <else>
         <text macro="juris-default-spotter"/>
       </else>
@@ -170,6 +186,7 @@
           <conditions match="all">
             <condition match="any" type="gazette legislation"/>
             <condition match="all" variable="title"/>
+            <condition match="any" variable="number"/>
           </conditions>
           <number variable="volume"/>
           <text variable="container-title" form="short"/>
@@ -185,7 +202,7 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
-          <else-if type="bill"/>
+          <else-if match="any" type="bill regulation"/>
           <else>
             <text variable="jurisdiction" form="short"/>
             <names variable="authority">
@@ -338,8 +355,8 @@
               <choose>
                 <if variable="locator">
                   <group delimiter=" ">
-                    <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-                    <text macro="juris-locator"/>
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="symbol"/>
                   </group>
                 </if>
                 <else>

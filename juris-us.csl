@@ -344,8 +344,8 @@
               <choose>
                 <if variable="locator">
                   <group delimiter=" ">
-                    <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-                    <text macro="juris-locator"/>
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="symbol"/>
                   </group>
                 </if>
                 <else>

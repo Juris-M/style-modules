@@ -79,8 +79,14 @@
         <choose>
           <if>
             <conditions match="all">
+              <condition match="any" type="gazette"/>
+              <condition match="none" number="number"/>
+              <condition match="none" number="chapter"/>
+            </conditions>
+          </if>
+          <else-if>
+            <conditions match="all">
               <condition variable="title"/>
-              <condition match="none" type="gazette" variable="number"/>
             </conditions>          
             <choose>
               <if number="number">
@@ -97,7 +103,7 @@
                 </group>
               </else>
             </choose>
-          </if>
+          </else-if>
           <else>
             <group delimiter=" ">
               <number variable="volume"/>

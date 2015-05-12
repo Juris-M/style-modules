@@ -205,13 +205,17 @@
           </else>
         </choose>
         <choose>
-            <if>
-              <conditions match="any">
-                <condition match="all" type="regulation" variable="gazette-flag"/>
-                <condition match="nand" type="legal_case" variable="container-title"/>
-              </conditions>
+            <if match="all" type="regulation" variable="gazette-flag">
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </if>
+            <else-if>
+              <conditions match="all">
+                <condition match="all" type="legal_case"/>
+                <condition match="none" variable="container-title"/>  
+                <condition match="none" variable="collection-number"/>  
+              </conditions>
+              <date form="text" date-parts="year-month-day" variable="issued"/>
+            </else-if>
             <else>
               <date form="text" date-parts="year" variable="issued"/>
             </else>

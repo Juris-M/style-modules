@@ -192,7 +192,10 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
-          <else-if match="any" type="bill regulation"/>
+          <else-if match="any" type="bill"/>
+          <else-if match="all" type="regulation">
+            <text variable="jurisdiction" form="short"/>
+          </else-if>
           <else>
             <text variable="jurisdiction" form="short"/>
             <names variable="authority">
@@ -201,7 +204,18 @@
             </names>
           </else>
         </choose>
-        <date form="text" date-parts="year" variable="issued"/>
+        <choose>
+            <if>
+              <conditions match="any">
+                <condition match="all" type="regulation" variable="gazette-flag"/>
+                <condition match="nand" type="legal_case" variable="container-title"/>
+              </conditions>
+              <date form="text" date-parts="year-month-day" variable="issued"/>
+            </if>
+            <else>
+              <date form="text" date-parts="year" variable="issued"/>
+            </else>
+        </choose>
       </group>
     </group>
   </macro>
@@ -215,6 +229,12 @@
         <text variable="title" form="short"/>
       </else-if>
       <else-if type="bill"/>
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="regulation"/>
+          <condition match="none" variable="gazette-flag"/>
+        </conditions>
+      </else-if>
       <else-if variable="title-short">
         <text variable="title-short"/>
       </else-if>

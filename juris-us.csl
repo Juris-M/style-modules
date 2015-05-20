@@ -33,6 +33,24 @@
           <date variable="issued" form="text" date-parts="year"/>          
         </group>
       </else-if>
+      <else-if type="hearing">
+        <group delimiter=": ">
+          <text variable="title" text-case="title"/>
+          <group delimiter=" ">
+            <text value="Hearing before the"/>
+            <group delimiter=" of the ">
+              <names variable="committee">
+                <name/>
+                <institution stop-last="1" use-first="1"/>
+              </names>
+              <names variable="committee">
+                <name/>
+                <institution use-last="1"/>
+              </names>
+            </group>
+          </group>
+        </group>
+      </else-if>
       <else>
         <text variable="title"/>
       </else>
@@ -120,6 +138,15 @@
           <text variable="container-title"/>
         </group>
       </else-if>
+      <else-if type="hearing">
+        <group delimiter=" ">
+          <number variable="collection-number" form="ordinal"/>
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -149,7 +176,7 @@
           <condition match="none" variable="gazette-flag"/>
         </conditions>
       </else-if>
-      <else-if match="any" type="bill regulation"/>
+      <else-if match="any" type="bill regulation hearing"/>
       <else>
         <text macro="juris-default-spotter"/>
       </else>
@@ -192,7 +219,7 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
-          <else-if match="any" type="bill"/>
+          <else-if match="any" type="bill hearing"/>
           <else-if match="all" type="regulation">
             <text variable="jurisdiction" form="short"/>
           </else-if>
@@ -339,7 +366,14 @@
         <else-if position="near-note" match="none">
           <!-- full form -->
           <group delimiter=", ">
-            <text macro="juris-title"/>
+            <choose>
+              <if type="hearing">
+                <text macro="juris-title" font-style="italic"/>
+              </if>
+              <else>
+                <text macro="juris-title"/>
+              </else>
+            </choose>
             <group delimiter=" ">
               <group delimiter=", ">
                 <text macro="juris-main"/>

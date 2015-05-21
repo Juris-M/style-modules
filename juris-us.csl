@@ -224,11 +224,11 @@
             <text variable="jurisdiction" form="short"/>
           </else-if>
           <else>
-            <text variable="jurisdiction" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>
             </names>
+            <text variable="jurisdiction" form="short"/>
           </else>
         </choose>
         <choose>

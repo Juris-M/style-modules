@@ -19,6 +19,7 @@
   <locale>
     <terms>
       <term form="symbol" name="chapter">ch.</term>
+      <term form="short" name="number">no.</term>
     </terms>
   </locale>
   
@@ -145,6 +146,15 @@
             <name/>
             <institution institution-parts="short"/>
           </names>
+        </group>
+      </else-if>
+      <else-if match="all" type="report" variable="title">
+        <group delimiter=" ">
+          <text variable="collection-title"/>
+          <group delimiter=" ">
+            <label variable="number" form="symbol" text-case="capitalize-first"/>
+            <number variable="number"/>
+          </group>
         </group>
       </else-if>
     </choose>
@@ -375,6 +385,17 @@
               <if type="hearing">
                 <text macro="juris-title" font-style="italic"/>
               </if>
+              <else-if type="report">
+                <group delimiter=", ">
+                <names variable="committee">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short" font-variant="small-caps"/>
+                  </institution>
+                </names>
+                <text macro="juris-title" font-variant="small-caps"/>
+                </group>
+              </else-if>
               <else>
                 <text macro="juris-title"/>
               </else>

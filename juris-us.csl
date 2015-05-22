@@ -229,7 +229,7 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
-          <else-if match="any" type="bill hearing"/>
+          <else-if match="any" type="bill hearing report"/>
           <else-if match="all" type="regulation">
             <text variable="jurisdiction" form="short"/>
           </else-if>
@@ -276,6 +276,9 @@
           <condition match="none" variable="gazette-flag"/>
         </conditions>
       </else-if>
+      <else-if type="report">
+        <text variable="title" form="short" font-variant="small-caps"/>
+      </else-if>
       <else-if variable="title-short">
         <text variable="title-short"/>
       </else-if>
@@ -297,7 +300,7 @@
           <number variable="number"/>
         </group>
       </else-if>
-      <else-if type="hearing"/>
+      <else-if type="hearing report"/>
       <else>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -321,6 +324,7 @@
         <conditions match="none">
           <condition match="all" variable="locator" type="legal_case"/>
           <condition match="none" variable="container-title"/>
+          <condition match="any" type="report"/>
         </conditions>
         <number variable="page-first"/>
       </if>
@@ -376,8 +380,8 @@
         </else-if>
         <else-if>
           <conditions match="any">
-            <condition match="none" position="near-note" type="hearing"/>
             <condition match="all" type="hearing" position="first"/>
+            <condition match="all" type="report" position="first"/>
           </conditions>
           <!-- full form -->
           <group delimiter=", ">
@@ -403,7 +407,17 @@
             <group delimiter=" ">
               <group delimiter=", ">
                 <text macro="juris-main"/>
-                <text macro="juris-comma-spotter" label-form="symbol"/>
+                <choose>
+                  <if match="all" variable="locator" type="report">
+                    <group delimiter=" ">
+                      <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                      <text macro="juris-locator" label-form="symbol"/>
+                    </group>
+                  </if>
+                  <else>
+                    <text macro="juris-comma-spotter" label-form="symbol"/>
+                  </else>
+                </choose>
               </group>
               <text macro="juris-default-spotter" label-form="symbol"/>
               <text macro="juris-tail"/>
@@ -422,7 +436,7 @@
               </else>
             </choose>
             <choose>
-              <if type="hearing">
+              <if type="hearing report">
                 <group delimiter=", ">
                   <group delimiter=" ">
                     <text value="supra" font-style="italic"/>

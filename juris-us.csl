@@ -406,8 +406,10 @@
           <conditions match="any">
             <condition match="all" type="hearing" position="first"/>
             <condition match="all" type="report" position="first"/>
+            <condition match="none" type="report hearing" position="near-note"/>
           </conditions>
           <!-- full form -->
+          <group delimiter=" ">
           <group delimiter=", ">
             <choose>
               <if type="hearing">
@@ -448,8 +450,9 @@
                 </choose>
               </group>
               <text macro="juris-default-spotter" label-form="symbol"/>
-              <text macro="juris-tail"/>
             </group>
+          </group>
+              <text macro="juris-tail"/>
           </group>
         </else-if>
         <else>

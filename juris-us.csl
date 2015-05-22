@@ -400,7 +400,12 @@
   </macro>
 
   <macro name="juris-locator">
-    <number variable="locator"/>
+    <choose>
+      <if match="all" type="report" position="near-note"/>
+      <else>
+        <number variable="locator"/>
+      </else>
+    </choose>
   </macro>
 
   <!-- 
@@ -528,7 +533,7 @@
                   <choose>
                     <if variable="locator">
                       <group delimiter=" ">
-                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol" prefix="[x]"/>
+                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
                         <text macro="juris-locator" label-form="symbol"/>
                       </group>
                     </if>

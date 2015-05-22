@@ -52,6 +52,30 @@
           </group>
         </group>
       </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="report"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution/>
+          </names>
+          <choose>
+            <if match="any" variable="genre">
+              <text variable="genre" form="short"/>
+            </if>
+            <else>
+              <text value="Rep."/>
+            </else>
+          </choose>
+          <group delimiter=" ">
+            <label variable="number" form="symbol"/>
+            <number variable="number"/>
+          </group>
+        </group>
+      </else-if> 
       <else>
         <text variable="title"/>
       </else>
@@ -391,13 +415,17 @@
               </if>
               <else-if type="report">
                 <group delimiter=", ">
-                <names variable="committee">
-                  <name/>
-                  <institution institution-parts="short">
-                    <institution-part name="short" font-variant="small-caps"/>
-                  </institution>
-                </names>
-                <text macro="juris-title" font-variant="small-caps"/>
+                  <choose>
+                    <if variable="title">
+                      <names variable="committee">
+                        <name/>
+                        <institution institution-parts="short">
+                          <institution-part name="short" font-variant="small-caps"/>
+                        </institution>
+                      </names>
+                    </if>
+                  </choose>
+                  <text macro="juris-title" font-variant="small-caps"/>
                 </group>
               </else-if>
               <else>

@@ -300,8 +300,11 @@
           <condition match="none" variable="gazette-flag"/>
         </conditions>
       </else-if>
-      <else-if type="report">
-        <text variable="title" form="short" font-variant="small-caps"/>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="none" variable="title"/>
+        </conditions>
       </else-if>
       <else-if variable="title-short">
         <text variable="title-short"/>
@@ -429,10 +432,9 @@
         </else-if>
         <else-if>
           <conditions match="any">
-            <condition match="all" type="hearing" position="first"/>
-            <condition match="all" type="report" position="first"/>
-            <condition match="none" type="bill legal_case regulation legislation hearing" position="near-note"/>
-            <condition match="any" type="bill legal_case regulation legislation"/>
+            <condition match="all" position="first"/>
+            <condition match="none" type="hearing" position="near-note"/>
+            <condition match="none" type="report" variable="title" position="near-note"/>
           </conditions>
           <!-- full form -->
           <group delimiter=" ">
@@ -488,6 +490,9 @@
               <if type="legal_case hearing">
                 <text macro="juris-title-short" font-style="italic"/>
               </if>
+              <else-if match="all" type="report" variable="title">
+                <text macro="juris-title-short" font-variant="small-caps"/>
+              </else-if>
               <else>
                 <text macro="juris-title-short"/>
               </else>

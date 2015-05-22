@@ -338,14 +338,14 @@
           </names>
           <choose>
             <if variable="genre">
-              <text variable="genre" text-case="capitalize-first"/>
+              <text variable="genre"/>
             </if>
             <else>
               <text value="Rep."/>
             </else>
           </choose>
           <group delimiter=" ">
-            <label variable="number" form="symbol"/>
+            <label variable="number" form="symbol" text-case="capitalize-first"/>
             <number variable="number"/>
           </group>
         </group>

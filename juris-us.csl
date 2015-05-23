@@ -29,11 +29,6 @@
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
     </terms>
-    <date form="text">
-      <date-part name="month" form="short" suffix=" "/>
-      <date-part name="day" form="numeric" suffix=", "/>
-      <date-part name="year"/>
-    </date>
   </locale>
   
   <macro name="juris-title">
@@ -45,10 +40,10 @@
       <else-if type="bill">
         <group delimiter=" of ">
           <text variable="title"/>
-          <date variable="issued" form="text" date-parts="year"/>
+          <date variable="issued" form="text" date-parts="year"/>          
         </group>
       </else-if>
-      <else-if match="all" type="hearing" variable="title">
+      <else-if type="hearing">
         <group delimiter=": ">
           <text variable="title" text-case="title"/>
           <group delimiter=" ">
@@ -226,17 +221,6 @@
           <text variable="container-title"/>
         </group>
       </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition type="hearing"/>
-          <condition match="none" variable="title"/>
-        </conditions>
-        <group delimiter=" ">
-          <number variable="volume"/>
-          <text variable="container-title"/>
-          <number variable="page"/>
-        </group>
-      </else-if>
       <else-if type="hearing">
         <group delimiter=" ">
           <number variable="collection-number" form="ordinal"/>
@@ -296,13 +280,6 @@
           <condition match="any" type="legislation"/>
           <condition match="none" variable="gazette-flag"/>
         </conditions>
-      </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition type="hearing"/>
-          <condition match="none" variable="title"/>
-        </conditions>
-        <text macro="juris-default-spotter"/>
       </else-if>
       <else-if match="any" type="bill regulation hearing"/>
       <else-if>
@@ -374,13 +351,6 @@
                 <condition match="all" type="legal_case"/>
                 <condition match="none" variable="container-title"/>  
                 <condition match="none" variable="collection-number"/>  
-              </conditions>
-              <date form="text" date-parts="year-month-day" variable="issued"/>
-            </else-if>
-            <else-if>
-              <conditions match="all">
-                <condition type="hearing"/>
-                <condition match="none" variable="title"/>
               </conditions>
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </else-if>
@@ -652,8 +622,8 @@
                   <choose>
                     <if>
                       <conditions match="all">
-                        <condition match="any" type="report hearing"/>
-                        <condition match="none" variable="title"/>
+                        <condition match="all" type="report"/>
+                        <condition  match="any" variable="committee author"/>
                       </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>

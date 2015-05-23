@@ -36,6 +36,7 @@
       <if type="legal_case">
         <text variable="title" form="short"/>
       </if>
+      <else-if match="all" type="bill" variable="event"/>
       <else-if type="bill">
         <group delimiter=" of ">
           <text variable="title"/>
@@ -423,10 +424,17 @@
       <if type="gazette"/>
       <else-if type="bill">
         <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution use-first="1" institution-parts="short"/>
-          </names>
+          <choose>
+            <if variable="event">
+              <text variable="event" form="short"/>
+            </if>
+            <else>
+              <names variable="authority">
+                <name/>
+                <institution use-first="1" institution-parts="short"/>
+              </names>
+            </else>
+          </choose>
           <number variable="number"/>
         </group>
       </else-if>

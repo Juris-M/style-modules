@@ -288,7 +288,7 @@
         </conditions>
       </else-if>
       <else>
-        <text macro="juris-default-spotter" prefix="[z]"/>
+        <text macro="juris-default-spotter"/>
       </else>
     </choose>
   </macro>
@@ -612,9 +612,16 @@
               <group delimiter=" ">
                 <group delimiter=", ">
                   <choose>
-                    <if match="any" variable="committee author">
+                    <if>
+                      <conditions match="all">
+                        <condition match="all" type="report"/>
+                        <condition  match="any" variable="committee author"/>
+                      </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>
+                    <else>
+                      <text macro="juris-main"/>
+                    </else>
                   </choose>
                   <choose>
                     <if match="all" variable="locator number" type="report">

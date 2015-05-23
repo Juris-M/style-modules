@@ -20,6 +20,14 @@
     <terms>
       <term form="symbol" name="chapter">ch.</term>
       <term form="short" name="number">no.</term>
+      <!-- ordinals -->
+      <term name="ordinal">th</term>
+      <term name="ordinal-01">st</term>
+      <term name="ordinal-02">d</term>
+      <term name="ordinal-03">d</term>
+      <term name="ordinal-11">th</term>
+      <term name="ordinal-12">th</term>
+      <term name="ordinal-13">th</term>
     </terms>
   </locale>
   
@@ -52,6 +60,39 @@
           </group>
         </group>
       </else-if>
+      <else-if match="all" type="report" variable="title">
+        <group delimiter=", ">
+          <choose>
+            <if match="all" variable="author">
+              <names variable="author">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </if>
+            <else-if match="all" variable="committee">
+              <names variable="committee">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </else-if>
+            <else>
+              <text variable="title"/>
+            </else>
+          </choose>
+          <choose>
+            <if match="none" variable="number">
+              <group delimiter=" ">
+                <number variable="collection-number" form="ordinal"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short" use-last="1"/>
+                </names>
+              </group>
+            </if>
+          </choose>
+          <text variable="title"/>
+        </group>
+      </else-if>
       <else-if>
         <conditions match="all">
           <condition type="report"/>
@@ -60,7 +101,7 @@
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution/>
+            <institution use-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if match="any" variable="genre">
@@ -75,7 +116,23 @@
             <number variable="number"/>
           </group>
         </group>
-      </else-if> 
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="none" variable="number"/>
+        </conditions>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <number variable="collection-number" form="ordinal"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short" use-last="1"/>
+            </names>
+          </group>
+          <text variable="title"/>
+        </group>
+      </else-if>
       <else>
         <text variable="title"/>
       </else>
@@ -172,9 +229,22 @@
           </names>
         </group>
       </else-if>
-      <else-if match="all" type="report" variable="title">
+      <else-if match="all" type="report" variable="title number">
         <group delimiter=" ">
-          <text variable="collection-title"/>
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+            <institution use-last="1" institution-parts="short"/>
+            </names>
+            <choose>
+              <if variable="genre">
+                <text variable="genre"/>
+              </if>
+              <else>
+                <text value="Rep."/>
+              </else>
+            </choose>
+          </group>
           <group delimiter=" ">
             <label variable="number" form="symbol" text-case="capitalize-first"/>
             <number variable="number"/>
@@ -211,8 +281,14 @@
         </conditions>
       </else-if>
       <else-if match="any" type="bill regulation hearing"/>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="none" variable="number"/>
+        </conditions>
+      </else-if>
       <else>
-        <text macro="juris-default-spotter"/>
+        <text macro="juris-default-spotter" prefix="[z]"/>
       </else>
     </choose>
   </macro>
@@ -337,7 +413,7 @@
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution/>
+            <institution use-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if variable="genre">
@@ -439,67 +515,31 @@
           <text term="ibid"/>
         </else-if>
         <else-if>
-          <conditions match="any">
-            <condition match="all" position="first"/>
-            <condition match="none" type="hearing" position="near-note"/>
-            <condition match="none" type="report" variable="title" position="near-note"/>
-          </conditions>
-          <!-- full form -->
-          <group delimiter=" ">
-          <group delimiter=", ">
-            <choose>
-              <if type="hearing">
-                <text macro="juris-title" font-style="italic"/>
-              </if>
-              <else-if type="report">
-                <group delimiter=", ">
-                  <choose>
-                    <if variable="title">
-                      <names variable="committee">
-                        <name/>
-                        <institution institution-parts="short">
-                          <institution-part name="short" font-variant="small-caps"/>
-                        </institution>
-                      </names>
-                    </if>
-                  </choose>
-                  <text macro="juris-title" font-variant="small-caps"/>
-                </group>
-              </else-if>
-              <else>
-                <text macro="juris-title"/>
-              </else>
-            </choose>
-            <group delimiter=" ">
-              <group delimiter=", ">
-                <text macro="juris-main"/>
-                <choose>
-                  <if match="all" variable="locator" type="report">
-                    <group delimiter=" ">
-                      <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-                      <text macro="juris-locator" label-form="symbol"/>
-                    </group>
-                  </if>
-                  <else>
-                    <text macro="juris-comma-spotter" label-form="symbol"/>
-                  </else>
-                </choose>
-              </group>
-              <text macro="juris-default-spotter" label-form="symbol"/>
-            </group>
-          </group>
-              <text macro="juris-tail"/>
-          </group>
-        </else-if>
-        <else>
           <!-- short form -->
+          <conditions match="any">
+            <condition match="all" position="near-note"/>
+            <condition match="all" type="report" variable="title" position="far-note"/>
+            <condition match="all" type="hearing" position="far-note"/>
+          </conditions>
           <group delimiter=", ">
             <choose>
               <if type="legal_case hearing">
                 <text macro="juris-title-short" font-style="italic"/>
               </if>
               <else-if match="all" type="report" variable="title">
-                <text macro="juris-title-short" font-variant="small-caps"/>
+                <group delimiter=", ">
+                  <names variable="committee">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short" font-variant="small-caps"/>
+                    </institution>
+                  </names>
+                  <choose>
+                    <if disambiguate="true">
+                      <text macro="juris-title-short" font-variant="small-caps"/>
+                    </if>
+                  </choose>
+                </group>
               </else-if>
               <else>
                 <text macro="juris-title-short"/>
@@ -537,6 +577,46 @@
                 </group>
               </else>
             </choose>
+          </group>
+        </else-if>
+        <else>
+          <!-- full form -->
+          <group delimiter=" ">
+            <group delimiter=", ">
+              <choose>
+                <if type="hearing">
+                  <text macro="juris-title" font-style="italic"/>
+                </if>
+                <else-if type="report">
+                  <text macro="juris-title" font-variant="small-caps"/>
+                </else-if>
+                <else>
+                  <text macro="juris-title"/>
+                </else>
+              </choose>
+              <group delimiter=" ">
+                <group delimiter=", ">
+                  <choose>
+                    <if match="any" variable="committee author">
+                      <text macro="juris-main" font-variant="small-caps"/>
+                    </if>
+                  </choose>
+                  <choose>
+                    <if match="all" variable="locator number" type="report">
+                      <group delimiter=" ">
+                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                        <text macro="juris-locator" label-form="symbol"/>
+                      </group>
+                    </if>
+                    <else>
+                      <text macro="juris-comma-spotter" label-form="symbol"/>
+                    </else>
+                  </choose>
+                </group>
+              </group>
+            </group>
+            <text macro="juris-default-spotter" label-form="symbol"/>
+            <text macro="juris-tail"/>
           </group>
         </else>
       </choose>

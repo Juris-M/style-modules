@@ -60,6 +60,38 @@
           </group>
         </group>
       </else-if>
+      <else-if match="all" type="report" variable="title">
+        <group delimiter=", ">
+          <choose>
+            <if match="all" variable="author">
+              <names variable="author">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </if>
+            <else-if match="all" variable="committee">
+              <names variable="committee">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </else-if>
+            <else>
+              <text variable="title"/>
+            </else>
+          </choose>
+          <choose>
+            <if match="none" variable="number">
+              <group delimiter=" ">
+                <number variable="collection-number" form="ordinal"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short" use-last="1"/>
+                </names>
+              </group>
+            </if>
+          </choose>
+        </group>
+      </else-if>
       <else-if>
         <conditions match="all">
           <condition type="report"/>
@@ -217,6 +249,13 @@
             <number variable="number"/>
           </group>
         </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="report"/>
+          <condition match="any" variable="committee author"/>
+        </conditions>
+        <text variable="title"/>
       </else-if>
     </choose>
   </macro>
@@ -555,19 +594,7 @@
                   <text macro="juris-title" font-style="italic"/>
                 </if>
                 <else-if type="report">
-                  <group delimiter=", ">
-                    <choose>
-                      <if variable="title">
-                        <names variable="committee">
-                          <name/>
-                          <institution institution-parts="short">
-                            <institution-part name="short" font-variant="small-caps"/>
-                          </institution>
-                        </names>
-                      </if>
-                    </choose>
-                    <text macro="juris-title" font-variant="small-caps"/>
-                  </group>
+                  <text macro="juris-title" font-variant="small-caps"/>
                 </else-if>
                 <else>
                   <text macro="juris-title"/>

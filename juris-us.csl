@@ -29,6 +29,11 @@
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
     </terms>
+    <date form="text">
+      <date-part name="month" form="short" suffix=" "/>
+      <date-part name="day" form="numeric" suffix=", "/>
+      <date-part name="year"/>
+    </date>
   </locale>
   
   <macro name="juris-title">
@@ -36,13 +41,14 @@
       <if type="legal_case">
         <text variable="title" form="short"/>
       </if>
+      <else-if match="all" type="bill" variable="event"/>
       <else-if type="bill">
         <group delimiter=" of ">
           <text variable="title"/>
-          <date variable="issued" form="text" date-parts="year"/>          
+          <date variable="issued" form="text" date-parts="year"/>
         </group>
       </else-if>
-      <else-if type="hearing">
+      <else-if match="all" type="hearing" variable="title">
         <group delimiter=": ">
           <text variable="title" text-case="title"/>
           <group delimiter=" ">
@@ -220,12 +226,23 @@
           <text variable="container-title"/>
         </group>
       </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="hearing"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title"/>
+          <number variable="page"/>
+        </group>
+      </else-if>
       <else-if type="hearing">
         <group delimiter=" ">
           <number variable="collection-number" form="ordinal"/>
           <names variable="authority">
             <name/>
-            <institution institution-parts="short"/>
+            <institution institution-parts="short" use-last="1"/>
           </names>
         </group>
       </else-if>
@@ -279,6 +296,13 @@
           <condition match="any" type="legislation"/>
           <condition match="none" variable="gazette-flag"/>
         </conditions>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="hearing"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <text macro="juris-default-spotter"/>
       </else-if>
       <else-if match="any" type="bill regulation hearing"/>
       <else-if>
@@ -353,6 +377,13 @@
               </conditions>
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </else-if>
+            <else-if>
+              <conditions match="all">
+                <condition type="hearing"/>
+                <condition match="none" variable="title"/>
+              </conditions>
+              <date form="text" date-parts="year-month-day" variable="issued"/>
+            </else-if>
             <else>
               <date form="text" date-parts="year" variable="issued"/>
             </else>
@@ -423,10 +454,17 @@
       <if type="gazette"/>
       <else-if type="bill">
         <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution use-first="1" institution-parts="short"/>
-          </names>
+          <choose>
+            <if variable="event">
+              <text variable="event" form="short"/>
+            </if>
+            <else>
+              <names variable="authority">
+                <name/>
+                <institution use-first="1" institution-parts="short"/>
+              </names>
+            </else>
+          </choose>
           <number variable="number"/>
         </group>
       </else-if>
@@ -614,8 +652,8 @@
                   <choose>
                     <if>
                       <conditions match="all">
-                        <condition match="all" type="report"/>
-                        <condition  match="any" variable="committee author"/>
+                        <condition match="any" type="report hearing"/>
+                        <condition match="none" variable="title"/>
                       </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>

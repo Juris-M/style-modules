@@ -428,8 +428,10 @@
         <if position="ibid-with-locator">
           <group delimiter=" ">
             <text term="ibid"/>
-            <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-            <text macro="juris-locator" label-form="symbol"/>
+            <group delimiter=" ">
+              <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+              <text macro="juris-locator" label-form="symbol"/>
+            </group>
           </group>
         </if>
         <else-if position="ibid">

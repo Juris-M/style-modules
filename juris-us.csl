@@ -499,7 +499,19 @@
                 <text macro="juris-title-short" font-style="italic"/>
               </if>
               <else-if match="all" type="report" variable="title">
-                <text macro="juris-title-short" font-variant="small-caps"/>
+                <group delimiter=", ">
+                  <names variable="committee">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short" font-variant="small-caps"/>
+                    </institution>
+                  </names>
+                  <choose>
+                    <if disambiguate="true">
+                      <text macro="juris-title-short" font-variant="small-caps"/>
+                    </if>
+                  </choose>
+                </group>
               </else-if>
               <else>
                 <text macro="juris-title-short"/>

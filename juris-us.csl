@@ -39,7 +39,27 @@
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
-        <text variable="title" form="short"/>
+        <choose>
+          <if variable="document-name">
+            <group delimiter=" ">
+              <text variable="document-name"/>
+              <group delimiter=" ">
+                <choose>
+                  <if locator="page">
+                    <text value="at"/>
+                  </if>
+                  <else>
+                    <label variable="locator" form="symbol"/>
+                  </else>
+                </choose>
+                <number variable="locator"/>
+              </group>
+            </group>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
       </if>
       <else-if match="all" type="bill" variable="event"/>
       <else-if type="bill">

@@ -382,6 +382,33 @@
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
+      <else-if type="report">
+        <group delimiter=", ">
+          <choose>
+            <if variable="author">
+              <names variable="author">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+            </if>
+            <else-if variable="committee">
+              <names variable="committee">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+            </else-if>
+          </choose>
+          <choose>
+            <if disambiguate="true">
+              <text variable="title" form="short"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
       <else-if variable="title-short">
         <text variable="title-short"/>
       </else-if>
@@ -526,20 +553,8 @@
               <if type="legal_case hearing">
                 <text macro="juris-title-short" font-style="italic"/>
               </if>
-              <else-if match="all" type="report" variable="title">
-                <group delimiter=", ">
-                  <names variable="committee">
-                    <name/>
-                    <institution institution-parts="short">
-                      <institution-part name="short" font-variant="small-caps"/>
-                    </institution>
-                  </names>
-                  <choose>
-                    <if disambiguate="true">
-                      <text macro="juris-title-short" font-variant="small-caps"/>
-                    </if>
-                  </choose>
-                </group>
+              <else-if match="all" type="report">
+                <text macro="juris-title-short" font-variant="small-caps"/>
               </else-if>
               <else>
                 <text macro="juris-title-short"/>

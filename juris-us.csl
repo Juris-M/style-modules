@@ -174,7 +174,20 @@
       </else-if>
       <else-if match="all" type="report" variable="title">
         <group delimiter=" ">
-          <text variable="collection-title"/>
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+            <choose>
+              <if variable="genre">
+                <text variable="genre"/>
+              </if>
+              <else>
+                <text value="Rep."/>
+              </else>
+            </choose>
+          </group>
           <group delimiter=" ">
             <label variable="number" form="symbol" text-case="capitalize-first"/>
             <number variable="number"/>

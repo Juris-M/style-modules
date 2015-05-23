@@ -516,14 +516,10 @@
                     <text term="note"/>
                     <text variable="first-reference-note-number"/>
                   </group>
-                  <choose>
-                    <if variable="locator">
-                      <group delimiter=" ">
-                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-                        <text macro="juris-locator" label-form="symbol"/>
-                      </group>
-                    </if>
-                  </choose>
+                  <group delimiter=" ">
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="symbol"/>
+                  </group>
                 </group>
               </if>
               <else>
@@ -532,17 +528,10 @@
                     <text macro="juris-main-short"/>
                     <text macro="juris-comma-spotter-short" label-form="symbol"/>
                   </group>
-                  <choose>
-                    <if variable="locator">
-                      <group delimiter=" ">
-                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-                        <text macro="juris-locator" label-form="symbol"/>
-                      </group>
-                    </if>
-                    <else>
-                      <text macro="juris-default-spotter-short" label-form="symbol"/>
-                    </else>
-                  </choose>
+                  <group delimiter=" ">
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="symbol"/>
+                  </group>
                   <text macro="juris-tail-short"/>
                 </group>
               </else>

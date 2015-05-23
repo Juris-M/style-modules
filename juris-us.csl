@@ -90,6 +90,7 @@
               </group>
             </if>
           </choose>
+          <text variable="title"/>
         </group>
       </else-if>
       <else-if>
@@ -249,13 +250,6 @@
             <number variable="number"/>
           </group>
         </group>
-      </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition type="report"/>
-          <condition match="any" variable="committee author"/>
-        </conditions>
-        <text variable="title"/>
       </else-if>
     </choose>
   </macro>
@@ -619,9 +613,9 @@
                     </else>
                   </choose>
                 </group>
-                <text macro="juris-default-spotter" label-form="symbol"/>
               </group>
             </group>
+            <text macro="juris-default-spotter" label-form="symbol"/>
             <text macro="juris-tail"/>
           </group>
         </else>

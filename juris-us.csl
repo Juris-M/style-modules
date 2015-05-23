@@ -71,7 +71,7 @@
             </else>
           </choose>
           <group delimiter=" ">
-            <label variable="number" form="symbol"/>
+            <label variable="number" form="symbol" text-case="capitalize-first"/>
             <number variable="number"/>
           </group>
         </group>
@@ -367,6 +367,12 @@
       <if match="all" type="bill" variable="number">
         <text macro="juris-default-spotter"/>        
       </if>
+      <else-if match="all" type="report" variable="number">
+        <group delimiter=" ">
+          <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+          <text macro="juris-locator" label-form="symbol"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -400,12 +406,7 @@
   </macro>
 
   <macro name="juris-locator">
-    <choose>
-      <if match="all" type="report" position="near-note"/>
-      <else>
-        <number variable="locator"/>
-      </else>
-    </choose>
+    <number variable="locator"/>
   </macro>
 
   <!-- 

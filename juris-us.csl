@@ -71,7 +71,7 @@
           <date variable="issued" form="text" date-parts="year"/>
         </group>
       </else-if>
-      <else-if match="all" type="hearing" variable="title">
+      <else-if match="all" type="hearing" variable="committee">
         <group delimiter=": ">
           <text variable="title" text-case="title"/>
           <group delimiter=" ">
@@ -261,7 +261,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -482,7 +482,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
       </else-if>
       <else-if variable="title-short">
@@ -638,7 +638,7 @@
           <conditions match="any">
             <condition match="all" position="near-note"/>
             <condition match="all" type="report" variable="title" position="far-note"/>
-            <condition match="all" type="hearing" variable="title" position="far-note"/>
+            <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
           </conditions>
           <group delimiter=", ">
@@ -663,7 +663,7 @@
             <choose>
               <if>
                 <conditions match="any">
-                  <condition match="all" type="hearing" variable="title"/>
+                  <condition match="all" type="hearing" variable="committee"/>
                   <condition match="all" type="report" variable="title"/>
                   <condition match="all" type="legal_case" variable="document-name"/>
                 </conditions>
@@ -686,7 +686,7 @@
                       <if>
                         <conditions match="all">
                           <condition type="hearing"/>
-                          <condition match="none" variable="title"/>
+                          <condition match="none" variable="committee"/>
                         </conditions>
                         <text macro="juris-main-short" font-variant="small-caps"/>
                       </if>
@@ -697,20 +697,8 @@
                     <text macro="juris-comma-spotter-short" label-form="symbol"/>
                   </group>
                   <group delimiter=" ">
-                    <choose>
-                      <if>
-                        <conditions match="all">
-                          <condition type="hearing"/>
-                          <condition match="none" variable="title"/>
-                          <condition match="none" variable="locator"/>
-                        </conditions>
-                        <number variable="page"/>
-                      </if>
-                      <else>
-                        <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-                        <text macro="juris-locator" label-form="symbol"/>
-                      </else>
-                    </choose>
+                    <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="symbol"/>
                   </group>
                   <text macro="juris-tail-short"/>
                 </group>

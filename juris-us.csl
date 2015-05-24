@@ -108,9 +108,6 @@
                 <institution institution-parts="short"/>
               </names>
             </else-if>
-            <else>
-              <text variable="title"/>
-            </else>
           </choose>
           <choose>
             <if>
@@ -133,7 +130,7 @@
       <else-if>
         <conditions match="all">
           <condition type="report"/>
-          <condition match="none" variable="title"/>
+          <condition match="any" variable="number"/>
         </conditions>
         <group delimiter=" ">
           <names variable="authority">
@@ -286,7 +283,12 @@
           </names>
         </group>
       </else-if>
-      <else-if match="all" type="report" variable="title number">
+      <else-if>
+        <conditions match="all">
+          <condition type="report"/>
+          <condition variable="number"/>
+          <condition match="any" variable="title committee"/>
+        </conditions>
         <group delimiter=" ">
           <group delimiter=" ">
             <names variable="authority">
@@ -743,7 +745,7 @@
                     <if>
                       <conditions match="all">
                         <condition match="all" type="report"/>
-                        <condition match="none" variable="title"/>
+                        <condition match="none" variable="title committee"/>
                       </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>

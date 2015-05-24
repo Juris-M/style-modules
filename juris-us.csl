@@ -283,7 +283,7 @@
           <group delimiter=" ">
             <names variable="authority">
               <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
             </names>
             <choose>
               <if variable="genre">
@@ -452,7 +452,7 @@
           <condition match="none" variable="title"/>
         </conditions>
       </else-if>
-      <else-if type="report">
+      <else-if match="all" type="report">
         <group delimiter=", ">
           <choose>
             <if variable="author">
@@ -526,7 +526,7 @@
       <else-if>
         <conditions match="any">
           <condition type="hearing"/>
-          <condition type="report" variable="committee"/>
+          <condition type="report" variable="title"/>
         </conditions>
       </else-if>
       <else-if type="report">

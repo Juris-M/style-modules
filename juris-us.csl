@@ -332,7 +332,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
         <text macro="juris-default-spotter"/>
       </else-if>
@@ -419,7 +419,7 @@
             <else-if>
               <conditions match="all">
                 <condition type="hearing"/>
-                <condition match="none" variable="title"/>
+                <condition match="none" variable="committee"/>
               </conditions>
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </else-if>
@@ -516,7 +516,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -526,7 +526,7 @@
       <else-if>
         <conditions match="any">
           <condition type="hearing"/>
-          <condition type="report" variable="title"/>
+          <condition type="report" variable="committee"/>
         </conditions>
       </else-if>
       <else-if type="report">

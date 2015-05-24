@@ -251,6 +251,11 @@
         <group delimiter=" ">
           <number variable="volume"/>
           <text variable="container-title"/>
+          <choose>
+            <if match="all" variable="gazette-flag">
+              <number variable="page"/>
+            </if>
+          </choose>
         </group>
       </else-if>
       <else-if>
@@ -328,6 +333,13 @@
         <conditions match="all">
           <condition type="hearing"/>
           <condition match="none" variable="title"/>
+        </conditions>
+        <text macro="juris-default-spotter"/>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="regulation"/>
+          <condition match="all" variable="gazette-flag"/>
         </conditions>
         <text macro="juris-default-spotter"/>
       </else-if>
@@ -483,9 +495,9 @@
   </macro>
 
   <macro name="juris-main-short">
+    <group delimiter=" ">
     <choose>
-      <if type="gazette"/>
-      <else-if type="bill">
+      <if type="bill">
         <group delimiter=" ">
           <choose>
             <if variable="event">
@@ -500,7 +512,7 @@
           </choose>
           <number variable="number"/>
         </group>
-      </else-if>
+      </if>
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
@@ -544,6 +556,17 @@
         </group>
       </else>
     </choose>
+    <choose>
+      <!-- basically anything with no locator that uses pages or page-first in juris-main -->
+      <if>
+        <conditions match="all">
+          <condition match="none" variable="locator"/>
+          <condition match="all" variable="container-title"/>
+        </conditions>
+        <number variable="page"/>
+      </if>
+    </choose>
+    </group>
   </macro>
 
   <macro name="juris-comma-spotter-short">
@@ -561,19 +584,7 @@
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <choose>
-      <if>
-        <conditions match="none">
-          <condition match="all" variable="locator" type="legal_case"/>
-          <condition match="none" variable="container-title"/>
-          <condition match="any" type="report"/>
-        </conditions>
-        <number variable="page-first"/>
-      </if>
-      <else>
-        <text macro="juris-default-spotter"/>
-      </else>
-    </choose>
+    <text macro="juris-default-spotter"/>
   </macro>
 
   <macro name="juris-tail-short">

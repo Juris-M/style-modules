@@ -708,6 +708,13 @@
                         </conditions>
                         <text macro="juris-main-short" font-variant="small-caps"/>
                       </if>
+                      <else-if>
+                        <conditions match="all">
+                          <condition type="report"/>
+                          <condition match="none" variable="committee title"/>
+                        </conditions>
+                        <text macro="juris-main-short" font-variant="small-caps"/>
+                      </else-if>
                       <else>
                         <text macro="juris-main-short"/>
                       </else>

@@ -109,7 +109,11 @@
             </else>
           </choose>
           <choose>
-            <if match="none" variable="number">
+            <if>
+              <conditions match="all">
+                <condition match="none" variable="number"/>
+                <condition match="all" variable="collection-number"/>
+              </conditions>  
               <group delimiter=" ">
                 <number variable="collection-number" form="ordinal"/>
                 <names variable="authority">
@@ -392,6 +396,14 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
+          <else-if>
+            <conditions match="all">
+              <condition type="report"/>
+              <condition variable="committee"/>
+              <condition match="none" variable="number"/>
+            </conditions>
+            <text value="Comm. Print"/>
+          </else-if>
           <else-if match="any" type="bill hearing report"/>
           <else-if match="all" type="regulation">
             <text variable="jurisdiction" form="short"/>

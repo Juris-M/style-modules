@@ -726,11 +726,18 @@
                   <choose>
                     <if>
                       <conditions match="all">
-                        <condition match="any" type="report hearing"/>
+                        <condition match="all" type="report"/>
                         <condition match="none" variable="title"/>
                       </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>
+                    <else-if>
+                      <conditions match="all">
+                        <condition match="all" type="hearing"/>
+                        <condition match="none" variable="committee"/>
+                      </conditions>
+                      <text macro="juris-main" font-variant="small-caps"/>
+                    </else-if>
                     <else>
                       <text macro="juris-main"/>
                     </else>

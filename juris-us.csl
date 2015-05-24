@@ -135,7 +135,7 @@
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if match="any" variable="genre">
@@ -467,7 +467,7 @@
       <else-if>
         <conditions match="all">
           <condition match="all" type="report"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="title committee"/>
         </conditions>
       </else-if>
       <else-if match="all" type="report">
@@ -491,7 +491,11 @@
             </else-if>
           </choose>
           <choose>
-            <if disambiguate="true">
+            <if>
+              <conditions match="any">
+                <condition disambiguate="true"/>
+                <condition match="none" variable="author committee"/>
+              </conditions>  
               <text variable="title" form="short"/>
             </if>
           </choose>
@@ -551,7 +555,7 @@
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if variable="genre">
@@ -656,6 +660,7 @@
           <conditions match="any">
             <condition match="all" position="near-note"/>
             <condition match="all" type="report" variable="title" position="far-note"/>
+            <condition match="all" type="report" variable="committee" position="far-note"/>
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
           </conditions>
@@ -683,6 +688,7 @@
                 <conditions match="any">
                   <condition match="all" type="hearing" variable="committee"/>
                   <condition match="all" type="report" variable="title"/>
+                  <condition match="all" type="report" variable="committee"/>
                   <condition match="all" type="legal_case" variable="document-name"/>
                 </conditions>
                 <group delimiter=", ">

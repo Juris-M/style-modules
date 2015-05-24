@@ -65,7 +65,7 @@
         </choose>
       </if>
       <else-if match="all" type="bill" variable="event"/>
-      <else-if type="bill">
+      <else-if match="all" type="bill" variable="title">
         <group delimiter=" of ">
           <text variable="title"/>
           <date variable="issued" form="text" date-parts="year"/>

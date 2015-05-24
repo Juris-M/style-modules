@@ -28,6 +28,9 @@
       <term name="ordinal-11">th</term>
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
+      <!-- id -->
+      <term name="ibid" form="short">id.</term>
+      <term name="ibid" form="long">id.</term>
     </terms>
     <date form="text">
       <date-part name="month" form="short" suffix=" "/>
@@ -645,7 +648,7 @@
       <choose>
         <if position="ibid-with-locator">
           <group delimiter=" ">
-            <text term="ibid"/>
+            <text term="ibid" font-style="italic"/>
             <group delimiter=" ">
               <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
               <text macro="juris-locator" label-form="symbol"/>
@@ -653,7 +656,7 @@
           </group>
         </if>
         <else-if position="ibid">
-          <text term="ibid"/>
+          <text term="ibid" font-style="italic"/>
         </else-if>
         <else-if>
           <!-- short form -->

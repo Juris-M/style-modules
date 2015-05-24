@@ -28,6 +28,9 @@
       <term name="ordinal-11">th</term>
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
+      <!-- id -->
+      <term name="ibid" form="short">id.</term>
+      <term name="ibid" form="long">id.</term>
     </terms>
     <date form="text">
       <date-part name="month" form="short" suffix=" "/>
@@ -89,7 +92,11 @@
           </group>
         </group>
       </else-if>
-      <else-if match="all" type="report" variable="title">
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="any" variable="title committee"/>
+        </conditions>
         <group delimiter=", ">
           <choose>
             <if match="all" variable="author">
@@ -104,12 +111,13 @@
                 <institution institution-parts="short"/>
               </names>
             </else-if>
-            <else>
-              <text variable="title"/>
-            </else>
           </choose>
           <choose>
-            <if match="none" variable="number">
+            <if>
+              <conditions match="all">
+                <condition match="none" variable="number"/>
+                <condition match="all" variable="collection-number"/>
+              </conditions>  
               <group delimiter=" ">
                 <number variable="collection-number" form="ordinal"/>
                 <names variable="authority">
@@ -125,12 +133,12 @@
       <else-if>
         <conditions match="all">
           <condition type="report"/>
-          <condition match="none" variable="title"/>
+          <condition match="any" variable="number"/>
         </conditions>
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if match="any" variable="genre">
@@ -278,12 +286,17 @@
           </names>
         </group>
       </else-if>
-      <else-if match="all" type="report" variable="title number">
+      <else-if>
+        <conditions match="all">
+          <condition type="report"/>
+          <condition variable="number"/>
+          <condition match="any" variable="title committee"/>
+        </conditions>
         <group delimiter=" ">
           <group delimiter=" ">
             <names variable="authority">
               <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
             </names>
             <choose>
               <if variable="genre">
@@ -332,7 +345,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
         <text macro="juris-default-spotter"/>
       </else-if>
@@ -392,6 +405,14 @@
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
           </if>
+          <else-if>
+            <conditions match="all">
+              <condition type="report"/>
+              <condition variable="committee"/>
+              <condition match="none" variable="number"/>
+            </conditions>
+            <text value="Comm. Print"/>
+          </else-if>
           <else-if match="any" type="bill hearing report"/>
           <else-if match="all" type="regulation">
             <text variable="jurisdiction" form="short"/>
@@ -419,7 +440,7 @@
             <else-if>
               <conditions match="all">
                 <condition type="hearing"/>
-                <condition match="none" variable="title"/>
+                <condition match="none" variable="committee"/>
               </conditions>
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </else-if>
@@ -449,10 +470,10 @@
       <else-if>
         <conditions match="all">
           <condition match="all" type="report"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="title committee"/>
         </conditions>
       </else-if>
-      <else-if type="report">
+      <else-if match="all" type="report">
         <group delimiter=", ">
           <choose>
             <if variable="author">
@@ -473,7 +494,11 @@
             </else-if>
           </choose>
           <choose>
-            <if disambiguate="true">
+            <if>
+              <conditions match="any">
+                <condition disambiguate="true"/>
+                <condition match="none" variable="author committee"/>
+              </conditions>  
               <text variable="title" form="short"/>
             </if>
           </choose>
@@ -516,7 +541,7 @@
       <else-if>
         <conditions match="all">
           <condition type="hearing"/>
-          <condition match="none" variable="title"/>
+          <condition match="none" variable="committee"/>
         </conditions>
         <group delimiter=" ">
           <number variable="volume"/>
@@ -533,7 +558,7 @@
         <group delimiter=" ">
           <names variable="authority">
             <name/>
-            <institution use-last="1" institution-parts="short"/>
+            <institution stop-last="1" institution-parts="short"/>
           </names>
           <choose>
             <if variable="genre">
@@ -623,7 +648,7 @@
       <choose>
         <if position="ibid-with-locator">
           <group delimiter=" ">
-            <text term="ibid"/>
+            <text term="ibid" font-style="italic"/>
             <group delimiter=" ">
               <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
               <text macro="juris-locator" label-form="symbol"/>
@@ -631,13 +656,14 @@
           </group>
         </if>
         <else-if position="ibid">
-          <text term="ibid"/>
+          <text term="ibid" font-style="italic"/>
         </else-if>
         <else-if>
           <!-- short form -->
           <conditions match="any">
             <condition match="all" position="near-note"/>
             <condition match="all" type="report" variable="title" position="far-note"/>
+            <condition match="all" type="report" variable="committee" position="far-note"/>
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
           </conditions>
@@ -665,6 +691,7 @@
                 <conditions match="any">
                   <condition match="all" type="hearing" variable="committee"/>
                   <condition match="all" type="report" variable="title"/>
+                  <condition match="all" type="report" variable="committee"/>
                   <condition match="all" type="legal_case" variable="document-name"/>
                 </conditions>
                 <group delimiter=", ">
@@ -690,6 +717,13 @@
                         </conditions>
                         <text macro="juris-main-short" font-variant="small-caps"/>
                       </if>
+                      <else-if>
+                        <conditions match="all">
+                          <condition type="report"/>
+                          <condition match="none" variable="committee title"/>
+                        </conditions>
+                        <text macro="juris-main-short" font-variant="small-caps"/>
+                      </else-if>
                       <else>
                         <text macro="juris-main-short"/>
                       </else>
@@ -727,7 +761,7 @@
                     <if>
                       <conditions match="all">
                         <condition match="all" type="report"/>
-                        <condition match="none" variable="title"/>
+                        <condition match="none" variable="title committee"/>
                       </conditions>
                       <text macro="juris-main" font-variant="small-caps"/>
                     </if>

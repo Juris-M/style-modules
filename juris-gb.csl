@@ -17,10 +17,49 @@
   </info>
   
   <macro name="juris-title">
-    <text value="[TITLE]"/>
+    <choose>
+      <if type="legal_case">
+        <text variable="title" form="short"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <number variable="collection-number" prefix="[" suffix="]"/>
+            </if>
+            <else-if variable="container-title">
+              <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
+            </else-if>
+            <else>
+              <group delimiter=", " prefix="(" suffix=")">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+                <date variable="issued" date-parts="year-month-day" form="text"/>
+              </group>
+            </else>
+          </choose>
+          <choose>
+            <if variable="container-title">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+            </if>
+            <else-if variable="collection-number">
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+            </else-if>
+          </choose>
+        </group>
+      </if>
+    </choose>
     <!-- The body of full citations (of all types) -->
     <text value="[MAIN]"/>
   </macro>
@@ -41,8 +80,18 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">

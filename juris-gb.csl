@@ -17,7 +17,6 @@
   </info>
   
   <macro name="juris-title">
-    <!-- The title form for full citations (of all types) -->
     <text value="[TITLE]"/>
   </macro>
 

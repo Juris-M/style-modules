@@ -57,11 +57,14 @@
               </names>
             </else-if>
           </choose>
+          <number variable="page-first"/>
+          <names variable="authority" prefix="(" suffix=")">
+            <name/>
+            <institution institution-parts="short" stop-last="1"/>
+          </names>
         </group>
       </if>
     </choose>
-    <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
   </macro>
 
   <macro name="juris-default-spotter">

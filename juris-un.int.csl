@@ -18,27 +18,51 @@
   </info>
   
   <macro name="juris-title">
-    <text variable="container-title" form="short"/>  
+    <text variable="title" form="short"/>  
   </macro>
 
   <macro name="juris-main">
-    <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <group delimiter=", ">
+              <choose>
+                <if match="none" variable="document-name">
+                  <text value="Judgment"/>
+                </if>
+              </choose>
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+            </group>
+            <date variable="issued" form="text" date-parts="year"/>
+          </group>
+          <group delimiter=" ">
+            <label variable="page" form="symbol"/>
+            <number variable="page"/>
+          </group>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <group delimiter=" ">
+      <text value="at"/>
+      <number variable="locator"/>
+    </group>
   </macro>
 
   <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <choose>
+      <if type="legal_case"/>
+    </choose>
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-title-short">

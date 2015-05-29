@@ -18,7 +18,14 @@
   </info>
   
   <macro name="juris-title">
-    <text variable="title" form="short"/>  
+    <group delimiter=", ">
+      <choose>
+        <if variable="document-name">
+          <text variable="document-name"/>
+        </if>
+      </choose>
+      <text variable="title" form="short"/>  
+    </group>
   </macro>
 
   <macro name="juris-main">
@@ -66,39 +73,49 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="document-name">
+            <text variable="document-name" form="short"/>
+          </if>
+          <else-if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </else-if>
+          <else>
+            <text variable="title"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <text value="juris-default-spotter"/>
   </macro>
 
   <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <text macro="juris-comma-spotter"/>
   </macro>
 
   <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+    <choose>
+      <if match="none" locator="page">
+        <label variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
+    <number variable="locator"/>
   </macro>
 
   <!-- 

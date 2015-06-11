@@ -429,6 +429,13 @@
             <if match="all" type="regulation" variable="gazette-flag">
               <date form="text" date-parts="year-month-day" variable="issued"/>
             </if>
+            <else-if type="regulation">
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+              <date form="text" date-parts="year" variable="issued"/>
+            </else-if>
             <else-if>
               <conditions match="all">
                 <condition match="all" type="legal_case"/>

@@ -434,7 +434,14 @@
                 <name/>
                 <institution institution-parts="short"/>
               </names>
-              <date form="text" date-parts="year" variable="issued"/>
+              <choose>
+                <if variable="issued">
+                  <date form="text" date-parts="year" variable="issued"/>
+                </if>
+                <else>
+                  <date form="text" date-parts="year" variable="publication-date"/>
+                </else>
+              </choose>
             </else-if>
             <else-if>
               <conditions match="all">

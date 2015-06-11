@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Cambodia</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="regulation"/>
+    <law-module types="regulation report"/>
   </info>
   
   <macro name="juris-title">
@@ -22,6 +22,9 @@
       <if type="regulation">
         <text variable="title"/>
       </if>
+      <else-if type="report">
+        <text variable="title"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -34,9 +37,17 @@
   </macro>
 
   <macro name="juris-default-spotter">
-    <choose>
-      <if type="regulation"/>
-    </choose>
+    <group delimiter=" ">
+      <choose>
+        <if type="regulation"/>
+        <else-if>
+          <conditions match="all">
+            <condition match="none" locator="page"/>
+          </conditions>
+          <label variable="locator"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-comma-spotter">
@@ -51,29 +62,79 @@
   </macro>
 
   <macro name="juris-tail">
-    <choose>
-      <if type="regulation">
-        <group delimiter=", " prefix="(" suffix=")">
-        <group delimiter=" ">
-          <text variable="jurisdiction" form="short"/>
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-        </group>
-        <choose>
-          <if variable="number">
-            <date variable="issued" form="text" date-parts="year-month-day"/>
-          </if>
-        </choose>
-        </group>
-      </if>
-    </choose>
+    <group delimiter=", " prefix="(" suffix=")">
+      <choose>
+        <if type="regulation">
+          <group delimiter=" ">
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <choose>
+            <if variable="number">
+              <date variable="issued" form="text" date-parts="year-month-day"/>
+            </if>
+            <else>
+              <date variable="issued" form="text" date-parts="year"/>
+            </else>
+          </choose>
+        </if>
+        <else-if type="report">
+          <group delimiter=" ">
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short" reverse-order="true"/>
+            </names>
+          </group>
+          <date form="text" date-parts="year" variable="issued"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-title-short">
     <choose>
       <if type="regulation"/>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="none" variable="title committee"/>
+        </conditions>
+      </else-if>
+      <else-if match="all" type="report">
+        <group delimiter=", ">
+          <choose>
+            <if variable="author">
+              <names variable="author">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+            </if>
+            <else-if variable="committee">
+              <names variable="committee">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+            </else-if>
+          </choose>
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition disambiguate="true"/>
+                <condition match="none" variable="author committee"/>
+              </conditions>  
+              <text variable="title" form="short"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -96,11 +157,17 @@
           </group>
         </group>
       </if>
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="regulation"/>
+          <condition match="none" variable="gazette-flag"/>
+        </conditions>
+      </else-if>
     </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <text value=""/>
+    <text macro="juris-default-spotter"/>
   </macro>
 
   <macro name="juris-comma-spotter-short">

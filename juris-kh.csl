@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Cambodia</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="regulation report"/>
+    <law-module types="regulation report legal_case"/>
   </info>
   
   <macro name="juris-title">
@@ -25,6 +25,15 @@
       <else-if type="report">
         <text variable="title"/>
       </else-if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <text variable="jurisdiction" form="short"/>
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -33,6 +42,12 @@
       <if type="regulation">
         <text macro="juris-main-short"/>
       </if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <text value="case"/>
+          <number variable="number"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -51,14 +66,25 @@
   </macro>
 
   <macro name="juris-comma-spotter">
-    <choose>
-      <if type="regulation">
-        <group delimiter=" ">
+    <group delimiter=" ">
+      <choose>
+        <if type="regulation">
           <label variable="locator"/>
           <number variable="locator"/>
-        </group>
-      </if>
-    </choose>
+        </if>
+        <else-if type="legal_case">
+          <choose>
+            <if locator="page">
+              <text value="at"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
+          <number variable="locator"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail">
@@ -90,6 +116,17 @@
             </names>
           </group>
           <date form="text" date-parts="year" variable="issued"/>
+        </else-if>
+        <else-if type="legal_case">
+          <choose>
+            <if variable="document-name">
+              <text variable="document-name"/>
+            </if>
+            <else>
+              <text value="Judgment"/>
+            </else>
+          </choose>
+          <date variable="issued" date-parts="year-month-day" form="text"/>
         </else-if>
       </choose>
     </group>
@@ -135,6 +172,9 @@
           </choose>
         </group>
       </else-if>
+      <else-if type="legal_case">
+        <text macro="juris-title"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -163,6 +203,21 @@
           <condition match="none" variable="gazette-flag"/>
         </conditions>
       </else-if>
+      <else-if type="legal_case">
+        <choose>
+          <if disambiguate="true">
+            <choose>
+              <if variable="document-name">
+                <text variable="document-name"/>
+              </if>
+              <else>
+                <text value="Judgment"/>
+              </else>
+            </choose>
+          </if>
+        </choose>
+        <date variable="issued" date-parts="year-month-day" form="text"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -175,6 +230,9 @@
       <if type="regulation">
         <text macro="juris-comma-spotter"/>
       </if>
+      <else-if type="legal_case">
+        <text macro="juris-comma-spotter"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -183,7 +241,12 @@
   </macro>
 
   <macro name="juris-locator-label">
-    <label variable="locator"/>
+    <choose>
+      <if match="all" type="legal_case" locator="page"/>
+      <else>
+        <label variable="locator"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-locator">

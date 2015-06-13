@@ -16,10 +16,20 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   
-  <macro name="juris-title">
-    <!-- The title form for full citations (of all types) -->
-    <text value="[TITLE]"/>
-  </macro>
+  
+
+<macro name="juris-title">
+  <choose>
+    <if type="legal_case">
+      <text variable="title" form="short"/>
+    </if>
+    <else>
+      <text variable="title"/>
+    </else>
+  </choose>
+</macro>
+
+
 
   <macro name="juris-main">
     <!-- The body of full citations (of all types) -->

@@ -16,101 +16,166 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   
-  
+  <locale>
+    <terms>
+      <term form="symbol" name="chapter">ch.</term>
+    </terms>
+  </locale>
 
-<macro name="juris-title">
-  <choose>
-    <if type="legal_case">
-      <text variable="title" form="short"/>
-    </if>
-    <else>
-      <text variable="title"/>
-    </else>
-  </choose>
-</macro>
+  <macro name="juris-title">
+    <choose>
+      <if type="legal_case">
+        <text variable="title" form="short"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
 
 
 
   <macro name="juris-main">
-  <choose>
-    <if type="legal_case">
-      <group delimiter=" ">
-        <number variable="volume"/>
-        <text variable="container-title" 
-              form="short"/>
-        <number variable="page-first"/>
-      </group>
-    </if>
-    <else>
-      <choose>
-        <if number="number">
-          <group delimiter=" " suffix=",">
-            <text value="Pub. L. No."/>
-            <number variable="number"/>
-          </group>
-        </if>
-        <else>
-          <group delimiter=" " suffix=",">
-            <label variable="number" 
-                   form="symbol"/>
-            <number variable="number"/>
-          </group>
-        </else>
-      </choose>
-    </else>
-  </choose>
-</macro>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title" 
+                form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </if>
+      <else>
+        <choose>
+          <if number="number">
+            <group delimiter=" " suffix=",">
+              <text value="Pub. L. No."/>
+              <number variable="number"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=" " suffix=",">
+              <label variable="number" 
+                     form="symbol"/>
+              <number variable="number"/>
+            </group>
+          </else>
+        </choose>
+      </else>
+    </choose>
+  </macro>
 
   <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <group delimiter=" ">
+      <choose>
+        <if match="none" locator="page">
+          <label variable="locator"/>
+        </if>
+      </choose>
+      <text macro="juris-locator"/>
+    </group>
   </macro>
 
   <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <choose>
+      <if match="all" type="legislation" 
+          variable="container-title">
+        <text macro="juris-default-spotter" suffix=","/>
+      </if>
+      <else>
+        <text macro="juris-default-spotter"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+    <group delimiter=" ">
+      <choose>
+        <if type="legislation">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <group delimiter=", ">
+            <number variable="page-first"/>
+            <text variable="locator-extra"/>
+          </group>
+        </if>
+      </choose>
+      <group delimiter=" " prefix="(" suffix=")">
+        <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+        </names>
+        <date form="text" date-parts="year" variable="issued"/>
+      </group>
+    </group>
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if match="all" type="legal_case" variable="title-short">
+        <text variable="title-short" form="short"/>
+      </if>
+      <else-if type="legal_case">
+        <text variable="title" form="short"/>
+      </else-if>
+      <else-if variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+    <choose>
+      <if type="legislation"/>
+      <else>
+        <group delimiter=" ">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+        </group>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <choose>
+      <if match="none" variable="locator">
+        <number variable="page-first"/>
+      </if>
+      <else-if locator="page">
+        <group delimiter=" ">
+          <text value="at"/>
+          <text variable="locator"/>
+        </group>
+      </else-if>
+      <else>
+        <text macro="juris-default-spotter"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+    <choose>
+      <if locator="page"/>
+      <else>
+        <label variable="locator" form="symbol"/>
+      </else>
+    </choose>
   </macro>
 
-  <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
-  </macro>
+<macro name="juris-locator">
+  <number variable="locator"/>
+</macro>
 
   <!-- 
        Local macro called by the scaffolding below (this macro is not

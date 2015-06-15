@@ -477,7 +477,7 @@
       <else-if type="bill"/>
       <else-if>
         <conditions match="all">
-          <condition match="any" type="regulation"/>
+          <condition match="all" type="regulation"/>
           <condition match="none" variable="gazette-flag"/>
         </conditions>
       </else-if>
@@ -587,6 +587,20 @@
             <number variable="number"/>
           </group>
         </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="regulation"/>
+          <condition match="none" variable="container-title"/>
+        </conditions>
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short"/>
+          </if>
+          <else>
+            <text variable="title"/>
+          </else>
+        </choose>
       </else-if>
       <else>
         <group delimiter=" ">

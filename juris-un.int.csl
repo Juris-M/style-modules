@@ -14,18 +14,27 @@
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case report"/>
   </info>
   
   <macro name="juris-title">
-    <group delimiter=", ">
-      <choose>
-        <if variable="document-name">
-          <text variable="document-name"/>
-        </if>
-      </choose>
-      <text variable="title" form="short"/>  
-    </group>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <choose>
+            <if variable="document-name">
+              <text variable="document-name"/>
+            </if>
+          </choose>
+          <text variable="title" form="short"/>  
+        </group>
+      </if>
+      <else-if type="report">
+        <group delimiter=", ">
+          <text variable="title"/>
+        </group>
+      </else-if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
@@ -69,6 +78,19 @@
   </macro>
 
   <macro name="juris-tail">
+    <choose>
+      <if type="report">
+        <group delimiter=", " prefix="(" suffix=")">
+          <text variable="jurisdiction" form="short"/>
+          <names variable="committee">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <number variable="number"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </if>
+    </choose>
     <text value=""/>
   </macro>
 

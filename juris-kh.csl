@@ -216,8 +216,11 @@
                 <label variable="number"/>
                 <number variable="number"/>
               </if>
-              <else>
+              <else-if variable="genre">
                 <text value="of"/>
+                <date variable="issued" form="text" date-parts="year-month-day"/>
+              </else-if>
+              <else>
                 <date variable="issued" form="text" date-parts="year-month-day"/>
               </else>
             </choose>

@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Japan</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legislation"/>
+    <law-module types="legislation report"/>
   </info>
   
   <macro name="juris-title">
@@ -22,6 +22,9 @@
       <if type="legislation">
         <text variable="title"/>
       </if>
+      <else-if type="report">
+        <text variable="title"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -47,18 +50,28 @@
   </macro>
 
   <macro name="juris-tail">
-    <choose>
-      <if type="legislation">
-        <group delimiter=", " prefix="(" suffix=")">
+    <group delimiter=", " prefix="(" suffix=")">
+      <choose>
+        <if type="legislation">
           <text variable="jurisdiction" form="short"/>
           <group delimiter=" ">
             <text value="Law no."/>
             <number variable="number"/>
           </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
-        </group>
-      </if>
-    </choose>
+        </if>
+        <else-if type="report">
+          <group delimiter=" ">
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <date variable="issued" form="text" date-parts="year"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-title-short">

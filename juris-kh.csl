@@ -110,10 +110,22 @@
         <else-if type="report">
           <group delimiter=" ">
             <text variable="jurisdiction" form="short"/>
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short" reverse-order="true"/>
-            </names>
+            <choose>
+              <if context="bibliography">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="long-short" reverse-order="true">
+                    <institution-part name="short" prefix="[" suffix="]"/>
+                  </institution>
+                </names>
+              </if>
+              <else>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short" reverse-order="true"/>
+                </names>
+              </else>
+            </choose>
           </group>
           <date form="text" date-parts="year" variable="issued"/>
         </else-if>

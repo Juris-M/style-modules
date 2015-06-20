@@ -26,14 +26,7 @@
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if match="any" type="legislation">
-        <group delimiter=" ">
-          <text value="Law no."/>
-          <number variable="number"/>
-        </group>
-      </if>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-default-spotter">
@@ -58,6 +51,10 @@
       <if type="legislation">
         <group delimiter=", " prefix="(" suffix=")">
           <text variable="jurisdiction" form="short"/>
+          <group delimiter=" ">
+            <text value="Law no."/>
+            <number variable="number"/>
+          </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>

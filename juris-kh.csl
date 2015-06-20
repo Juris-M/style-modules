@@ -56,7 +56,7 @@
       </else-if>
       <else-if type="report">
         <group delimiter=" ">
-          <text variable="genre"/>
+          <text variable="genre" form="short"/>
           <group delimiter=" ">
             <text value="doc."/>
             <number variable="number"/>

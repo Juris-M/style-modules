@@ -17,6 +17,12 @@
     <law-module types="regulation report legal_case"/>
   </info>
   
+  <locale>
+    <terms>
+      <term name="number" form="symbol">no.</term>
+    </terms>
+  </locale>
+  
   <macro name="juris-title">
     <choose>
       <if type="regulation">
@@ -46,6 +52,15 @@
         <group delimiter=" ">
           <text value="case"/>
           <number variable="number"/>
+        </group>
+      </else-if>
+      <else-if type="report">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <group delimiter=" ">
+            <text value="doc."/>
+            <number variable="number"/>
+          </group>
         </group>
       </else-if>
     </choose>

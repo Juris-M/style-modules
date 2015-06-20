@@ -14,7 +14,7 @@
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case report"/>
+    <law-module types="legal_case report bill"/>
   </info>
   
   <macro name="juris-title">
@@ -33,6 +33,9 @@
         <group delimiter=", ">
           <text variable="title"/>
         </group>
+      </else-if>
+      <else-if type="bill">
+        <text variable="title"/>
       </else-if>
     </choose>
   </macro>
@@ -61,6 +64,16 @@
           </group>
         </group>
       </if>
+      <else-if type="bill">
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <text variable="event" form="short"/>
+          <number variable="number"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -72,9 +85,22 @@
   </macro>
 
   <macro name="juris-comma-spotter">
-    <choose>
-      <if type="legal_case"/>
-    </choose>
+    <group delimiter=" ">
+      <choose>
+        <if type="legal_case"/>
+        <else-if type="bill">
+          <choose>
+            <if locator="page">
+              <text value="at"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
+          <number variable="locator"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail">
@@ -90,6 +116,11 @@
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>
+      <else-if type="bill">
+        <group delimiter=" " prefix="(" suffix=")">
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </else-if>
     </choose>
     <text value=""/>
   </macro>
@@ -109,6 +140,16 @@
           </else>
         </choose>
       </if>
+      <else-if type="bill">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </else-if>
     </choose>
   </macro>
 

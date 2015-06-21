@@ -108,10 +108,13 @@
         <text variable="title"/>
       </if>
       <else-if type="legal_case">
-        <names variable="authority">
-          <name/>
-          <institution institution-parts="short"/>
-        </names>
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <text value="judgment"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -131,6 +134,13 @@
           </if>
         </choose>
       </if>
+      <else-if type="legal_case">
+        <choose>
+          <if disambiguate="true">
+            <date variable="issued" form="text" date-parts="year-month-day"/>
+          </if>
+        </choose>
+      </else-if>
     </choose>
   </macro>
 

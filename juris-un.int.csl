@@ -14,7 +14,7 @@
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case report bill"/>
+    <law-module types="legal_case report bill hearing"/>
   </info>
   
   <macro name="juris-title">
@@ -34,6 +34,14 @@
       </else-if>
       <else-if type="bill">
         <text variable="title"/>
+      </else-if>
+      <else-if type="hearing">
+        <group delimiter=", ">
+          <names variable="author" font-style="normal" font-variant="normal">
+            <name/>
+          </names>
+          <text variable="title"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -86,6 +94,30 @@
           </choose>
         </group>
       </else-if>
+      <else-if type="hearing">
+        <group delimiter=", ">
+        <group delimiter=" ">
+          <text value="reporting to the"/>
+          <group delimiter=" of the ">
+            <group delimiter=" ">
+              <number variable="collection-number" form="ordinal"/>
+              <text value="session"/>
+            </group>
+            <group delimiter=" ">
+              <text variable="jurisdiction" form="short"/>
+              <names variable="committee">
+                <name/>
+                <institution/>
+              </names>
+            </group>
+          </group>
+        </group>
+        <group delimiter=" ">
+          <text value="Doc."/>
+          <number variable="number"/>
+        </group>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -100,7 +132,7 @@
     <group delimiter=" ">
       <choose>
         <if type="legal_case"/>
-        <else-if type="bill">
+        <else-if match="any" type="bill hearing">
           <choose>
             <if locator="page">
               <text value="at"/>
@@ -116,9 +148,9 @@
   </macro>
 
   <macro name="juris-tail">
-    <choose>
-      <if type="report">
-        <group delimiter=", " prefix="(" suffix=")">
+    <group delimiter=", " prefix="(" suffix=")">
+      <choose>
+        <if type="report">
           <text variable="jurisdiction" form="short"/>
           <names variable="committee">
             <name/>
@@ -126,15 +158,15 @@
           </names>
           <number variable="number"/>
           <date variable="issued" form="text" date-parts="year-month-day"/>
-        </group>
-      </if>
-      <else-if type="bill">
-        <group delimiter=" " prefix="(" suffix=")">
+        </if>
+        <else-if type="bill">
           <date variable="issued" form="text" date-parts="year-month-day"/>
-        </group>
-      </else-if>
-    </choose>
-    <text value=""/>
+        </else-if>
+        <else-if type="hearing">
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-title-short">

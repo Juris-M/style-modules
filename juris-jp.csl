@@ -26,7 +26,7 @@
         <text variable="title"/>
       </else-if>
       <else-if type="legal_case">
-        <names variable="authority">
+        <names variable="authority" font-variant="normal" font-style="normal">
           <name/>
           <institution institution-parts="short"/>
         </names>
@@ -39,12 +39,22 @@
       <if type="legislation"/>
       <else-if type="report"/>
       <else-if type="legal_case">
-        <group>
-          <date variable="submitted">
-            <date-part name="year" form="imperial"/>
-          </date>
-          <text variable="genre" form="short" prefix="(" suffix=")"/>
-          <number variable="number"/>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <date variable="submitted">
+              <date-part name="year" form="imperial"/>
+            </date>
+            <text variable="genre" form="short" prefix="(" suffix=")"/>
+            <number variable="number"/>
+          </group>
+          <choose>
+            <if variable="document-name">
+              <text variable="document-name"/>
+            </if>
+            <else>
+              <text value="judgment"/>
+            </else>
+          </choose>
         </group>
       </else-if>
     </choose>
@@ -91,11 +101,6 @@
         </else-if>
         <else-if type="legal_case">
           <text variable="jurisdiction" form="short"/>
-          <choose>
-            <if match="none" variable="document-name">
-              <text value="Judgment"/>
-            </if>
-          </choose>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
       </choose>
@@ -108,7 +113,7 @@
         <text variable="title"/>
       </if>
       <else-if type="legal_case">
-        <group delimiter=" ">
+        <group delimiter=" " font-variant="normal" font-style="normal">
           <names variable="authority">
             <name/>
             <institution institution-parts="short"/>

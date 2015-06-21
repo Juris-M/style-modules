@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Japan</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legislation report"/>
+    <law-module types="legislation report legal_case"/>
   </info>
   
   <macro name="juris-title">
@@ -25,25 +25,44 @@
       <else-if type="report">
         <text variable="title"/>
       </else-if>
+      <else-if type="legal_case">
+        <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+        </names>
+      </else-if>
     </choose>
   </macro>
 
   <macro name="juris-main">
-    <text value=""/>
+    <choose>
+      <if type="legislation"/>
+      <else-if type="report"/>
+      <else-if type="legal_case">
+        <group>
+          <date variable="submitted">
+            <date-part name="year" form="imperial"/>
+          </date>
+          <text variable="genre" form="short" prefix="(" suffix=")"/>
+          <number variable="number"/>
+        </group>
+      </else-if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter">
     <choose>
       <if type="legislation"/>
+      <else-if type="legal_case"/>
     </choose>
   </macro>
 
   <macro name="juris-comma-spotter">
     <choose>
-      <if type="legislation">
+      <if type="legislation legal_case">
         <group delimiter=" ">
-          <label variable="locator"/>
-          <number variable="locator"/>
+          <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+          <text macro="juris-locator"/>
         </group>
       </if>
     </choose>
@@ -70,6 +89,15 @@
           </group>
           <date variable="issued" form="text" date-parts="year"/>
         </else-if>
+        <else-if type="legal_case">
+          <text variable="jurisdiction" form="short"/>
+          <choose>
+            <if match="none" variable="document-name">
+              <text value="Judgment"/>
+            </if>
+          </choose>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </else-if>
       </choose>
     </group>
   </macro>
@@ -79,6 +107,12 @@
       <if type="legislation">
         <text variable="title"/>
       </if>
+      <else-if type="legal_case">
+        <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+        </names>
+      </else-if>
     </choose>
   </macro>
 
@@ -103,6 +137,7 @@
   <macro name="juris-default-spotter-short">
     <choose>
       <if type="legislation"/>
+      <else-if type="legal_case"/>
     </choose>
   </macro>
 
@@ -113,12 +148,17 @@
   <macro name="juris-tail-short">
     <choose>
       <if type="legislation"/>
+      <else-if type="legal_case"/>
     </choose>
   </macro>
 
   <macro name="juris-locator-label">
     <!-- The label applied to pinpoint locators -->
-    <label variable="locator"/>
+    <choose>
+      <if locator="page" match="none">
+        <label variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-locator">

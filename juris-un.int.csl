@@ -30,9 +30,7 @@
         </group>
       </if>
       <else-if type="report">
-        <group delimiter=", ">
-          <text variable="title"/>
-        </group>
+        <text variable="title"/>
       </else-if>
       <else-if type="bill">
         <text variable="title"/>
@@ -66,12 +64,26 @@
       </if>
       <else-if type="bill">
         <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-          <text variable="event" form="short"/>
-          <number variable="number"/>
+          <group delimiter=" of the ">
+            <choose>
+              <if match="none" variable="number">
+                <text variable="event" form="short"/>
+              </if>
+            </choose>
+            <group delimiter=" ">
+              <number variable="collection-number" form="ordinal"/>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </group>
+          </group>
+          <choose>
+            <if match="all" variable="number">
+              <text variable="event" form="short"/>
+              <number variable="number"/>
+            </if>
+          </choose>
         </group>
       </else-if>
     </choose>

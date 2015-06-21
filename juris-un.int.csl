@@ -39,6 +39,7 @@
         <group delimiter=", ">
           <names variable="author" font-style="normal" font-variant="normal">
             <name/>
+            <institution/>
           </names>
           <text variable="title"/>
         </group>

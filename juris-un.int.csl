@@ -101,7 +101,7 @@
           <text value="reporting to the"/>
           <group delimiter=" of the ">
             <group delimiter=" ">
-              <number variable="collection-number" form="ordinal"/>
+              <number variable="chapter-number" form="ordinal"/>
               <text value="session"/>
             </group>
             <group delimiter=" ">

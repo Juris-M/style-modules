@@ -17,13 +17,54 @@
   </info>
   
   <macro name="juris-title">
-    <!-- The title form for full citations (of all types) -->
-    <text value="[TITLE]"/>
+    <choose>
+      <if type="legal_case">
+        <text variable="title" form="short"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
-    <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <number variable="collection-number" prefix="[" suffix="]"/>
+            </if>
+            <else-if variable="container-title">
+              <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
+            </else-if>
+            <else>
+              <group delimiter=", " prefix="(" suffix=")">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+                <date variable="issued" date-parts="year-month-day" form="text"/>
+              </group>
+            </else>
+          </choose>
+          <choose>
+            <if variable="container-title">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+            </if>
+            <else-if variable="collection-number">
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+            </else-if>
+          </choose>
+          <number variable="page-first"/>
+          <names variable="authority" prefix="(" suffix=")">
+            <name/>
+            <institution institution-parts="short" stop-last="1"/>
+          </names>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter">
@@ -42,8 +83,18 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
@@ -115,7 +166,7 @@
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
           </conditions>
-          <group delimiter=", ">
+          <group delimiter=" ">
             <choose>
               <if>
                 <conditions match="all">
@@ -191,7 +242,7 @@
         <else>
           <!-- full form -->
           <group delimiter=" ">
-            <group delimiter=", ">
+            <group delimiter=" ">
               <choose>
                 <if type="hearing">
                   <text macro="juris-title" font-style="italic"/>

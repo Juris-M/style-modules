@@ -32,13 +32,10 @@
         <text variable="title"/>
       </else-if>
       <else-if type="legal_case">
-        <group delimiter=" ">
-          <text variable="jurisdiction" form="short"/>
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-        </group>
+        <names variable="authority" font-variant="normal" font-style="normal">
+          <name/>
+          <institution institution-parts="short"/>
+        </names>
       </else-if>
     </choose>
   </macro>
@@ -49,18 +46,16 @@
         <text macro="juris-main-short"/>
       </if>
       <else-if type="legal_case">
-        <group delimiter=" ">
-          <text value="case"/>
+        <group delimiter=", ">
           <number variable="number"/>
-        </group>
-      </else-if>
-      <else-if type="report">
-        <group delimiter=" ">
-          <text variable="genre" form="short"/>
-          <group delimiter=" ">
-            <text value="doc."/>
-            <number variable="number"/>
-          </group>
+          <choose>
+            <if variable="document-name">
+              <text variable="document-name"/>
+            </if>
+            <else>
+              <text value="judgment"/>
+            </else>
+          </choose>
         </group>
       </else-if>
     </choose>
@@ -145,15 +140,8 @@
           <date form="text" date-parts="year" variable="issued"/>
         </else-if>
         <else-if type="legal_case">
-          <choose>
-            <if variable="document-name">
-              <text variable="document-name"/>
-            </if>
-            <else>
-              <text value="Judgment"/>
-            </else>
-          </choose>
-          <date variable="issued" date-parts="year-month-day" form="text"/>
+          <text variable="jurisdiction" form="short"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
       </choose>
     </group>

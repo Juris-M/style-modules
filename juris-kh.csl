@@ -47,15 +47,11 @@
       </if>
       <else-if type="legal_case">
         <group delimiter=", ">
-          <number variable="number"/>
-          <choose>
-            <if variable="document-name">
-              <text variable="document-name"/>
-            </if>
-            <else>
-              <text value="judgment"/>
-            </else>
-          </choose>
+          <group delimiter=" ">
+            <text value="judgment"/>
+            <number variable="number"/>
+          </group>
+          <text variable="document-name"/>
         </group>
       </else-if>
     </choose>
@@ -222,19 +218,17 @@
         </conditions>
       </else-if>
       <else-if type="legal_case">
-        <choose>
-          <if disambiguate="true">
-            <choose>
-              <if variable="document-name">
-                <text variable="document-name"/>
-              </if>
-              <else>
-                <text value="Judgment"/>
-              </else>
-            </choose>
-          </if>
-        </choose>
-        <date variable="issued" date-parts="year-month-day" form="text"/>
+        <group delimiter=", ">
+          <choose>
+            <if disambiguate="true">
+              <group delimiter=" ">
+                <text value="judgment"/>
+                <number variable="number"/>
+              </group>
+            </if>
+          </choose>
+          <date variable="issued" date-parts="year-month-day" form="text"/>
+        </group>
       </else-if>
     </choose>
   </macro>

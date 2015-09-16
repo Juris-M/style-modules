@@ -160,13 +160,16 @@
   </macro>
 
   <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+  <choose>
+    <if locator="page"/>
+    <else>
+      <label variable="locator" form="symbol"/>
+    </else>
+  </choose>
   </macro>
 
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
+  <number variable="locator"/>
   </macro>
 
   <!-- 

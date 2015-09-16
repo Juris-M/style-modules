@@ -72,13 +72,37 @@
   </macro>
 
   <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+  <choose>
+    <if match="all" type="legislation" 
+        variable="container-title">
+      <text macro="juris-default-spotter" suffix=","/>
+    </if>
+    <else>
+      <text macro="juris-default-spotter"/>
+    </else>
+  </choose>
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+  <group delimiter=" ">
+    <choose>
+      <if type="legislation">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+        <group delimiter=", ">
+          <number variable="page-first"/>
+          <text variable="locator-extra"/>
+        </group>
+      </if>
+    </choose>
+    <group delimiter=" " prefix="(" suffix=")">
+      <names variable="authority">
+        <name/>
+        <institution institution-parts="short"/>
+      </names>
+      <date form="text" date-parts="year" variable="issued"/>
+    </group>
+  </group>
   </macro>
 
   <macro name="juris-title-short">
@@ -96,7 +120,7 @@
       <text variable="title"/>
     </else>
   </choose>
-</macro>
+  </macro>
 
   <macro name="juris-main-short">
   <choose>

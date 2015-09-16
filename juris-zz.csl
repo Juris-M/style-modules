@@ -135,18 +135,28 @@
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+  <choose>
+    <if match="none" variable="locator">
+      <number variable="page-first"/>
+    </if>
+    <else-if locator="page">
+      <group delimiter=" ">
+        <text value="at"/>
+        <text variable="locator"/>
+      </group>
+    </else-if>
+    <else>
+      <text macro="juris-default-spotter"/>
+    </else>
+  </choose>
   </macro>
 
   <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+  <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+  <text value=""/>
   </macro>
 
   <macro name="juris-locator-label">

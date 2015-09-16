@@ -61,8 +61,14 @@
   </macro>
 
   <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+  <group delimiter=" ">
+    <choose>
+      <if match="none" locator="page">
+        <label variable="locator"/>
+      </if>
+    </choose>
+    <text macro="juris-locator"/>
+  </group>
   </macro>
 
   <macro name="juris-comma-spotter">

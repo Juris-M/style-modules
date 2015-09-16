@@ -68,9 +68,15 @@
 </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+  <choose>
+    <if type="legislation"/>
+    <else>
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+      </group>
+    </else>
+  </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">

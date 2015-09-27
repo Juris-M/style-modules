@@ -203,10 +203,19 @@
             </else>
           </choose>
           <choose>
+            <if variable="archive">
+              <group delimiter=" ">
+                <number variable="collection-number"/>
+                <text variable="archive"/>
+                <number variable="page-first"/>
+              </group>
+            </if>
+          </choose>
+          <choose>
             <if>
               <conditions match="all">
                 <condition variable="locator"/>
-                <condition match="none" variable="document-name"/>
+                <condition match="none" variable="document-name archive"/>
               </conditions>  
               <group delimiter=" ">
                 <text value="slip op."/>
@@ -321,7 +330,7 @@
       <if>
         <conditions match="all">
           <condition match="any" type="legal_case"/>
-          <condition match="none" variable="page container-title"/>
+          <condition match="none" variable="page container-title archive"/>
         </conditions>
         <group delimiter=" ">
           <text value="slip op. at"/>
@@ -372,12 +381,12 @@
   <macro name="juris-default-spotter">
     <group delimiter=" ">
       <choose>
-        <if>
-          <conditions match="all">
-            <condition match="none" locator="page"/>
-          </conditions>
+        <if match="none" locator="page">
           <label variable="locator"/>
         </if>
+        <else-if match="all" variable="archive">
+          <text value="at"/>
+        </else-if>
       </choose>
       <text macro="juris-locator"/>
     </group>
@@ -453,10 +462,19 @@
             <else-if>
               <conditions match="all">
                 <condition match="all" type="legal_case"/>
-                <condition match="none" variable="container-title"/>  
-                <condition match="none" variable="collection-number"/>  
               </conditions>
-              <date form="text" date-parts="year-month-day" variable="issued"/>
+              <choose>
+                <if match="none" variable="container-title collection-number">
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="none" variable="container-title"/>
+                    <condition match="all" variable="archive"/>
+                  </conditions>
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </else-if>
+              </choose>
             </else-if>
             <else-if>
               <conditions match="all">

@@ -79,7 +79,7 @@
 
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-title-short">

@@ -21,12 +21,9 @@
     <choose>
       <if type="legal_case">
         <group delimiter=", ">
-          <choose>
-            <if variable="document-name">
-              <text variable="document-name"/>
-            </if>
-          </choose>
-          <text variable="title" form="short"/>  
+          <text variable="title"/>
+          <text variable="document-name"/>
+          <text variable="title-short"/>
         </group>
       </if>
       <else-if type="report">
@@ -50,25 +47,10 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <group delimiter=", ">
-              <choose>
-                <if match="none" variable="document-name">
-                  <text value="Judgment"/>
-                </if>
-              </choose>
-              <names variable="authority">
-                <name/>
-                <institution form="short"/>
-              </names>
-            </group>
-            <date variable="issued" form="text" date-parts="year"/>
-          </group>
-          <group delimiter=" ">
-            <label variable="page" form="symbol"/>
-            <number variable="page"/>
-          </group>
+        <group delimiter=" ">
+          <text variable="container-title"/>
+          <number variable="page"/>
+          <date variable="issued" form="text" date-parts="year" prefix="(" suffix=")"/>
         </group>
       </if>
       <else-if type="bill">
@@ -174,12 +156,9 @@
     <choose>
       <if type="legal_case">
         <choose>
-          <if variable="document-name">
-            <text variable="document-name" form="short"/>
+          <if variable="title-short">
+            <text variable="title-short"/>
           </if>
-          <else-if variable="title-short">
-            <text variable="title-short" form="short"/>
-          </else-if>
           <else>
             <text variable="title"/>
           </else>
@@ -262,7 +241,7 @@
             <condition match="all" type="report" variable="title" position="far-note"/>
             <condition match="all" type="report" variable="committee" position="far-note"/>
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
-            <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
+            <condition match="all" type="legal_case" variable="title-short" position="far-note"/>
           </conditions>
           <group delimiter=", ">
             <choose>

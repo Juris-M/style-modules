@@ -20,10 +20,9 @@
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
-        <group delimiter=", ">
+        <group delimiter=" ">
           <text variable="title"/>
-          <text variable="document-name"/>
-          <text variable="title-short"/>
+          <text variable="document-name" prefix="(" suffix=")"/>
         </group>
       </if>
       <else-if type="report">
@@ -250,7 +249,7 @@
                   <condition type="legal_case"/>
                   <condition match="none" variable="document-name"/>
                 </conditions>
-                <text macro="juris-title-short" font-style="italic"/>
+                <text macro="juris-title-short"/>
               </if>
               <else-if type="hearing">
                 <text macro="juris-title-short" font-style="italic"/>

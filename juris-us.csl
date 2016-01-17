@@ -474,6 +474,12 @@
                   </conditions>
                   <date form="text" date-parts="year-month-day" variable="issued"/>
                 </else-if>
+                <else-if variable="issued">
+                  <date form="text" date-parts="year" variable="issued"/>
+                </else-if>
+                <else>
+                  <date form="text" date-parts="year" variable="publication-date"/>
+                </else>
               </choose>
             </else-if>
             <else-if>

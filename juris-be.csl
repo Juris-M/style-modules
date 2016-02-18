@@ -84,30 +84,34 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
+    <choose>
+      <if type="legislation">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+    <choose>
+      <if type="legislation">
+        <text value=""/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
-    <choose>
-      <if type="legislation">
-        <text variable="locator"/>
-      </if>
-    </choose>
+    <text macro="juris-default-spotter"/>
   </macro>
 
   <macro name="juris-comma-spotter-short">
-    <choose>
-      <if type="legislation">
-        <text variable="locator"/>
-      </if>
-    </choose>
+    <text macro="juris-comma-spotter"/>
   </macro>
 
   <macro name="juris-tail-short">
@@ -119,7 +123,7 @@
   </macro>
 
   <macro name="juris-locator-label">
-    <label variable="locator" plural="contextual"/>
+    <label variable="locator"/>
   </macro>
 
   <macro name="juris-locator">

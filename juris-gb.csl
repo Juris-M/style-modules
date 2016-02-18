@@ -69,17 +69,21 @@
 
   <macro name="juris-default-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <number variable="locator" prefix="[" suffix="]"/>
   </macro>
 
   <macro name="juris-comma-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <choose>
+      <if match="none" locator="paragraph">
+        <number variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-title-short">
@@ -242,7 +246,7 @@
         <else>
           <!-- full form -->
           <group delimiter=" ">
-            <group delimiter=", ">
+            <group delimiter=" ">
               <choose>
                 <if type="hearing">
                   <text macro="juris-title" font-style="italic"/>
@@ -251,7 +255,7 @@
                   <text macro="juris-title" font-variant="small-caps"/>
                 </else-if>
                 <else>
-                  <text macro="juris-title"/>
+                  <text macro="juris-title" font-style="italic"/>
                 </else>
               </choose>
               <group delimiter=" ">

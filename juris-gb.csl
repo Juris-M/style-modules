@@ -16,6 +16,12 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   
+  <locale>
+    <terms>
+      <term name="paragraph" form="short">[%s]</term>
+    </terms>
+  </locale>
+  
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -69,7 +75,12 @@
 
   <macro name="juris-default-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <number variable="locator" prefix="[" suffix="]"/>
+    <choose>
+      <if locator="paragraph">
+        <label variable="locator" form="short"/>
+        <number variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-comma-spotter">

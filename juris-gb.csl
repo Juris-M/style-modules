@@ -42,6 +42,7 @@
               <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
             </else-if>
             <else>
+              <!-- unreported cases -->
               <group delimiter=", " prefix="(" suffix=")">
                 <names variable="authority">
                   <name/>
@@ -64,10 +65,20 @@
             </else-if>
           </choose>
           <number variable="page-first"/>
-          <names variable="authority" prefix="(" suffix=")">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
+          <choose>
+            <if variable="container-title">
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" use-first="1"/>
+              </names>
+            </if>
+            <else>
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" stop-last="1" use-first="1"/>
+              </names>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>
@@ -135,12 +146,16 @@
 
   <macro name="juris-locator-label">
     <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+    <choose>
+      <if locator="page paragraph" match="none">
+        <label variable="locator"/>        
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-locator">
     <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
+    <number variable="locator"/>
   </macro>
 
   <!-- 

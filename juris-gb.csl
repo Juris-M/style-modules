@@ -18,7 +18,7 @@
   
   <locale>
     <terms>
-      <term name="paragraph" form="short">[%s]</term>
+      <term name="paragraph" form="static">[%s]</term>
     </terms>
   </locale>
   
@@ -77,7 +77,7 @@
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
     <choose>
       <if locator="paragraph">
-        <label variable="locator" form="short"/>
+        <label variable="locator" form="static"/>
         <number variable="locator"/>
       </if>
     </choose>

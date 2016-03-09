@@ -14,7 +14,14 @@
     <summary>Juris-M style module for the United Kingdom</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
   </info>
+  
+  <locale>
+    <terms>
+      <term name="paragraph" form="static">[%s]</term>
+    </terms>
+  </locale>
   
   <macro name="juris-title">
     <choose>
@@ -36,6 +43,7 @@
               <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
             </else-if>
             <else>
+              <!-- unreported cases -->
               <group delimiter=", " prefix="(" suffix=")">
                 <names variable="authority">
                   <name/>
@@ -58,10 +66,20 @@
             </else-if>
           </choose>
           <number variable="page-first"/>
-          <names variable="authority" prefix="(" suffix=")">
-            <name/>
-            <institution institution-parts="short" stop-last="1"/>
-          </names>
+          <choose>
+            <if variable="container-title">
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" use-first="1"/>
+              </names>
+            </if>
+            <else>
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" stop-last="1" use-first="1"/>
+              </names>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>
@@ -69,7 +87,12 @@
 
   <macro name="juris-default-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <number variable="locator" prefix="[" suffix="]"/>
+    <choose>
+      <if locator="paragraph">
+        <label variable="locator" form="static"/>
+        <number variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-comma-spotter">
@@ -103,33 +126,87 @@
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <number variable="collection-number" prefix="[" suffix="]"/>
+            </if>
+            <else-if variable="container-title">
+              <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
+            </else-if>
+            <else>
+              <!-- unreported cases -->
+              <group delimiter=", " prefix="(" suffix=")">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+                <date variable="issued" date-parts="year-month-day" form="text"/>
+              </group>
+            </else>
+          </choose>
+          <choose>
+            <if variable="container-title">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+            </if>
+            <else-if variable="collection-number">
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+            </else-if>
+          </choose>
+          <number variable="page-first"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <choose>
+      <if locator="paragraph">
+        <label variable="locator" form="static"/>
+        <number variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-comma-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <group delimiter=" ">
+      <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+      <choose>
+        <if match="none" locator="paragraph">
+          <number variable="locator"/>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-locator-label">
     <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+    <choose>
+      <if locator="page paragraph" match="none">
+        <label variable="locator"/>        
+      </if>
+      <else-if locator="paragraph">
+        <label variable="locator" form="static"/>
+      </else-if>
+    </choose>
   </macro>
 
   <macro name="juris-locator">
     <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
+    <number variable="locator"/>
   </macro>
 
   <!-- 

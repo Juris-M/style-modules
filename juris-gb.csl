@@ -125,23 +125,70 @@
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-
-    <text value="[MAIN-SHORT]"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <number variable="collection-number" prefix="[" suffix="]"/>
+            </if>
+            <else-if variable="container-title">
+              <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
+            </else-if>
+            <else>
+              <!-- unreported cases -->
+              <group delimiter=", " prefix="(" suffix=")">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+                <date variable="issued" date-parts="year-month-day" form="text"/>
+              </group>
+            </else>
+          </choose>
+          <choose>
+            <if variable="container-title">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+            </if>
+            <else-if variable="collection-number">
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+            </else-if>
+          </choose>
+          <number variable="page-first"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-default-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
+    <choose>
+      <if locator="paragraph">
+        <label variable="locator" form="static"/>
+        <number variable="locator"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-comma-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
+    <group delimiter=" ">
+      <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
+      <choose>
+        <if match="none" locator="paragraph">
+          <number variable="locator"/>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-locator-label">
@@ -150,6 +197,9 @@
       <if locator="page paragraph" match="none">
         <label variable="locator"/>        
       </if>
+      <else-if locator="paragraph">
+        <label variable="locator" form="static"/>
+      </else-if>
     </choose>
   </macro>
 

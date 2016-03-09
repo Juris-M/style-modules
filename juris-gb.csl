@@ -66,7 +66,7 @@
           <number variable="page-first"/>
           <names variable="authority" prefix="(" suffix=")">
             <name/>
-            <institution institution-parts="short" stop-last="1"/>
+            <institution institution-parts="short"/>
           </names>
         </group>
       </if>

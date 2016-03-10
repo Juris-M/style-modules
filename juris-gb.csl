@@ -14,7 +14,7 @@
     <summary>Juris-M style module for the United Kingdom</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   
   <locale>
@@ -25,8 +25,8 @@
   
   <macro name="juris-title">
     <choose>
-      <if type="legal_case">
-        <text variable="title" form="short"/>
+      <if type="legal_case legislation">
+        <text variable="title"/>
       </if>
     </choose>
   </macro>
@@ -88,19 +88,32 @@
   <macro name="juris-default-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
     <choose>
-      <if locator="paragraph">
+      <if type="legal_case" locator="paragraph" match="all">
         <label variable="locator" form="static"/>
         <number variable="locator"/>
       </if>
+      <else-if type="legislation" match="all">
+        <group delimiter=" ">
+          <label variable="locator" form="symbol"/>
+          <number variable="locator"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
   <macro name="juris-comma-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
     <choose>
-      <if match="none" locator="paragraph">
+      <if type="legal_case" locator="paragraph" match="all"/>
+      <else-if>
+        <conditions match="all">
+          <condition type="legislation"/>
+          <condition locator="paragraph section" match="any"/>
+        </conditions>
+      </else-if> 
+      <else-if locator="page">
         <number variable="locator"/>
-      </if>
+      </else-if>
     </choose>
   </macro>
 
@@ -264,6 +277,7 @@
               </else-if>
               <else>
                 <text macro="juris-title-short"/>
+                <text variable="document-name"/>
               </else>
             </choose>
             <choose>
@@ -325,14 +339,24 @@
           <group delimiter=" ">
             <group delimiter=" ">
               <choose>
-                <if type="hearing">
+              <if>
+                  <conditions match="all">
+                    <condition type="legal_case"/>
+                    <condition match="none" variable="document-name"/>
+                  </conditions>
                   <text macro="juris-title" font-style="italic"/>
                 </if>
+                <else-if type="hearing">
+                  <text macro="juris-title" font-style="italic"/>
+                </else-if>
                 <else-if type="report">
                   <text macro="juris-title" font-variant="small-caps"/>
                 </else-if>
                 <else>
-                  <text macro="juris-title" font-style="italic"/>
+                  <group delimiter=", ">
+                    <text macro="juris-title"/>
+                    <text variable="document-name"/>
+                  </group>
                 </else>
               </choose>
               <group delimiter=" ">

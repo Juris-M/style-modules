@@ -22,6 +22,9 @@
       <date-part name="month" form="numeric-leading-zeros" prefix="."/>
       <date-part name="day" form="numeric-leading-zeros" prefix="."/>
     </date>
+    <terms>
+      <term name="paragraph" form="static">[%s]</term>
+    </terms>
   </locale>
   
   <macro name="juris-title">
@@ -46,16 +49,16 @@
 
   <macro name="juris-default-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <group delimiter=" ">
-      <label variable="locator"/>
+    <group delimiter=" " reject="label-empty-or-alpha">
+      <text macro="juris-locator-label"/>
       <number variable="locator"/>
     </group>
   </macro>
 
   <macro name="juris-comma-spotter">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <group delimiter=" ">
-      <label variable="locator"/>
+    <group delimiter=" " require="label-empty-or-alpha">
+      <text macro="juris-locator-label"/>
       <number variable="locator"/>
     </group>
   </macro>
@@ -77,18 +80,12 @@
 
   <macro name="juris-default-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <group delimiter=" ">
-      <label variable="locator"/>
-      <number variable="locator"/>
-    </group>
+    <text macro="juris-default-spotter"/>
   </macro>
 
   <macro name="juris-comma-spotter-short">
     <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <group delimiter=" ">
-      <label variable="locator"/>
-      <number variable="locator"/>
-    </group>
+    <text macro="juris-comma-spotter"/>
   </macro>
 
   <macro name="juris-tail-short">
@@ -98,7 +95,14 @@
 
   <macro name="juris-locator-label">
     <!-- The label applied to pinpoint locators -->
-    <label variable="locator"/>
+    <choose>
+      <if locator="paragraph">
+        <label variable="locator" form="static"/>
+      </if>
+      <else>
+        <label variable="locator" form="symbol"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-locator">

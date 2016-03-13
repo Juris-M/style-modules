@@ -17,11 +17,6 @@
   </info>
   
   <locale>
-    <date form="numeric">
-      <date-part name="year"/>
-      <date-part name="month" form="numeric-leading-zeros" prefix="."/>
-      <date-part name="day" form="numeric-leading-zeros" prefix="."/>
-    </date>
     <terms>
       <term name="paragraph" form="static">[%s]</term>
     </terms>
@@ -29,7 +24,18 @@
   
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
-    <text variable="title-short" font-style="italic"/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" font-style="italic"/>
+          </if>
+          <else>
+            <text variable="title" font-style="italic"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
@@ -43,7 +49,11 @@
         <name/>
         <institution/>
       </names>
-      <date variable="issued" date-parts="year-month-day" form="numeric"/>
+      <date variable="issued">
+        <date-part name="year"/>
+        <date-part name="month" form="numeric-leading-zeros" prefix="."/>
+        <date-part name="day" form="numeric-leading-zeros" prefix="."/>
+      </date>
     </group>
   </macro>
 
@@ -70,7 +80,7 @@
 
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
-    <text variable="title-short"/>
+    <text macro="juris-title"/>
   </macro>
 
   <macro name="juris-main-short">

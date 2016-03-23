@@ -113,10 +113,17 @@
   <text value=""/>
 </macro>
 
-  <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
-  </macro>
+<macro name="juris-locator">
+  <group delimiter=" ">
+    <choose>
+      <if locator="page"/>
+      <else>
+        <label variable="locator"/>
+      </else>
+    </choose>
+    <number variable="locator"/>
+  </group>
+</macro>
 
   <citation>
     <layout>
@@ -178,9 +185,11 @@
                     <text term="note"/>
                     <text variable="first-reference-note-number"/>
                   </group>
-                  <group delimiter=" " require="empty-label">
+                  <group delimiter=" ">
                     <text value="at"/>
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <group require="empty-label">
+                      <text macro="juris-locator" label-form="symbol"/>
+                    </group>
                   </group>
                   <group delimiter=" " reject="empty-label">
                     <text macro="juris-locator" label-form="symbol"/>
@@ -228,6 +237,7 @@
         </else-if>
         <else>
           <!-- full form -->
+          <group delimiter=", ">
           <group delimiter=" ">
             <group delimiter=", ">
               <choose>
@@ -275,7 +285,18 @@
             <group reject="comma-safe">
               <text macro="juris-locator" label-form="symbol"/>
             </group>
-            <text macro="juris-tail"/>
+            <choose>
+              <if type="legislation" variable="container-title number page volume" match="all"/>
+              <else>
+                <text macro="juris-tail"/>
+              </else>
+            </choose>
+          </group>
+          <choose>
+            <if type="legislation" variable="container-title number page volume gazette-flag" match="all">
+              <text macro="juris-tail"/>
+            </if>
+          </choose>
           </group>
         </else>
       </choose>

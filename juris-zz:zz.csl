@@ -28,10 +28,35 @@
     </choose>
   </macro>
 
-  <macro name="juris-main">
-    <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
-  </macro>
+<macro name="juris-main">
+  <choose>
+    <if type="legal_case">
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" 
+              form="short"/>
+        <number variable="page-first"/>
+      </group>
+    </if>
+    <else>
+      <choose>
+        <if number="number">
+          <group delimiter=" " suffix=",">
+            <text value="Pub. L. No."/>
+            <number variable="number"/>
+          </group>
+        </if>
+        <else>
+          <group delimiter=" " suffix=",">
+            <label variable="number" 
+                   form="symbol"/>
+            <number variable="number"/>
+          </group>
+        </else>
+      </choose>
+    </else>
+  </choose>
+</macro>
 
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->

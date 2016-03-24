@@ -61,7 +61,7 @@
 <macro name="juris-tail">
   <group delimiter=" ">
     <choose>
-      <if type="legislation">
+      <if type="legislation" variable="gazette-flag" match="all">
         <number variable="volume"/>
         <text variable="container-title" form="short"/>
         <group delimiter=", ">
@@ -152,6 +152,7 @@
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
           </conditions>
+          <group delimiter=" ">
           <group delimiter=", ">
             <choose>
               <if>
@@ -222,6 +223,10 @@
                       <text macro="juris-locator" label-form="symbol"/>
                     </group>
                   </group>
+                </group>
+              </else>
+            </choose>
+          </group>
                   <group delimiter=" " require="empty-label">
                     <text value="at"/>
                     <text macro="juris-locator" label-form="symbol"/>
@@ -230,9 +235,6 @@
                     <text macro="juris-locator" label-form="symbol"/>
                   </group>
                   <text macro="juris-tail-short"/>
-                </group>
-              </else>
-            </choose>
           </group>
         </else-if>
         <else>
@@ -286,14 +288,14 @@
               <text macro="juris-locator" label-form="symbol"/>
             </group>
             <choose>
-              <if type="legislation" variable="container-title number page volume" match="all"/>
+              <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
               <else>
                 <text macro="juris-tail"/>
               </else>
             </choose>
           </group>
           <choose>
-            <if type="legislation" variable="container-title number page volume gazette-flag" match="all">
+            <if type="legislation" variable="container-title page volume gazette-flag" match="all">
               <text macro="juris-tail"/>
             </if>
           </choose>

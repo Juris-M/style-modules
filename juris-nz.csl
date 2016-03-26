@@ -78,7 +78,7 @@
       </if>
       <else-if type="legislation">
         <group delimiter=" ">
-          <text variable="title"/>
+          <text variable="title" strip-periods="true"/>
           <date form="text" variable="issued" date-parts="year"/>
           <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
         </group>

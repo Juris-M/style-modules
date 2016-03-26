@@ -14,7 +14,13 @@
     <summary>Juris-M style module for New Zealand</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
   </info>
+  <locale>
+    <terms>
+      <term name="paragraph" form="static">[%s]</term>
+    </terms>
+  </locale>
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -64,17 +70,9 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
-  </macro>
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
+    <text value=""/>
   </macro>
   <macro name="juris-title-short">
     <choose>
@@ -94,39 +92,25 @@
     <!-- The body of subsequent citations (of all types) -->
     <text value="[MAIN-SHORT]"/>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <text value="[SPACE-LOCATOR]"/>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <text value="[COMMA-LOCATOR]"/>
-  </macro>
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
-  </macro>
-  <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <text value="[LOCATOR-LABEL]"/>
+    <text value=""/>
   </macro>
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <text value="[LOCATOR]"/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else-if locator="paragraph">
+          <label variable="locator" form="static"/>
+        </else-if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

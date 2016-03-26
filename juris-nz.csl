@@ -148,16 +148,16 @@
                     <condition type="legal_case"/>
                     <condition match="none" variable="document-name"/>
                   </conditions>
-                  <text macro="juris-title-short" font-style="italic"/>
+                  <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
                 </if>
                 <else-if type="hearing">
-                  <text macro="juris-title-short" font-style="italic"/>
+                  <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
                 </else-if>
                 <else-if match="all" type="report">
-                  <text macro="juris-title-short" font-variant="small-caps"/>
+                  <text macro="juris-title-short" font-variant="small-caps" strip-periods="true"/>
                 </else-if>
                 <else>
-                  <text macro="juris-title-short"/>
+                  <text macro="juris-title-short" strip-periods="true"/>
                 </else>
               </choose>
               <choose>
@@ -232,13 +232,13 @@
               <group delimiter=", ">
                 <choose>
                   <if type="hearing">
-                    <text macro="juris-title" font-style="italic"/>
+                    <text macro="juris-title" font-style="italic" strip-periods="true"/>
                   </if>
                   <else-if type="report">
-                    <text macro="juris-title" font-variant="small-caps"/>
+                    <text macro="juris-title" font-variant="small-caps" strip-periods="true"/>
                   </else-if>
                   <else>
-                    <text macro="juris-title"/>
+                    <text macro="juris-title" strip-periods="true" font-style="italic"/>
                   </else>
                 </choose>
                 <group delimiter=" ">

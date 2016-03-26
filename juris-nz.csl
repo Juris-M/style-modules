@@ -14,11 +14,12 @@
     <summary>Juris-M style module for New Zealand</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   <locale>
     <terms>
       <term name="paragraph" form="static">[%s]</term>
+      <term name="section" form="symbol">s</term>
     </terms>
   </locale>
   <macro name="juris-title">
@@ -75,6 +76,13 @@
           </choose>
         </group>
       </if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <text variable="title"/>
+          <date form="text" variable="issued" date-parts="year"/>
+          <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -105,7 +113,11 @@
   </macro>
   <macro name="juris-locator">
     <group delimiter=" ">
-      <text value="at"/>
+      <choose>
+        <if type="legal_case">
+          <text value="at"/>
+        </if>
+      </choose>
       <choose>
         <if locator="page"/>
         <else-if locator="paragraph">

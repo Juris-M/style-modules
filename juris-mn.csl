@@ -6,8 +6,8 @@
     <link href="http://citationstylist/modules/juris-mn" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>YOUR-NAME-HERE</name>
-      <email>YOUR-EMAIL-ADDRESS-HERE</email>
+      <name>Frank Bennett</name>
+      <email>bennett@law.nagoya-u.ac.jp</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
@@ -19,7 +19,7 @@
     <!-- The title form for full citations (of all types) -->
     <choose>
       <if type="legal_case">
-        <text variable="title" font-style="italic"/>
+        <text variable="title"/>
       </if>
     </choose>
   </macro>
@@ -39,28 +39,6 @@
           </date>
           <number variable="number"/>
           <number variable="call-number"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" " reject="label-empty-or-alpha">
-          <text macro="juris-locator-label"/>
-          <number variable="locator"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" " require="label-empty-or-alpha">
-          <text macro="juris-locator-label"/>
-          <number variable="locator"/>
         </group>
       </if>
     </choose>
@@ -102,55 +80,22 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <choose>
-      <if type="legal_case">
-        <text macro="juris-default-spotter"/>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <choose>
-      <if type="legal_case">
-        <text macro="juris-comma-spotter"/>
-      </if>
-    </choose>
-  </macro>
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
-  <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <choose>
-      <if type="legal_case">
-        <label variable="locator" form="symbol"/>
-      </if>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <choose>
-      <if type="legal_case">
-        <number variable="locator"/>
-      </if>
-    </choose>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

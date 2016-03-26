@@ -42,30 +42,6 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter">
-    <choose>
-      <if type="legislation">
-        <group delimiter=" ">
-          <text macro="juris-locator-label"/>
-          <text macro="juris-locator"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <choose>
-      <if>
-        <conditions match="all">
-          <condition type="legislation"/>
-          <condition locator="section" match="none"/>
-        </conditions>
-        <group delimiter=" ">
-          <text macro="juris-locator-label"/>
-          <text macro="juris-locator"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
   <macro name="juris-tail">
     <choose>
       <if type="legislation">
@@ -97,12 +73,6 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <text macro="juris-default-spotter"/>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <text macro="juris-comma-spotter"/>
-  </macro>
   <macro name="juris-tail-short">
     <choose>
       <if type="legislation">
@@ -110,25 +80,12 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-locator-label">
-    <label variable="locator"/>
-  </macro>
   <macro name="juris-locator">
-    <text variable="locator"/>
+    <group delimiter=" ">
+      <label variable="locator"/>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
   <citation>
     <layout>
       <choose>

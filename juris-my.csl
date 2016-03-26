@@ -32,21 +32,12 @@
     </choose>
   </macro>
   <macro name="juris-title-short">
-    <text form="short" variable="title-short"/>
-  </macro>
-  <macro name="juris-title-short">
     <choose>
-      <if match="all" type="legal_case" variable="title-short">
-        <text variable="title-short" form="short"/>
+      <if variable="title-short">
+        <text form="short" variable="title-short"/>
       </if>
-      <else-if type="legal_case">
-        <text variable="title" form="short"/>
-      </else-if>
-      <else-if variable="title-short">
-        <text variable="title-short"/>
-      </else-if>
       <else>
-        <text variable="title"/>
+        <text form="short" variable="title"/>
       </else>
     </choose>
   </macro>
@@ -88,32 +79,6 @@
       </else>
     </choose>
   </macro>
-  <macro name="juris-space-locator">
-    <group delimiter=" ">
-      <text macro="juris-locator-label"/>
-      <text macro="juris-locator"/>
-    </group>
-  </macro>
-  <macro name="juris-default-spotter">
-    <group delimiter=" ">
-      <choose>
-        <if match="none" locator="page">
-          <label variable="locator"/>
-        </if>
-      </choose>
-      <text macro="juris-locator"/>
-    </group>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <choose>
-      <if match="all" type="legal_case" variable="container-title">
-        <text macro="juris-default-spotter" suffix=","/>
-      </if>
-      <else>
-        <text macro="juris-default-spotter"/>
-      </else>
-    </choose>
-  </macro>
   <macro name="juris-locator">
     <choose>
       <if locator="paragraph" variable="collection-number" match="all">
@@ -124,42 +89,8 @@
       </else>
     </choose>
   </macro>
-  <macro name="juris-locator-label">
-    <choose>
-      <if locator="page"/>
-      <else>
-        <label variable="locator" form="symbol"/>
-      </else>
-    </choose>
-  </macro>
-  <macro name="juris-default-spotter-short">
-    <choose>
-      <if match="none" variable="locator">
-        <number variable="page-first"/>
-      </if>
-      <else-if locator="page">
-        <group delimiter=" ">
-          <text value="at"/>
-          <text variable="locator"/>
-        </group>
-      </else-if>
-      <else>
-        <text macro="juris-default-spotter"/>
-      </else>
-    </choose>
-  </macro>
   <macro name="juris-tail">
     <group delimiter=" ">
-      <choose>
-        <if type="legal_case">
-          <number variable="volume"/>
-          <text variable="container-title" form="short"/>
-          <group delimiter=", ">
-            <number variable="page-first"/>
-            <text variable="locator-extra"/>
-          </group>
-        </if>
-      </choose>
       <group delimiter=" " prefix="(" suffix=")">
         <names variable="authority">
           <name/>
@@ -172,22 +103,7 @@
   <macro name="juris-tail-short">
     <text value=""/>
   </macro>
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <macro name="full">
-    <group delimiter=" ">
-      <text macro="juris-title" font-style="italic"/>
-      <group delimiter=" ">
-        <group delimiter=", ">
-          <text macro="juris-main"/>
-          <text macro="juris-comma-locator"/>
-        </group>
-        <text macro="juris-space-locator"/>
-        <text macro="juris-tail"/>
-      </group>
-    </group>
-  </macro>
+
   <citation>
     <layout>
       <choose>

@@ -106,7 +106,9 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page"/>
+        <if locator="page">
+          <text value="at"/>
+        </if>
         <else-if locator="paragraph">
           <label variable="locator" form="static"/>
         </else-if>

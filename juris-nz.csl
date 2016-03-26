@@ -62,10 +62,17 @@
             </else-if>
           </choose>
           <number variable="page-first"/>
-          <names variable="authority" prefix="(" suffix=")">
-            <name/>
-            <institution institution-parts="short" stop-last="1"/>
-          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="container-title"/>
+              </conditions>
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </if>
+          </choose>
         </group>
       </if>
     </choose>

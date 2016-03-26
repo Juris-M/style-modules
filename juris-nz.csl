@@ -62,10 +62,17 @@
             </else-if>
           </choose>
           <number variable="page-first"/>
-          <names variable="authority" prefix="(" suffix=")">
-            <name/>
-            <institution institution-parts="short" stop-last="1"/>
-          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="container-title"/>
+              </conditions>
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </if>
+          </choose>
         </group>
       </if>
     </choose>
@@ -98,6 +105,7 @@
   </macro>
   <macro name="juris-locator">
     <group delimiter=" ">
+      <text value="at"/>
       <choose>
         <if locator="page"/>
         <else-if locator="paragraph">
@@ -148,16 +156,16 @@
                     <condition type="legal_case"/>
                     <condition match="none" variable="document-name"/>
                   </conditions>
-                  <text macro="juris-title-short" font-style="italic"/>
+                  <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
                 </if>
                 <else-if type="hearing">
-                  <text macro="juris-title-short" font-style="italic"/>
+                  <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
                 </else-if>
                 <else-if match="all" type="report">
-                  <text macro="juris-title-short" font-variant="small-caps"/>
+                  <text macro="juris-title-short" font-variant="small-caps" strip-periods="true"/>
                 </else-if>
                 <else>
-                  <text macro="juris-title-short"/>
+                  <text macro="juris-title-short" strip-periods="true"/>
                 </else>
               </choose>
               <choose>
@@ -232,13 +240,13 @@
               <group delimiter=", ">
                 <choose>
                   <if type="hearing">
-                    <text macro="juris-title" font-style="italic"/>
+                    <text macro="juris-title" font-style="italic" strip-periods="true"/>
                   </if>
                   <else-if type="report">
-                    <text macro="juris-title" font-variant="small-caps"/>
+                    <text macro="juris-title" font-variant="small-caps" strip-periods="true"/>
                   </else-if>
                   <else>
-                    <text macro="juris-title"/>
+                    <text macro="juris-title" strip-periods="true" font-style="italic"/>
                   </else>
                 </choose>
                 <group delimiter=" ">

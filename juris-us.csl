@@ -319,71 +319,6 @@
       </else-if>
     </choose>
   </macro>
-  <macro name="juris-comma-spotter">
-    <choose>
-      <if>
-        <conditions match="all">
-          <condition match="any" type="legal_case"/>
-          <condition match="none" variable="page container-title archive"/>
-        </conditions>
-        <group delimiter=" ">
-          <text value="slip op. at"/>
-          <number variable="locator"/>
-        </group>
-      </if>
-      <else-if>
-        <conditions match="all">
-          <condition match="any" type="legislation"/>
-          <condition match="all" variable="gazette-flag"/>
-          <condition match="all" variable="title container-title locator number"/>
-        </conditions>
-        <text macro="juris-default-spotter" suffix=","/>
-      </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition match="any" type="legislation"/>
-          <condition match="none" variable="gazette-flag"/>
-        </conditions>
-      </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition type="hearing"/>
-          <condition match="none" variable="committee"/>
-        </conditions>
-        <text macro="juris-default-spotter"/>
-      </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition type="regulation"/>
-          <condition match="all" variable="gazette-flag"/>
-        </conditions>
-        <text macro="juris-default-spotter"/>
-      </else-if>
-      <else-if match="any" type="bill regulation hearing"/>
-      <else-if>
-        <conditions match="all">
-          <condition match="all" type="report"/>
-          <condition match="none" variable="number"/>
-        </conditions>
-      </else-if>
-      <else>
-        <text macro="juris-default-spotter"/>
-      </else>
-    </choose>
-  </macro>
-  <macro name="juris-default-spotter">
-    <group delimiter=" ">
-      <choose>
-        <if match="none" locator="page">
-          <label variable="locator"/>
-        </if>
-        <else-if match="all" variable="archive">
-          <text value="at"/>
-        </else-if>
-      </choose>
-      <text macro="juris-locator"/>
-    </group>
-  </macro>
   <macro name="juris-tail">
     <group delimiter=" ">
       <choose>
@@ -642,49 +577,24 @@
       </choose>
     </group>
   </macro>
-  <macro name="juris-comma-spotter-short">
-    <choose>
-      <if match="all" type="bill" variable="number">
-        <text macro="juris-default-spotter"/>
-      </if>
-      <else-if match="all" type="report" variable="number">
-        <group delimiter=" ">
-          <text macro="juris-locator-label" alternative-macro="at-locator-label" label-form="symbol"/>
-          <text macro="juris-locator" label-form="symbol"/>
-        </group>
-      </else-if>
-    </choose>
-  </macro>
-  <macro name="juris-default-spotter-short">
-    <text macro="juris-default-spotter"/>
-  </macro>
   <macro name="juris-tail-short">
     <text value=""/>
   </macro>
-  <macro name="juris-locator-label">
-    <choose>
-      <if locator="page"/>
-      <else>
-        <label variable="locator" form="symbol"/>
-      </else>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <number variable="locator"/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page" type="report" variable="number" match="all">
+          <text value="at"/>
+        </if>
+        <else-if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

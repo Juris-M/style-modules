@@ -100,30 +100,6 @@
       </else-if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter">
-    <group delimiter=" ">
-      <text value="at"/>
-      <number variable="locator"/>
-    </group>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <group delimiter=" ">
-      <choose>
-        <if type="legal_case"/>
-        <else-if match="any" type="bill hearing">
-          <choose>
-            <if locator="page">
-              <text value="at"/>
-            </if>
-            <else>
-              <label variable="locator"/>
-            </else>
-          </choose>
-          <number variable="locator"/>
-        </else-if>
-      </choose>
-    </group>
-  </macro>
   <macro name="juris-tail">
     <group delimiter=", " prefix="(" suffix=")">
       <choose>
@@ -172,38 +148,21 @@
   <macro name="juris-main-short">
     <text value=""/>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <text value="juris-default-spotter"/>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <text macro="juris-comma-spotter"/>
-  </macro>
   <macro name="juris-tail-short">
     <text value=""/>
   </macro>
-  <macro name="juris-locator-label">
-    <choose>
-      <if match="none" locator="page">
-        <label variable="locator"/>
-      </if>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <number variable="locator"/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

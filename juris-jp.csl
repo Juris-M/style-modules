@@ -16,6 +16,15 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legislation report legal_case"/>
   </info>
+  <locale>
+    <terms>
+      <term name="article">article</term>
+      <term name="article" form="short">
+        <single>art.</single>
+        <multiple>arts.</multiple>
+      </term>
+    </terms>
+  </locale>
   <macro name="juris-title">
     <choose>
       <if type="legislation">
@@ -55,22 +64,6 @@
           </choose>
         </group>
       </else-if>
-    </choose>
-  </macro>
-  <macro name="juris-default-spotter">
-    <choose>
-      <if type="legislation"/>
-      <else-if type="legal_case"/>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <choose>
-      <if type="legislation legal_case">
-        <group delimiter=" ">
-          <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-          <text macro="juris-locator"/>
-        </group>
-      </if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -141,46 +134,19 @@
       </else-if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <choose>
-      <if type="legislation"/>
-      <else-if type="legal_case"/>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <text macro="juris-comma-spotter"/>
-  </macro>
   <macro name="juris-tail-short">
     <choose>
       <if type="legislation"/>
       <else-if type="legal_case"/>
     </choose>
   </macro>
-  <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <choose>
-      <if locator="page" match="none">
-        <label variable="locator"/>
-      </if>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <number variable="locator"/>
+    <group delimiter=" ">
+      <label variable="locator"/>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

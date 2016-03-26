@@ -81,36 +81,6 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a full-form cite -->
-    <choose>
-      <if type="legal_case" locator="paragraph" match="all">
-        <label variable="locator" form="static"/>
-        <number variable="locator"/>
-      </if>
-      <else-if type="legislation" match="all">
-        <group delimiter=" ">
-          <label variable="locator" form="symbol"/>
-          <number variable="locator"/>
-        </group>
-      </else-if>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a full-form cite -->
-    <choose>
-      <if type="legal_case" locator="paragraph" match="all"/>
-      <else-if>
-        <conditions match="all">
-          <condition type="legislation"/>
-          <condition locator="paragraph section" match="any"/>
-        </conditions>
-      </else-if>
-      <else-if locator="page">
-        <number variable="locator"/>
-      </else-if>
-    </choose>
-  </macro>
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
@@ -169,58 +139,25 @@
       </if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a space in a short-form cite -->
-    <choose>
-      <if locator="paragraph">
-        <label variable="locator" form="static"/>
-        <number variable="locator"/>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <!-- Pinpoint forms (with label) that are preceded by a comma in a short-form cite -->
-    <group delimiter=" ">
-      <text macro="juris-locator-label" alternative-macro="at-locator-label"/>
-      <choose>
-        <if match="none" locator="paragraph">
-          <number variable="locator"/>
-        </if>
-      </choose>
-    </group>
-  </macro>
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
-  <macro name="juris-locator-label">
-    <!-- The label applied to pinpoint locators -->
-    <choose>
-      <if locator="page paragraph" match="none">
-        <label variable="locator"/>
-      </if>
-      <else-if locator="paragraph">
-        <label variable="locator" form="static"/>
-      </else-if>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <!-- The bare locator without label (but including affixes, if required) -->
-    <number variable="locator"/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else-if locator="paragraph">
+          <label variable="locator" form="static"/>
+        </else-if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>    
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

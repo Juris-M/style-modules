@@ -6,8 +6,8 @@
     <link href="http://citationstylist/modules/juris-eec.int" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>YOUR-NAME-HERE</name>
-      <email>YOUR-EMAIL-ADDRESS-HERE</email>
+      <name>Frank Bennett</name>
+      <email>bennett@law.nagoya-u.ac.jp</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
@@ -60,40 +60,6 @@
         </group>
       </else-if>
     </choose>
-  </macro>
-  <macro name="juris-default-spotter">
-    <group delimiter=" ">
-      <choose>
-        <if type="regulation"/>
-        <else-if>
-          <conditions match="all">
-            <condition match="none" locator="page"/>
-          </conditions>
-          <label variable="locator"/>
-        </else-if>
-      </choose>
-    </group>
-  </macro>
-  <macro name="juris-comma-spotter">
-    <group delimiter=" ">
-      <choose>
-        <if type="regulation">
-          <label variable="locator"/>
-          <number variable="locator"/>
-        </if>
-        <else-if type="legal_case">
-          <choose>
-            <if locator="page">
-              <text value="at"/>
-            </if>
-            <else>
-              <label variable="locator"/>
-            </else>
-          </choose>
-          <number variable="locator"/>
-        </else-if>
-      </choose>
-    </group>
   </macro>
   <macro name="juris-tail">
     <group delimiter=", " prefix="(" suffix=")">
@@ -241,46 +207,21 @@
       </else-if>
     </choose>
   </macro>
-  <macro name="juris-default-spotter-short">
-    <text macro="juris-default-spotter"/>
-  </macro>
-  <macro name="juris-comma-spotter-short">
-    <choose>
-      <if type="regulation">
-        <text macro="juris-comma-spotter"/>
-      </if>
-      <else-if type="legal_case">
-        <text macro="juris-comma-spotter"/>
-      </else-if>
-    </choose>
-  </macro>
   <macro name="juris-tail-short">
     <text value=""/>
   </macro>
-  <macro name="juris-locator-label">
-    <choose>
-      <if match="all" type="legal_case" locator="page"/>
-      <else>
-        <label variable="locator"/>
-      </else>
-    </choose>
-  </macro>
   <macro name="juris-locator">
-    <number variable="locator"/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
-  <!-- 
-       Local macro called by the scaffolding below (this macro is not
-       part of the modular code, and will be ignored by the calling
-       style).
-  -->
-  <macro name="at-locator-label">
-    <text value="at"/>
-  </macro>
-  <!-- 
-       Punctuation scaffolding for Bluebook citations (you do not need
-       to change this - punctuation scaffolding is applied by the
-       style that calls the module)
-  -->
+
   <citation>
     <layout>
       <choose>

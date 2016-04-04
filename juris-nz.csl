@@ -22,6 +22,9 @@
       <term name="section" form="symbol">s</term>
     </terms>
   </locale>
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -87,6 +90,9 @@
   </macro>
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+  <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
   <macro name="juris-title-short">

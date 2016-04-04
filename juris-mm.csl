@@ -16,6 +16,9 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legislation report"/>
   </info>
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <choose>
       <if type="legislation">
@@ -65,6 +68,9 @@
         </if>
       </choose>
     </group>
+  </macro>
+  <macro name="juris-pretitle-short">
+    <text value=""/>
   </macro>
   <macro name="juris-title-short">
     <choose>

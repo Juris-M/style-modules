@@ -37,6 +37,9 @@
       <date-part name="year"/>
     </date>
   </locale>
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -422,6 +425,9 @@
         </choose>
       </group>
     </group>
+  </macro>
+  <macro name="juris-pretitle-short">
+    <text value=""/>
   </macro>
   <macro name="juris-title-short">
     <choose>

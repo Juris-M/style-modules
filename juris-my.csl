@@ -21,6 +21,9 @@
       <term form="symbol" name="chapter">ch.</term>
     </terms>
   </locale>
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
@@ -30,6 +33,9 @@
         <text variable="title"/>
       </else>
     </choose>
+  </macro>
+  <macro name="juris-pretitle-short">
+    <text value=""/>
   </macro>
   <macro name="juris-title-short">
     <choose>

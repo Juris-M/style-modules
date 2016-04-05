@@ -57,16 +57,10 @@
     <text value=""/>
   </macro>
 
-<<<<<<< HEAD
   <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
-=======
-<macro name="juris-pretitle-short">
-  <text value="YY"/>
-</macro>
 
->>>>>>> 540ad64b14be251d224d35f80e6ccd90dbb17e56
   <macro name="juris-title-short">
     <choose>
       <if type="legal_case">

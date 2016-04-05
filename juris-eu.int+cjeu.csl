@@ -17,6 +17,7 @@
     <law-module types="legal_case"/>
   </info>
   
+  
   <locale>
     <terms>
       <term name="paragraph" form="short">

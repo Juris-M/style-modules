@@ -24,6 +24,7 @@
         <single>para.</single>
         <multiple>paras.</multiple>
       </term>
+      <term name="paragraph" form="static">[%s]</term>
     </terms>
   </locale>
   
@@ -97,6 +98,9 @@
     <group delimiter=" ">
       <choose>
         <if locator="page"/>
+        <else-if locator="paragraph">
+          <label variable="locator" form="static"/>
+        </else-if>
         <else>
           <label variable="locator" form="short"/>
         </else>

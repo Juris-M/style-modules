@@ -108,6 +108,10 @@
       <choose>
         <if type="report">
           <text variable="jurisdiction" form="short"/>
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
           <names variable="committee">
             <name/>
             <institution institution-parts="short"/>

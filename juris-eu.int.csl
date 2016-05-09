@@ -14,7 +14,7 @@
     <summary>Juris-M style module for European Union</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case regulation"/>
   </info>
   
   <locale>
@@ -24,11 +24,39 @@
   </locale>
   
   <macro name="juris-pretitle">
-    <text value=""/>
+      <choose>
+        <if type="regulation">
+          <group delimiter=" ">
+            <choose>
+              <if match="none" variable="contributor">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+              </if>
+            </choose>
+            <text variable="genre"/>
+            <number variable="number"/>
+            <choose>
+              <if match="any" variable="contributor">
+                <group delimiter=" " prefix="of the ">
+                  <names variable="contributor">
+                    <name/>
+                    <institution institution-parts="short" and="text"/>
+                  </names>
+                </group>
+              </if>
+            </choose>
+            <text value="of"/>
+            <date variable="issued" date-parts="year-month-day" form="text"/>
+          </group>
+        </if>
+      </choose>
   </macro>
+  
   <macro name="juris-title">
     <choose>
-      <if type="legal_case">
+      <if match="any" type="legal_case regulation">
         <text variable="title"/>
       </if>
     </choose>
@@ -56,6 +84,13 @@
           </group>
         </group>
       </if>
+      <else-if type="regulation">
+        <group delimiter=" ">
+          <date variable="publication-date" form="text" date-parts="year" prefix="[" suffix="]"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -154,10 +189,10 @@
                 <!-- join with comman in Indigo -->
                 <choose>
                   <if type="legislation regulation" match="any">
-                    <text macro="juris-title-short" strip-periods="true"/>
+                    <text macro="juris-title" strip-periods="true"/>
                   </if>
                   <else>
-                    <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
+                    <text macro="juris-title" font-style="italic" strip-periods="true"/>
                   </else>
                 </choose>
                 <group delimiter=" ">

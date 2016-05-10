@@ -17,6 +17,14 @@
   </info>
   <locale>
     <terms>
+      <term name="article">
+        <single>article</single>
+        <multiple>articles</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art.</single>
+        <multiple>arts.</multiple>
+      </term>
       <term form="symbol" name="chapter">ch.</term>
       <term form="short" name="number">no.</term>
       <!-- ordinals -->
@@ -263,14 +271,21 @@
         </group>
       </else-if>
       <else-if type="regulation">
-        <group delimiter=" ">
-          <number variable="volume"/>
-          <text variable="container-title"/>
-          <choose>
-            <if match="all" variable="gazette-flag">
-              <number variable="page"/>
-            </if>
-          </choose>
+        <group delimiter=", ">
+          <!-- added for UNCITRAL arbitration rules (un.int) -->
+          <group delimiter=" ">
+            <text value="as revised" font-style="italic"/>
+            <date variable="event-date" form="text" date-parts="year-month-day"/>
+          </group>
+          <group delimiter=" ">
+            <number variable="volume"/>
+            <text variable="container-title"/>
+            <choose>
+              <if match="all" variable="gazette-flag">
+                <number variable="page"/>
+              </if>
+            </choose>
+          </group>
         </group>
       </else-if>
       <else-if>
@@ -562,6 +577,13 @@
             <else>
               <text variable="title"/>
             </else>
+          </choose>
+          <!-- added for UNCITRAL arbitration rules (un.int) -->
+          <choose>
+            <if disambiguate="true">
+              <text value="revised" font-style="italic"/>
+              <date variable="issued" form="text" date-parts="year-month-day"/>
+            </if>
           </choose>
         </else-if>
         <else>

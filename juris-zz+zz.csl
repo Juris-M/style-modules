@@ -16,7 +16,11 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation"/>
   </info>
-  
+  <locale>
+    <terms>
+      <term form="symbol" name="chapter">ch.</term>
+    </terms>
+  </locale>  
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <text value="[PRETITLE]"/>
@@ -34,38 +38,72 @@
   </macro>
 
   <macro name="juris-main">
-    <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
+    <choose>
+    <if type="legal_case">
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" 
+              form="short"/>
+        <number variable="page-first"/>
+      </group>
+    </if>
+    <else>
+      <choose>
+        <if number="number">
+          <group delimiter=" " suffix=",">
+            <text value="Pub. L. No."/>
+            <number variable="number"/>
+          </group>
+        </if>
+        <else>
+          <group delimiter=" " suffix=",">
+            <label variable="number" 
+                   form="symbol"/>
+            <number variable="number"/>
+          </group>
+        </else>
+      </choose>
+    </else>
+  </choose>
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
-  </macro>
-
-  <macro name="juris-pretitle-short">
-    <!-- Fragment to precede short title (rare) -->
-    <text value="[PRETITLE-SHORT]"/>
+    <group delimiter=" ">
+      <choose>
+        <if type="legislation">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <group delimiter=", ">
+            <number variable="page-first"/>
+            <text variable="locator-extra"/>
+          </group>
+        </if>
+      </choose>
+      <group delimiter=" " prefix="(" suffix=")">
+        <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+        </names>
+        <date form="text" date-parts="year" variable="issued"/>
+      </group>
+    </group>
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
-  </macro>
-
-  <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
-  </macro>
-
-  <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
-  </macro>
-
-  <macro name="juris-locator">
-    <!-- The label and locator -->
-    <text value="[LOCATOR]"/>
+    <choose>
+      <if match="all" type="legal_case" variable="title-short">
+        <text variable="title-short" form="short"/>
+      </if>
+      <else-if type="legal_case">
+        <text variable="title" form="short"/>
+      </else-if>
+      <else-if variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
 
   <citation>

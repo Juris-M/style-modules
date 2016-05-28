@@ -300,12 +300,18 @@
         </group>
       </else-if>
       <else-if type="hearing">
-        <group delimiter=" ">
-          <number variable="collection-number" form="ordinal"/>
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short" use-last="1"/>
-          </names>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <number variable="collection-number" form="ordinal"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short" use-last="1"/>
+            </names>
+          </group>
+          <group delimiter=" ">
+            <number variable="chapter-number" form="ordinal"/>
+            <text value="session"/>
+          </group>
         </group>
       </else-if>
       <else-if>

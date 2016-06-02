@@ -23,6 +23,11 @@
         <single>art.</single>
         <multiple>arts.</multiple>
       </term>
+      <term name="number">number</term>
+      <term name="number" form="short">
+        <single>no.</single>
+        <multiple>nos.</multiple>
+      </term>
     </terms>
   </locale>
   <macro name="juris-pretitle">
@@ -47,7 +52,6 @@
   <macro name="juris-main">
     <choose>
       <if type="legislation"/>
-      <else-if type="report"/>
       <else-if type="legal_case">
         <group delimiter=", ">
           <group delimiter=" ">
@@ -65,6 +69,15 @@
               <text value="judgment"/>
             </else>
           </choose>
+        </group>
+      </else-if>
+      <else-if type="report">
+        <group delimiter=", ">
+          <text variable="genre"/>
+          <group delimiter=" ">
+            <label variable="number" form="short"/>
+            <number variable="number"/>
+          </group>
         </group>
       </else-if>
     </choose>
@@ -88,7 +101,7 @@
               <institution institution-parts="short"/>
             </names>
           </group>
-          <date variable="issued" form="text" date-parts="year"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
         <else-if type="legal_case">
           <text variable="jurisdiction" form="short"/>
@@ -114,6 +127,16 @@
           <text value="judgment"/>
         </group>
       </else-if>
+      <else-if type="report">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-main-short">
@@ -135,6 +158,16 @@
         <choose>
           <if disambiguate="true">
             <date variable="issued" form="text" date-parts="year-month-day"/>
+          </if>
+        </choose>
+      </else-if>
+      <else-if type="report">
+        <choose>
+          <if disambiguate="true">
+            <group delimiter=" ">
+              <label variable="number" form="short"/>
+              <number variable="number"/>
+            </group>
           </if>
         </choose>
       </else-if>

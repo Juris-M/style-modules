@@ -6,8 +6,8 @@
     <link href="http://citationstylist/modules/juris-us:tx" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>YOUR-NAME-HERE</name>
-      <email>YOUR-EMAIL-ADDRESS-HERE</email>
+      <name>Will Clark</name>
+      <email>wjclark@utexas.edu</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
@@ -23,7 +23,7 @@
 
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
-    <text value="[TITLE]"/>
+    <text variable="title"/>
   </macro>
 
   <macro name="juris-main">

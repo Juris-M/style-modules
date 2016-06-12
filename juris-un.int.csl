@@ -80,18 +80,68 @@
       <else-if type="hearing">
         <group delimiter=", ">
           <group delimiter=" ">
-            <text value="reporting to the"/>
-            <group delimiter=" of the ">
-              <group delimiter=" ">
-                <number variable="chapter-number" form="ordinal"/>
-                <text value="session"/>
-              </group>
-              <group delimiter=" ">
-                <text variable="jurisdiction" form="short"/>
-                <names variable="committee">
-                  <name/>
-                  <institution/>
-                </names>
+            <!-- a little too cocky here -->
+            <!-- possible combinations:
+                 * (author + title) + (chapno + cttee)
+                 * (author + title) + (chapno + cttee) + (num + authority)
+                 * (author + title) + (num + authority)
+                 and
+                 * (chapno + cttee) + (num + authority)
+                 * (num + authority)
+                 * (chapno + cttee)
+                 what to do with that mess of possibilities?
+            -->
+            <choose>
+              <if variable="title">
+                <text value="presented to the"/>
+              </if>
+              <else-if variable="author">
+                <text value="reporting to the"/>
+              </else-if>
+              <else>
+                <text value="Record of the"/>
+              </else>
+            </choose>
+            <group delimiter=" ">
+              <group delimiter=" for the ">
+                <group delimiter=" of the ">
+                  <group delimiter=" ">
+                    <number variable="collection-number" form="ordinal"/>
+                    <text value="session"/>
+                  </group>
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="none" variable="authority"/>
+                          <condition match="any" variable="committee"/>
+                        </conditions>
+                        <text variable="jurisdiction" form="short"/>
+                      </if>
+                    </choose>
+                    <names variable="committee">
+                      <name/>
+                      <institution/>
+                    </names>
+                  </group>
+                </group>
+                <group delimiter=" of the ">
+                  <group delimiter=" ">
+                    <number variable="chapter-number" form="ordinal"/>
+                    <text value="session"/>
+                  </group>
+                  <group delimiter=" ">
+                    <choose>
+                      <if match="any" variable="authority">
+                        <text variable="jurisdiction" form="short"/>
+                      </if>
+                    </choose>
+                    <names variable="authority">
+                      <name/>
+                      <institution/>
+                    </names>
+                  </group>
+                </group>
               </group>
             </group>
           </group>

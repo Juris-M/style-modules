@@ -99,7 +99,7 @@
                 <text value="reporting to the"/>
               </else-if>
               <else>
-                <text value="Record of the"/>
+                <text value="Report of the"/>
               </else>
             </choose>
             <group delimiter=" ">

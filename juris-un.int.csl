@@ -201,7 +201,14 @@
     </group>
   </macro>
   <macro name="juris-pretitle-short">
-    <text value=""/>
+    <choose>
+      <if type="hearing">
+        <names variable="author">
+          <name form="short"/>
+          <institution/>
+        </names>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-title-short">
     <choose>
@@ -225,10 +232,55 @@
           </else>
         </choose>
       </else-if>
+      <else-if type="hearing">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short"/>
+          </if>
+          <else>
+            <text variable="title" form="short"/>
+          </else>
+        </choose>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-main-short">
-    <text value=""/>
+    <choose>
+      <if match="none" variable="author title title-short">
+        <choose>
+          <if variable="committee">
+            <group delimiter=" of the ">
+              <group delimiter=" ">
+                <number variable="chapter-number" form="ordinal"/>
+                <text value="session"/>
+              </group>
+              <group delimiter=" ">
+                <text variable="jurisdiction" form="short"/>
+                <names variable="committee">
+                  <name/>
+                  <institution/>
+                </names>
+              </group>
+            </group>
+          </if>
+          <else-if variable="authority">
+            <group delimiter=" of the ">
+              <group delimiter=" ">
+                <number variable="collection-number" form="ordinal"/>
+                <text value="session"/>
+              </group>
+              <group delimiter=" ">
+                <text variable="jurisdiction" form="short"/>
+                <names variable="authority">
+                  <name/>
+                  <institution/>
+                </names>
+              </group>
+            </group>
+          </else-if>
+        </choose>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-tail-short">
     <text value=""/>
@@ -276,6 +328,7 @@
           </conditions>
           <group delimiter=" ">
             <group delimiter=", ">
+              <text macro="juris-pretitle-short"/>
               <choose>
                 <if>
                   <conditions match="all">
@@ -286,6 +339,7 @@
                 </if>
                 <else-if type="hearing">
                   <text macro="juris-title-short" font-style="italic"/>
+                  <text macro="juris-main-short"/>
                 </else-if>
                 <else-if match="all" type="report">
                   <text macro="juris-title-short" font-variant="small-caps"/>

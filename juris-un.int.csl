@@ -247,38 +247,41 @@
   <macro name="juris-main-short">
     <choose>
       <if match="none" variable="author title title-short">
-        <choose>
-          <if variable="committee">
-            <group delimiter=" of the ">
-              <group delimiter=" ">
-                <number variable="chapter-number" form="ordinal"/>
-                <text value="session"/>
+        <group delimiter=" ">
+          <text value="Report of the"/>
+          <choose>
+            <if variable="committee">
+              <group delimiter=" of the ">
+                <group delimiter=" ">
+                  <number variable="chapter-number" form="ordinal"/>
+                  <text value="session"/>
+                </group>
+                <group delimiter=" ">
+                  <text variable="jurisdiction" form="short"/>
+                  <names variable="committee">
+                    <name/>
+                    <institution/>
+                  </names>
+                </group>
               </group>
-              <group delimiter=" ">
-                <text variable="jurisdiction" form="short"/>
-                <names variable="committee">
-                  <name/>
-                  <institution/>
-                </names>
+            </if>
+            <else-if variable="authority">
+              <group delimiter=" of the ">
+                <group delimiter=" ">
+                  <number variable="collection-number" form="ordinal"/>
+                  <text value="session"/>
+                </group>
+                <group delimiter=" ">
+                  <text variable="jurisdiction" form="short"/>
+                  <names variable="authority">
+                    <name/>
+                    <institution/>
+                  </names>
+                </group>
               </group>
-            </group>
-          </if>
-          <else-if variable="authority">
-            <group delimiter=" of the ">
-              <group delimiter=" ">
-                <number variable="collection-number" form="ordinal"/>
-                <text value="session"/>
-              </group>
-              <group delimiter=" ">
-                <text variable="jurisdiction" form="short"/>
-                <names variable="authority">
-                  <name/>
-                  <institution/>
-                </names>
-              </group>
-            </group>
-          </else-if>
-        </choose>
+            </else-if>
+          </choose>
+        </group>
       </if>
     </choose>
   </macro>

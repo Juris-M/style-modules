@@ -385,7 +385,6 @@
             <text variable="jurisdiction" form="short"/>
           </else-if>
           <else-if type="legal_case">
-            <text variable="jurisdiction" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>

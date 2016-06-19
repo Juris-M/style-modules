@@ -58,6 +58,19 @@
           <institution institution-parts="short"/>
         </names>
       </if>
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="legal_case"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+           <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-title">
@@ -368,10 +381,16 @@
       </choose>
       <group delimiter=" " prefix="(" suffix=")">
         <choose>
-          <if type="bill" variable="chapter-number">
+          <if>
+            <conditions match="all">
+              <condition match="any" type="legal_case"/>
+              <condition match="none" variable="title"/>
+            </conditions>
+          </if> 
+          <else-if type="bill" variable="chapter-number">
             <number variable="chapter-number" form="ordinal"/>
             <text value="Sess" suffix="."/>
-          </if>
+          </else-if>
           <else-if>
             <conditions match="all">
               <condition type="report"/>
@@ -399,9 +418,15 @@
           </else>
         </choose>
         <choose>
-          <if match="all" type="regulation" variable="gazette-flag">
+          <if>
+            <conditions match="all">
+              <condition match="any" type="legal_case"/>
+              <condition match="none" variable="title"/>
+            </conditions>
+          </if> 
+          <else-if match="all" type="regulation" variable="gazette-flag">
             <date form="text" date-parts="year-month-day" variable="issued"/>
-          </if>
+          </else-if>
           <else-if type="regulation">
             <group delimiter=" ">
               <names variable="authority">
@@ -471,11 +496,24 @@
           </institution>
         </names>
       </if>
-    </choose>
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="legal_case"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+           <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </else-if>
+     </choose>
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if match="all" type="legal_case" variable="title-short">
+      <if match="all" type="legal_case" variable="title-short title">
         <text variable="title-short" form="short"/>
       </if>
       <else-if type="legal_case">
@@ -607,6 +645,12 @@
               <date variable="issued" form="text" date-parts="year-month-day"/>
             </if>
           </choose>
+        </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition match="any" type="legal_case"/>
+            <condition match="none" variable="title"/>
+          </conditions>
         </else-if>
         <else>
           <group delimiter=" ">

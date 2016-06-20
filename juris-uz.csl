@@ -48,6 +48,7 @@
   <macro name="juris-tail">
     <choose>
       <if type="report">
+        <group delimiter=", " prefix="(" suffix=")">
           <group delimiter=" ">
             <text variable="jurisdiction" form="short"/>
             <names variable="authority">
@@ -56,6 +57,7 @@
             </names>
           </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
       </if>
     </choose>
   </macro>

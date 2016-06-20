@@ -55,10 +55,13 @@
       <else-if type="legal_case">
         <group delimiter=", ">
           <group delimiter=" ">
-            <date variable="submitted">
-              <date-part name="year" form="imperial"/>
-            </date>
-            <text variable="genre" form="short" prefix="(" suffix=")"/>
+            <group>
+              <text variable="genre"/>
+              <date variable="submitted">
+                <date-part name="year" form="imperial"/>
+              </date>
+            </group>
+            <number variable="call-number" prefix="(" suffix=")"/>
             <number variable="number"/>
           </group>
           <choose>

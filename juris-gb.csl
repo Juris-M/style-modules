@@ -27,7 +27,10 @@
   <macro name="juris-title">
     <choose>
       <if type="legal_case legislation">
-        <text variable="title"/>
+        <group delimiter=" ">
+          <text variable="title"/>
+          <date variable="issued" form="text" date-parts="year"/>
+        </group>
       </if>
     </choose>
   </macro>
@@ -103,6 +106,23 @@
           </else>
         </choose>
       </if>
+      <else-if type="regulation legislation">
+        <group delimiter=" ">
+          <choose>
+            <if variable="title-short">
+              <text variable="title-short" form="short"/>
+            </if>
+            <else>
+              <text variable="title" form="short"/>
+            </else>
+          </choose>
+          <choose>
+            <if disambiguate="true">
+              <date variable="issued" form="text" date-parts="year"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-main-short">

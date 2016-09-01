@@ -352,7 +352,7 @@
           <group delimiter=", ">
             <group delimiter=" ">
               <group delimiter=", ">
-                <text macro="juris-pretitle" suffix="XX"/>
+                <text macro="juris-pretitle"/>
                 <choose>
                   <if type="hearing">
                     <text macro="juris-title" font-style="italic"/>

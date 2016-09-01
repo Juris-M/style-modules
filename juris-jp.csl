@@ -115,12 +115,12 @@
             <institution/>
           </names>
           <group delimiter=" ">
-            <number variable="chapter-number" form="ordinal"/>
+            <number variable="collection-number" form="ordinal"/>
             <text value="Session"/>
           </group>
           <group delimiter=" ">
             <text value="Meeting No."/>
-            <number variable="collection-number"/>
+            <number variable="chapter-number"/>
           </group>
         </group>
       </else-if>

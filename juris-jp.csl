@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Japan</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legislation report legal_case"/>
+    <law-module types="legislation report legal_case hearing"/>
   </info>
   <locale>
     <terms>
@@ -31,7 +31,17 @@
     </terms>
   </locale>
   <macro name="juris-pretitle">
-    <text value=""/>
+    <choose>
+      <if type="hearing">
+        <names variable="author">
+          <name/>
+          <institution/>
+          <substitute>
+            <names variable="authority"/>
+          </substitute>
+        </names>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-title">
     <choose>
@@ -94,6 +104,26 @@
           </group>
         </group>
       </else-if>
+      <else-if type="hearing">
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution/>
+          </names>
+          <names variable="committee">
+            <name/>
+            <institution/>
+          </names>
+          <group delimiter=" ">
+            <number variable="chapter-number" form="ordinal"/>
+            <text value="Session"/>
+          </group>
+          <group delimiter=" ">
+            <text value="Meeting No."/>
+            <number variable="collection-number"/>
+          </group>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -119,6 +149,9 @@
         </else-if>
         <else-if type="legal_case">
           <text variable="jurisdiction" form="short"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </else-if>
+        <else-if type="hearing">
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
       </choose>
@@ -319,6 +352,7 @@
           <group delimiter=", ">
             <group delimiter=" ">
               <group delimiter=", ">
+                <text macro="juris-pretitle" suffix="XX"/>
                 <choose>
                   <if type="hearing">
                     <text macro="juris-title" font-style="italic"/>

@@ -14,7 +14,7 @@
     <summary>Juris-M style module for European Union ECLI standard</summary>
     <updated>2016-09-06T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case regulation"/>
+    <law-module types="legal_case legislation"/>
   </info>
   
   <locale>

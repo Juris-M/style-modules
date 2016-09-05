@@ -6,13 +6,13 @@
     <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <name>aAlexander Schuster</name>
+      <email>alexander.schuster@unitn.it</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for European Union</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <summary>Juris-M style module for European Union ECLI standard</summary>
+    <updated>2016-09-06T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case regulation"/>
   </info>

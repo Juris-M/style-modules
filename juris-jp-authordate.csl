@@ -42,7 +42,14 @@
         </names>
       </if>
       <else-if type="legislation">
-        <text variable="title-short"/>
+        <names variable="dummy">
+          <name/>
+          <institution/>
+          <substitute>
+            <text variable="title-short"/>
+            <text variable="title"/>
+          </substitute>
+        </names>
       </else-if>
       <else-if type="legal_case">
         <group delimiter=" " font-variant="normal" font-style="normal">

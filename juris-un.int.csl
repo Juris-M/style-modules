@@ -9,20 +9,25 @@
       <name>Frank Bennett</name>
       <email>bennett@nagoya-u.jp</email>
     </author>
+    <contributor>
+      <name>Ehsan Ziaaddini</name>
+      <email>e.ziaaddini@icloud.com</email>
+    </contributor>
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case report bill hearing"/>
+    <law-module types="legal_case"/>
   </info>
+ 
   <macro name="juris-pretitle">
     <text value=""/>
   </macro>
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
+        <group delimiter=" " font-style="italic">
           <text variable="title"/>
           <text variable="document-name" prefix="(" suffix=")"/>
         </group>
@@ -46,13 +51,158 @@
   </macro>
   <macro name="juris-main">
     <choose>
-      <if type="legal_case">
+       <if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="collection-number"/>
+          <condition match="all" variable="references"/>
+        </conditions>
+          <group delimiter=" ">
+            <group prefix="(" suffix=")">
+              <text variable="genre"/>
+              <group delimiter=" ">
+                <text variable="references" prefix=", " suffix=" of"/>
+                  <group delimiter=" ">
+                    <date variable="issued">
+                      <date-part name="day" suffix=" "/>
+                      <date-part name="month" suffix=" "/>
+                      <date-part name="year"/>
+                    </date>
+                  </group>
+              </group>
+              <text variable="note" prefix=", "/>
+            </group>   
+          </group>
+        </if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="genre"/>
+          <condition match="all" variable="issued"/>
+          <condition match="all" variable="page"/>
+          <condition match="none" variable="volume"/>
+          <condition match="none" variable="issue"/>
+          <condition match="none" variable="references"/>
+        </conditions>
         <group delimiter=" ">
-          <text variable="container-title"/>
-          <number variable="page"/>
-          <date variable="issued" form="text" date-parts="year" prefix="(" suffix=")"/>
+          <text variable="genre" prefix="(" suffix=")"/>
+          <date variable="issued" form="text" date-parts="year" prefix="[" suffix="]"/>
         </group>
-      </if>
+      </else-if>
+      <else-if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="genre"/>
+              <condition match="all" variable="issued"/>
+              <condition match="all" variable="page"/>
+              <condition match="all" variable="volume"/>
+              <condition match="none" variable="issue"/>
+              <condition match="none" variable="references"/>
+            </conditions>
+            <group delimiter=" ">
+              <text variable="genre" prefix="(" suffix=")"/>
+              <group delimiter="-">
+                <date variable="submitted" form="numeric" date-parts="year" prefix="("/>
+                <date variable="issued" form="numeric" date-parts="year" suffix=")"/>
+              </group>
+            </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="number"/>
+          <condition match="all" variable="references"/>
+          <condition match="none" variable="container-title"/>
+          <condition match="none" variable="collection-number"/>
+          <condition match="none" variable="call-number"/>
+        </conditions>
+        <group delimiter=" ">
+          <group delimiter=": " prefix="(" suffix=")">
+            <text variable="genre"/>
+            <text variable="references"/>
+          </group>
+          <text value="General List No "/>
+        </group>
+        <number variable="number"/>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="URL"/>
+          <condition match="all" variable="accessed"/>
+          <condition match="all" variable="genre"/>
+          <condition match="none" variable="volume"/>
+          <condition match="none" variable="page"/>
+          <condition match="none" variable="container-title"/>
+          <condition match="none" variable="collection-number"/>
+          <condition match="none" variable="call-number"/>
+        </conditions>
+        <group delimiter=" ">
+          <text variable="genre" prefix="(" suffix=")"/>
+          <date variable="issued" form="numeric"/>
+          <text variable="URL" prefix="&lt;" suffix="&gt;"/>
+          <text value="accessed"/>
+          <group delimiter=" ">
+            <date variable="accessed">
+              <date-part name="day" suffix=" "/>
+              <date-part name="month" suffix=" "/>
+              <date-part name="year"/>
+            </date>
+          </group>
+        </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="URL"/>
+          <condition match="all" variable="accessed"/>
+          <condition match="all" variable="genre"/>
+          <condition match="all" variable="publication-date"/>
+          <condition match="none" variable="volume"/>
+          <condition match="none" variable="page"/>
+          <condition match="all" variable="container-title"/>
+          <condition match="none" variable="collection-number"/>
+          <condition match="none" variable="call-number"/>
+        </conditions>
+        <group delimiter=" ">
+          <text variable="genre" prefix="(" suffix=")"/>
+          <text value="ICJ Press release "/>
+        </group>
+        <date variable="publication-date" form="numeric" date-parts="year"/>
+        <group delimiter=" ">
+        <number variable="issue" prefix="/"/>
+          <text variable="URL" prefix="&lt;" suffix="&gt;"/>
+          <text value="accessed"/>
+          <group subgroup-delimiter=" ">
+            <date variable="accessed">
+              <date-part name="day" suffix=" "/>
+              <date-part name="month" suffix=" "/>
+              <date-part name="year"/>
+            </date>
+          </group>
+        </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="legal_case"/>
+          <condition match="all" variable="genre"/>
+          <condition match="all" variable="number"/>
+          <condition match="all" variable="container-title"/>
+          <condition match="all" variable="issued"/>
+          <condition match="all" variable="collection-number"/>
+          <condition match="all" variable="publisher-place"/>
+          <condition match="none" variable="publication-date"/>
+          <condition match="none" variable="volume"/>
+          <condition match="none" variable="call-number"/>
+        </conditions>
+        <group delimiter=" ">
+          <text variable="genre" prefix="(" suffix=")"/>
+          <text variable="publisher-place"/>
+        </group>
+        <number variable="collection-number" prefix="-"/>
+        <number variable="number" prefix="-"/>
+        <text variable="container-title" form="short" strip-periods="true" prefix=", "/>
+      </else-if>
       <else-if type="bill">
         <group delimiter=" ">
           <group delimiter=" of the ">
@@ -214,6 +364,91 @@
           </choose>
         </else-if>
       </choose>
+    </group>
+    <group delimiter=" ">
+      <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="collection-number"/>
+              <condition match="all" variable="references"/>
+            </conditions>
+            <group delimiter=" ">
+              <text value="ITLOS Reports"/>
+              <group delimiter=", ">
+                <number variable="collection-number"/>
+                <number variable="page"/>
+              </group>
+            </group>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="genre"/>
+              <condition match="all" variable="issued"/>
+              <condition match="all" variable="page"/>
+              <condition match="none" variable="volume"/>
+              <condition match="none" variable="issue"/>
+              <condition match="none" variable="references"/>
+            </conditions>
+            <group delimiter=" ">
+              <text value="ICJ Rep"/>
+              <number variable="page"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="genre"/>
+              <condition match="all" variable="issued"/>
+              <condition match="all" variable="page"/>
+              <condition match="all" variable="volume"/>
+              <condition match="none" variable="issue"/>
+              <condition match="none" variable="references"/>
+            </conditions>
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="container-title"/>
+              <number variable="page"/>
+            </group>
+          </else-if>
+          <else-if>
+              <conditions match="all">
+                <condition match="all" type="legal_case"/>
+                <condition match="all" variable="number"/>
+                <condition match="all" variable="references"/>
+                <condition match="none" variable="container-title"/>
+                <condition match="none" variable="collection-number"/>
+                <condition match="none" variable="call-number"/>
+              </conditions>
+              <group delimiter=" ">
+                <date variable="issued" form="numeric" prefix="[" suffix="]"/>
+                <text value="ICJ"/>
+                <number variable="page"/>
+              </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="genre"/>
+              <condition match="all" variable="number"/>
+              <condition match="all" variable="container-title"/>
+              <condition match="all" variable="issued"/>
+              <condition match="all" variable="collection-number"/>
+              <condition match="all" variable="publisher-place"/>
+              <condition match="none" variable="publication-date"/>
+              <condition match="none" variable="volume"/>
+              <condition match="none" variable="call-number"/>
+            </conditions>
+            <group delimiter=" " prefix="(" suffix=")">
+              <date variable="issued">
+                <date-part name="day" suffix=" "/>
+                <date-part name="month" suffix=" "/>
+                <date-part name="year"/>
+              </date>
+            </group>
+          </else-if>
+        </choose>
     </group>
   </macro>
   <macro name="juris-pretitle-short">
@@ -444,10 +679,19 @@
                   <else-if type="report">
                     <text macro="juris-title" font-variant="small-caps"/>
                   </else-if>
-                  <else>
+                  <else-if match="none" type="legal_case">
                     <text macro="juris-title"/>
-                  </else>
+                  </else-if>
                 </choose>
+              </group>
+              <group delimiter=" ">
+                <choose>
+                  <if type="legal_case">
+                    <text macro="juris-title"/>
+                  </if>
+                </choose>
+              </group>
+              <group delimiter=", ">
                 <group delimiter=" ">
                   <group delimiter=", ">
                     <choose>

@@ -199,6 +199,12 @@
           <text variable="title"/>
         </group>
       </else-if>
+      <else-if type="standard">
+        <group delimiter=": ">
+          <text variable="title"/>
+          <text variable="locator-extra"/>
+        </group>
+      </else-if>
       <else>
         <text variable="title"/>
       </else>
@@ -473,6 +479,12 @@
               <condition match="none" variable="committee"/>
             </conditions>
             <date form="text" date-parts="year-month-day" variable="issued"/>
+          </else-if>
+          <else-if type="standard">
+            <group delimiter=" ">
+              <text variable="publisher"/>
+              <date form="text" date-parts="year" variable="issued"/>
+            </group>
           </else-if>
           <else>
             <date form="text" date-parts="year" variable="issued"/>

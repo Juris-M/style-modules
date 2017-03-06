@@ -6,20 +6,23 @@
     <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <name>aAlexander Schuster</name>
+      <email>alexander.schuster@unitn.it</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for European Union</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <summary>Juris-M style module for European Union ECLI standard</summary>
+    <updated>2016-09-06T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case regulation"/>
+    <law-module types="legal_case legislation"/>
   </info>
   
   <locale>
     <terms>
-      <term name="paragraph" form="static">[%s]</term>
+      <term name="paragraph">
+        <single>paragraph</single>
+        <multiple>paragraphs</multiple>
+      </term>
       <term name="article">
         <single>article</single>
         <multiple>articles</multiple>
@@ -73,8 +76,11 @@
   
   <macro name="juris-title">
     <choose>
-      <if match="any" type="legal_case regulation">
-        <text variable="title"/>
+      <if type="legal_case">
+        <group delimiter=" " suffix=",">
+          <text variable="title"/>
+          <number variable="number"/>
+        </group>
       </if>
     </choose>
   </macro>
@@ -83,21 +89,9 @@
     <choose>
       <if type="legal_case">
         <group delimiter=" ">
-          <group delimiter=" " prefix="(" suffix=")">
-            <text value="Case"/>
+          <group delimiter=" " prefix="Judgment of" suffix=",">
+            <date variable="issued" form="text"/>
             <number variable="number"/>
-          </group>
-          <group delimiter=" ">
-            <text value="Commission Decision"/>
-            <number variable="call-number"/>
-          </group>
-          <date variable="issued" date-parts="year" form="text" prefix="[" suffix="]"/>
-          <group>
-            <text variable="container-title"/>
-            <group delimiter="/">
-              <number variable="issue"/>
-              <number variable="page-first"/>
-            </group>
           </group>
         </group>
       </if>
@@ -150,7 +144,7 @@
         <if locator="page"/>
         <else-if locator="paragraph">
           <group>
-            <label variable="locator" form="static"/>
+            <label variable="locator"/>
           </group>
         </else-if>
         <else>

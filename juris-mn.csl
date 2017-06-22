@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Mongolia</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   <macro name="juris-pretitle">
     <text value=""/>
@@ -45,6 +45,22 @@
           <number variable="call-number"/>
         </group>
       </if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <text variable="title"/>
+          <choose>
+            <if variable="issued">
+              <date variable="issued" date-parts="year" form="text"/>
+            </if>
+            <else-if variable="original-date">
+              <date variable="original-date" date-parts="year" form="text"/>
+            </else-if>
+            <else-if variable="publication-date">
+              <date variable="publication-date" date-parts="year" form="text"/>
+            </else-if>
+          </choose>  
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">

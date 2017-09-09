@@ -266,7 +266,7 @@
                           <condition match="none" variable="authority"/>
                           <condition match="any" variable="committee"/>
                         </conditions>
-                        <text variable="jurisdiction" form="short"/>
+                        <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
                       </if>
                     </choose>
                     <names variable="committee">
@@ -295,7 +295,7 @@
                   <group delimiter=" ">
                     <choose>
                       <if match="any" variable="authority">
-                        <text variable="jurisdiction" form="short"/>
+                        <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
                       </if>
                     </choose>
                     <names variable="authority">
@@ -337,7 +337,7 @@
     <group delimiter=", " prefix="(" suffix=")">
       <choose>
         <if type="report">
-          <text variable="jurisdiction" form="short"/>
+          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           <names variable="authority">
             <name/>
             <institution institution-parts="short"/>
@@ -508,7 +508,7 @@
                   <text value="session"/>
                 </group>
                 <group delimiter=" ">
-                  <text variable="jurisdiction" form="short"/>
+                  <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
                   <names variable="committee">
                     <name/>
                     <institution/>
@@ -523,7 +523,7 @@
                   <text value="session"/>
                 </group>
                 <group delimiter=" ">
-                  <text variable="jurisdiction" form="short"/>
+                  <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
                   <names variable="authority">
                     <name/>
                     <institution/>

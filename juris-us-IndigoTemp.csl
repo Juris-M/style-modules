@@ -401,10 +401,10 @@
           </else-if>
           <else-if match="any" type="bill hearing report"/>
           <else-if match="all" type="regulation">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           </else-if>
           <else-if type="legal_case">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>
@@ -415,7 +415,7 @@
               <name/>
               <institution institution-parts="short"/>
             </names>
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           </else>
         </choose>
         <choose>

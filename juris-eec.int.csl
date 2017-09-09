@@ -34,7 +34,7 @@
       </else-if>
       <else-if type="legal_case">
         <group delimiter=" ">
-          <text variable="jurisdiction" form="short"/>
+          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           <names variable="authority">
             <name/>
             <institution institution-parts="short"/>
@@ -70,7 +70,7 @@
       <choose>
         <if type="regulation">
           <group delimiter=" ">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>
@@ -87,7 +87,7 @@
         </if>
         <else-if type="report">
           <group delimiter=" ">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
             <choose>
               <if context="bibliography">
                 <names variable="authority">

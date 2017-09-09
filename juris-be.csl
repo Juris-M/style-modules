@@ -49,7 +49,7 @@
     <choose>
       <if type="legislation">
         <group prefix="(" suffix=")" delimiter=" ">
-          <text variable="jurisdiction" form="short"/>
+          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>

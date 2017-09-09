@@ -133,7 +133,7 @@
     <group delimiter=", ">
       <choose>
         <if type="legislation">
-          <text variable="jurisdiction" form="short"/>
+          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           <group delimiter=" ">
             <text value="Law no."/>
             <number variable="number"/>
@@ -142,7 +142,7 @@
         </if>
         <else-if type="report">
           <group delimiter=" ">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>
@@ -151,7 +151,7 @@
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
         <else-if type="legal_case">
-          <text variable="jurisdiction" form="short"/>
+          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
         <else-if type="hearing">

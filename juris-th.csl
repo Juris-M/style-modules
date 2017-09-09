@@ -38,7 +38,7 @@
       <if type="regulation">
         <group delimiter=", " prefix="(" suffix=")">
           <group delimiter=" ">
-            <text variable="jurisdiction" form="short"/>
+            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>

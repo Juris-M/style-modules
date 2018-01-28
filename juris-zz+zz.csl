@@ -28,9 +28,9 @@
       <if type = "legal_case">
         <text variable = "title" form ="short"/>
       </if>
-      <else>
+      <else-if type="legislation">
         <text variable="title"/>
-      </else>
+      </else-if>
     </choose>
   </macro>
 

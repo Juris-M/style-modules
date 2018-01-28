@@ -36,7 +36,15 @@
 
   <macro name="juris-main">
     <!-- The body of full citations (of all types) -->
-    <text value="[MAIN]"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter = " ">
+          <number variable="volume"/>
+          <text variable="container-title" form="short"/>
+          <number variable="page-first"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail">

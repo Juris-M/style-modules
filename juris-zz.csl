@@ -17,6 +17,12 @@
     <law-module types="legal_case legislation"/>
   </info>
   
+  <locale>
+  <terms>
+    <term name="paragraph" form="static">[%s]</term>
+  </terms>
+</locale>
+  
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <text value="[PRETITLE]"/>

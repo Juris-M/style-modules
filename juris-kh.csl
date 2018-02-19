@@ -18,6 +18,8 @@
   </info>
   <locale>
     <terms>
+      <term name="number">number</term>
+      <term name="number" form="short">no.</term>
       <term name="number" form="symbol">no.</term>
       <term name="article">article</term>
       <term name="article" form="short">
@@ -162,11 +164,22 @@
     <choose>
       <if type="regulation">
         <group delimiter=" ">
-          <text variable="genre"/>
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+            </if>
+            <else>
+              <text value="Sub-decree"/>
+            </else>
+          </choose>
           <group delimiter=" ">
             <choose>
               <if variable="number">
-                <label variable="number"/>
+                <choose>
+                  <if is-numeric="number">
+                    <label variable="number" form="short"/>
+                  </if>
+                </choose>
                 <number variable="number"/>
               </if>
               <else-if variable="genre">

@@ -117,7 +117,16 @@
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if type="regulation"/>
+      <if type="regulation">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short"/>
+          </if>
+          <else-if variable="title">
+            <text variable="title" form="short"/>
+          </else-if>
+        </choose>
+      </if>
       <else-if>
         <conditions match="all">
           <condition match="all" type="report"/>
@@ -163,35 +172,39 @@
   <macro name="juris-main-short">
     <choose>
       <if type="regulation">
-        <group delimiter=" ">
-          <choose>
-            <if variable="genre">
-              <text variable="genre"/>
-            </if>
-            <else>
-              <text value="Sub-decree"/>
-            </else>
-          </choose>
-          <group delimiter=" ">
-            <choose>
-              <if variable="number">
+        <choose>
+          <if variable="title title-short" match="none">
+            <group delimiter=" ">
+              <choose>
+                <if variable="genre">
+                  <text variable="genre"/>
+                </if>
+                <else>
+                  <text value="Sub-decree"/>
+                </else>
+              </choose>
+              <group delimiter=" ">
                 <choose>
-                  <if is-numeric="number">
-                    <label variable="number" form="short"/>
+                  <if variable="number">
+                    <choose>
+                      <if is-numeric="number">
+                        <label variable="number" form="short"/>
+                      </if>
+                    </choose>
+                    <number variable="number"/>
                   </if>
+                  <else-if variable="genre">
+                    <text value="of"/>
+                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                  </else-if>
+                  <else>
+                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                  </else>
                 </choose>
-                <number variable="number"/>
-              </if>
-              <else-if variable="genre">
-                <text value="of"/>
-                <date variable="issued" form="text" date-parts="year-month-day"/>
-              </else-if>
-              <else>
-                <date variable="issued" form="text" date-parts="year-month-day"/>
-              </else>
-            </choose>
-          </group>
-        </group>
+              </group>
+            </group>
+          </if>
+        </choose>
       </if>
       <else-if>
         <conditions match="all">

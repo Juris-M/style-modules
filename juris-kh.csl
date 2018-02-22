@@ -50,7 +50,10 @@
   <macro name="juris-main">
     <choose>
       <if type="regulation">
-        <text macro="juris-main-short"/>
+        <group delimiter=" ">
+          <text macro="juris-main-short"/>
+          <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
+        </group>
       </if>
       <else-if type="legal_case">
         <group delimiter=", ">
@@ -66,23 +69,7 @@
   <macro name="juris-tail">
     <group delimiter=", " prefix="(" suffix=")">
       <choose>
-        <if type="regulation">
-          <group delimiter=" ">
-            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
-          </group>
-          <choose>
-            <if variable="number">
-              <date variable="issued" form="text" date-parts="year-month-day"/>
-            </if>
-            <else>
-              <date variable="issued" form="text" date-parts="year"/>
-            </else>
-          </choose>
-        </if>
+        <if type="regulation"/>
         <else-if type="report">
           <group delimiter=" ">
             <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
@@ -204,6 +191,19 @@
               </group>
             </group>
           </if>
+          <else>
+            <group delimiter=" ">
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <label variable="number" form="short"/>
+              </group>
+              <number variable="number"/>
+              <group delimiter=" ">
+                <text value="of"/>
+                <date variable="issued" form="text" date-parts="year"/>
+              </group>
+            </group>
+          </else>
         </choose>
       </if>
       <else-if>

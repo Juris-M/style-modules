@@ -51,8 +51,49 @@
     <choose>
       <if type="regulation">
         <group delimiter=" ">
-          <text macro="juris-main-short"/>
-          <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
+          <choose>
+            <if variable="title title-short" match="none">
+              <group delimiter=" ">
+                <choose>
+                  <if variable="genre">
+                    <text variable="genre"/>
+                  </if>
+                  <else>
+                    <text value="Sub-decree"/>
+                  </else>
+                </choose>
+                <group delimiter=" ">
+                  <choose>
+                    <if variable="number">
+                      <choose>
+                        <if is-numeric="number">
+                          <label variable="number" form="short"/>
+                        </if>
+                      </choose>
+                      <number variable="number"/>
+                    </if>
+                    <else>
+                      <text value="of"/>
+                      <date variable="issued" form="text" date-parts="year-month-day"/>
+                    </else>
+                  </choose>
+                </group>
+              </group>
+            </if>
+            <else>
+              <group delimiter=", ">
+                <number variable="number"/>
+                <date variable="issued" form="text" date-parts="year"/>
+              </group>
+            </else>
+          </choose>
+          <group prefix="(" delimiter=" " suffix=")">
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority">
+              <name/>
+              <institution/>
+            </names>
+          </group>
         </group>
       </if>
       <else-if type="legal_case">
@@ -159,9 +200,9 @@
   <macro name="juris-main-short">
     <choose>
       <if type="regulation">
-        <choose>
-          <if variable="title title-short" match="none">
-            <group delimiter=" ">
+        <group delimiter=" ">
+          <choose>
+            <if variable="title title-short" match="none">
               <choose>
                 <if variable="genre">
                   <text variable="genre"/>
@@ -180,38 +221,16 @@
                     </choose>
                     <number variable="number"/>
                   </if>
-                  <else-if variable="genre">
-                    <text value="of"/>
-                    <date variable="issued" form="text" date-parts="year-month-day"/>
-                  </else-if>
                   <else>
+                    <text value="of"/>
                     <date variable="issued" form="text" date-parts="year-month-day"/>
                   </else>
                 </choose>
               </group>
-            </group>
-          </if>
-          <else>
-            <group delimiter=" ">
-              <group delimiter=" ">
-                <text variable="genre"/>
-                <label variable="number" form="short"/>
-              </group>
-              <number variable="number"/>
-              <group delimiter=" ">
-                <text value="of"/>
-                <date variable="issued" form="text" date-parts="year"/>
-              </group>
-            </group>
-          </else>
-        </choose>
+            </if>
+          </choose>
+        </group>
       </if>
-      <else-if>
-        <conditions match="all">
-          <condition match="any" type="regulation"/>
-          <condition match="none" variable="gazette-flag"/>
-        </conditions>
-      </else-if>
       <else-if type="legal_case">
         <group delimiter=", ">
           <choose>

@@ -21,6 +21,7 @@
       <term name="paragraph" form="static">[%s]</term>
       <term name="section" form="symbol">s</term>
       <term name="section" form="long">Section</term>
+      <term name="ibid" form="long">at</term>
     </terms>
   </locale>
   <macro name="juris-pretitle">
@@ -229,7 +230,7 @@
         <group delimiter=" ">
           <!-- text term="ibid" font-style="italic"/ -->
           <group delimiter=" ">
-            <text value="At"/>
+            <text term="ibid"/>
             <group require="empty-label-no-decor">
               <text macro="juris-locator" label-form="symbol"/>
             </group>

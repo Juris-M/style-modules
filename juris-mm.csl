@@ -59,7 +59,10 @@
     <group delimiter=" " prefix="(" suffix=")">
       <choose>
         <if type="legislation report">
-          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+          <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
           <text variable="genre" form="short"/>
           <group delimiter="/">
             <number variable="number"/>

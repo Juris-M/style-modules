@@ -50,7 +50,10 @@
       <if type="report">
         <group delimiter=", " prefix="(" suffix=")">
           <group delimiter=" ">
-            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+            <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>

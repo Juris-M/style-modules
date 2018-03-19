@@ -140,7 +140,10 @@
     <group delimiter=", ">
       <choose>
         <if type="legislation">
-          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+          <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
           <group delimiter=" ">
             <text value="Law no."/>
             <number variable="number"/>
@@ -149,7 +152,10 @@
         </if>
         <else-if type="report">
           <group delimiter=" ">
-            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+            <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>

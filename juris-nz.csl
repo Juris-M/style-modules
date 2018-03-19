@@ -85,7 +85,10 @@
         <group delimiter=" ">
           <text variable="title" strip-periods="true"/>
           <date form="text" variable="issued" date-parts="year"/>
-          <text variable="jurisdiction" jurisdiction-depth="1" form="short" prefix="(" suffix=")"/>
+          <group delimiter=" ">
+          <text variable="country" form="short" prefix="(" suffix=")"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
         </group>
       </else-if>
     </choose>

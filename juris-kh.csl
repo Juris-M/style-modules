@@ -113,7 +113,10 @@
         <if type="regulation"/>
         <else-if type="report">
           <group delimiter=" ">
-            <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+            <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
             <choose>
               <if context="bibliography">
                 <names variable="authority">
@@ -134,7 +137,10 @@
           <date form="text" date-parts="year" variable="issued"/>
         </else-if>
         <else-if type="legal_case">
-          <text variable="jurisdiction" jurisdiction-depth="1" form="short"/>
+          <group delimiter=" ">
+          <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	  </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
       </choose>

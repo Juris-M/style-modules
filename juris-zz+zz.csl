@@ -16,6 +16,12 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   
+  <locale>
+    <terms>
+      <term form="symbol" name="chapter">ch.</term>
+    </terms>
+  </locale>
+
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <text value="[PRETITLE]"/>

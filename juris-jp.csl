@@ -82,12 +82,18 @@
               <text variable="document-name"/>
             </if>
             <else>
-              <group delimiter=" ">
+              <group delimiter=", ">
                 <choose>
                   <if variable="volume container-title page">
-                    <number variable="volume"/>
-                    <text variable="container-title"/>
-                    <number variable="page"/>
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=" ">
+                      <label variable="volume" form="short"/>
+                      <number variable="volume"/>
+                    </group>
+                    <group delimiter=" ">
+                      <label variable="page" form="short"/>
+                      <number variable="page"/>
+                    </group>
                   </if>
                   <else>
                     <text value="judgment"/>

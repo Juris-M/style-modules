@@ -70,15 +70,24 @@
       <if type="legislation"/>
       <else-if type="legal_case">
         <group delimiter=", ">
-            <choose>
-              <if variable="container-title">
+          <text variable="document-name"/>
+          <choose>
+            <if variable="container-title">
+              <group delimiter=", ">
                 <group delimiter=" ">
-                  <number variable="container-title"/>
-                  <number variable="volume"/>
+                  <text variable="container-title"/>
+                  <group delimiter=" ">
+                    <label variable="volume" form="short"/>
+                    <number variable="volume"/>
+                  </group>
+                </group>
+                <group delimiter=" ">
+                  <label variable="page" form="short"/>
                   <number variable="page"/>
                 </group>
-              </if>
-              <else>
+              </group>
+            </if>
+            <else>
                 <group delimiter=" ">
                   <text variable="genre"/>
                   <group>
@@ -91,31 +100,6 @@
                 </group>
               </else>
             </choose>
-          <choose>
-            <if variable="document-name">
-              <text variable="document-name"/>
-            </if>
-            <else>
-              <group delimiter=", ">
-                <choose>
-                  <if variable="volume container-title page">
-                    <text variable="container-title" form="short"/>
-                    <group delimiter=" ">
-                      <label variable="volume" form="short"/>
-                      <number variable="volume"/>
-                    </group>
-                    <group delimiter=" ">
-                      <label variable="page" form="short"/>
-                      <number variable="page"/>
-                    </group>
-                  </if>
-                  <else>
-                    <text value="judgment"/>
-                  </else>
-                </choose>
-              </group>
-            </else>
-          </choose>
         </group>
       </else-if>
       <else-if type="report">

@@ -55,10 +55,13 @@
         <text variable="title"/>
       </else-if>
       <else-if type="legal_case">
-        <names variable="authority" font-variant="normal" font-style="normal">
-          <name/>
-          <institution institution-parts="short"/>
-        </names>
+        <group delimiter=", " font-variant="normal" font-style="normal">
+          <group delimiter=" ">
+            <text variable="jurisdiction" form="short"/>
+            <names variable="authority"/>
+          </group>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -67,16 +70,27 @@
       <if type="legislation"/>
       <else-if type="legal_case">
         <group delimiter=", ">
-          <group delimiter=" ">
-            <group>
-              <text variable="genre"/>
-              <date variable="submitted">
-                <date-part name="year" form="imperial"/>
-              </date>
-            </group>
-            <number variable="call-number" prefix="(" suffix=")"/>
-            <number variable="number"/>
-          </group>
+            <choose>
+              <if variable="container-title">
+                <group delimiter=" ">
+                  <number variable="container-title"/>
+                  <number variable="volume"/>
+                  <number variable="page"/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <group>
+                    <date variable="submitted">
+                      <date-part name="year" form="imperial"/>
+                    </date>
+                    <number variable="call-number" prefix="(" suffix=")"/>
+                    <number variable="number"/>
+                  </group>
+                </group>
+              </else>
+            </choose>
           <choose>
             <if variable="document-name">
               <text variable="document-name"/>
@@ -140,9 +154,9 @@
       <choose>
         <if type="legislation">
           <group delimiter=" ">
-          <text variable="country" form="short"/>
+            <text variable="country" form="short"/>
             <text variable="jurisdiction" form="short"/>
-	  </group>
+	      </group>
           <group delimiter=" ">
             <text value="Law no."/>
             <number variable="number"/>
@@ -151,10 +165,10 @@
         </if>
         <else-if type="report">
           <group delimiter=" ">
-          <group delimiter=" ">
-            <text variable="country" form="short"/>
-            <text variable="jurisdiction" form="short"/>
-	  </group>
+            <group delimiter=" ">
+              <text variable="country" form="short"/>
+              <text variable="jurisdiction" form="short"/>
+	        </group>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>
@@ -164,10 +178,8 @@
         </else-if>
         <else-if type="legal_case">
           <group delimiter=" ">
-          <text variable="country" form="short"/>
-            <text variable="jurisdiction" form="short"/>
-	  </group>
-          <date variable="issued" form="text" date-parts="year-month-day"/>
+            <text variable="country" form="short"/>
+	      </group>
         </else-if>
         <else-if type="hearing">
           <date variable="issued" form="text" date-parts="year-month-day"/>
@@ -184,13 +196,7 @@
         <text variable="title"/>
       </if>
       <else-if type="legal_case">
-        <group delimiter=" " font-variant="normal" font-style="normal">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-          <text value="judgment"/>
-        </group>
+        <text macro="juris-title"/>
       </else-if>
       <else-if type="report">
         <choose>
@@ -222,7 +228,7 @@
       <else-if type="legal_case">
         <choose>
           <if disambiguate="true">
-            <date variable="issued" form="text" date-parts="year-month-day"/>
+            <text macro="juris-main"/>
           </if>
         </choose>
       </else-if>

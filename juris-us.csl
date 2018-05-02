@@ -53,7 +53,7 @@
           <condition match="any" variable="title committee"/>
           <condition match="all" variable="author"/>
         </conditions>
-        <names variable="author">
+        <names variable="author committee" delimiter=", for ">
           <name/>
           <institution institution-parts="short"/>
         </names>
@@ -402,10 +402,21 @@
               <condition type="report"/>
               <condition variable="committee"/>
               <condition match="none" variable="number"/>
+              <condition match="all" jurisdiction="us"/>
             </conditions>
             <text value="Comm. Print"/>
           </else-if>
-          <else-if match="any" type="bill hearing report"/>
+          <else-if match="any" type="bill hearing report">
+            <choose>
+              <if jurisdiction="us" match="none">
+                <text variable="jurisdiction"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short"/>
+                </names>
+              </if>
+            </choose>
+          </else-if>
           <else-if match="all" type="regulation">
             <group delimiter=" ">
               <text variable="country" form="short"/>

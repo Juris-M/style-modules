@@ -409,7 +409,8 @@
           <else-if match="any" type="bill hearing report">
             <choose>
               <if jurisdiction="us" match="none">
-                <text variable="jurisdiction"/>
+                <text variable="country" form="short"/>
+                <text variable="jurisdiction" form="short"/>
                 <names variable="authority">
                   <name/>
                   <institution institution-parts="short"/>

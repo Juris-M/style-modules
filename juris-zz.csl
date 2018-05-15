@@ -67,10 +67,27 @@
   </choose>
 </macro>
 
-  <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
-  </macro>
+<macro name="juris-tail">
+  <group delimiter=" ">
+    <choose>
+      <if type="legislation">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+        <group delimiter=", ">
+          <number variable="page-first"/>
+          <text variable="locator-extra"/>
+        </group>
+      </if>
+    </choose>
+    <group delimiter=" " prefix="(" suffix=")">
+      <names variable="authority">
+        <name/>
+        <institution institution-parts="short"/>
+      </names>
+      <date form="text" date-parts="year" variable="issued"/>
+    </group>
+  </group>
+</macro>
 
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->

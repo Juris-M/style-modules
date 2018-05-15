@@ -6,93 +6,110 @@
     <link href="http://citationstylist/modules/juris-th" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <name>Sarah Bishop</name>
+      <email>Sarah.Bishop@anu.edu.au</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Thailand</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="regulation"/>
+    <law-module types="legal_case"/>
   </info>
-  <macro name="juris-pretitle">
-    <text value=""/>
-  </macro>
-  <macro name="juris-title">
-    <choose>
-      <if type="regulation">
-        <text variable="title"/>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-main">
-    <choose>
-      <if type="regulation">
-        <text macro="juris-main-short"/>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-tail">
-    <choose>
-      <if type="regulation">
-        <group delimiter=", " prefix="(" suffix=")">
+
+<macro name="juris-pretitle">
+  <choose>
+    <if type="legal_case">
           <group delimiter=" ">
-          <group delimiter=" ">
-            <text variable="country" form="short"/>
-            <text variable="jurisdiction" form="short"/>
-	  </group>
             <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
+            <name/>
+            <institution institution-parts="short"/>
             </names>
+          </group>  
+    </if>
+    <else>
+      <text value=""/>
+    </else>
+  </choose>
+</macro>
+
+<macro name="juris-title">
+  <choose>
+    <if type="legal_case">
+          <group delimiter=" ">
+          <text variable="title" font-style="italic"/>
+            <group delimiter=" " prefix = "(" suffix=")">
+            <date form="text" variable="issued"/>
           </group>
-          <choose>
-            <if variable="number">
-              <date variable="issued" form="text" date-parts="year-month-day"/>
-            </if>
-          </choose>
+          </group>
+    </if>
+    <else>
+      <text value=""/>
+    </else>
+  </choose>
+</macro>
+
+<macro name="juris-main">
+  <choose>
+    <if type="legal_case">
+      <group delimiter=" ">
+        <text variable="container-title" 
+              form="short"/>
+        <date prefix = "(" suffix=")" form="text" variable="publication-date"/>
+        <group suffix="," delimiter = " ">
+        <number prefix = "Volume " variable="volume"/>
+        <number prefix = "Part " variable="issue"/>
         </group>
-      </if>
-    </choose>
-  </macro>
+        <number prefix =  "Page " variable="page-first"/>
+      </group>
+    </if>
+    <else>
+      <text value=""/>
+    </else>
+  </choose>
+</macro>
+
+<macro name="juris-tail">
+        <text value=""/>
+</macro>
+
   <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
-  <macro name="juris-title-short">
-    <choose>
-      <if type="regulation"/>
-    </choose>
-  </macro>
-  <macro name="juris-main-short">
-    <choose>
-      <if type="regulation">
-        <group delimiter=" ">
-          <text variable="genre"/>
-          <group delimiter=" ">
-            <choose>
-              <if variable="number">
-                <label variable="number"/>
-                <number variable="number"/>
-              </if>
-              <else>
-                <text value="of"/>
-                <date variable="issued" form="text" date-parts="year-month-day"/>
-              </else>
-            </choose>
-          </group>
-        </group>
-      </if>
-    </choose>
-  </macro>
-  <macro name="juris-tail-short">
-    <text value=""/>
-  </macro>
+  
+<macro name="juris-title-short">
+  <choose>
+    <if type="legal_case">
+      <text variable="title" form="short"/>
+    </if>
+    <else>
+      <text value=""/>
+    </else>
+  </choose>
+</macro>
+
+<macro name="juris-main-short">
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <number variable="issue"/>
+        <text variable="container-title" form="short"/>
+      </group>
+</macro>
+
+<macro name="juris-tail-short">
+  <text value=""/>
+</macro>
+
   <macro name="juris-locator">
     <group delimiter=" ">
+  <choose>
+    <if locator="page"/>
+    <else>
       <label variable="locator"/>
-      <number variable="locator"/>
-    </group>
+    </else>
+  </choose>
+  <number variable="locator"/>
+</group>
   </macro>
 
   <citation>
@@ -213,6 +230,7 @@
           <!-- full form -->
           <group delimiter=", ">
             <group delimiter=" ">
+              <text macro="juris-pretitle" font-style="italic"/>
               <group delimiter=", ">
                 <choose>
                   <if type="hearing">
@@ -274,6 +292,7 @@
           </group>
         </else>
       </choose>
+      <text value = "."/>
     </layout>
   </citation>
 </style>

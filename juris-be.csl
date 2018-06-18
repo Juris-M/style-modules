@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Belgium</title>
-    <id>http://citationstylist.org/modules/juris-be</id>
-    <link href="http://citationstylist/modules/juris-be" rel="self"/>
+    <title>Juridische verwijzingen en afkortingen</title>
+    <id>https://legalworld.wolterskluwer.be/</id>
+    <link href="hhttps://legalworld.wolterskluwer.be/media/4300/v_a-bi15001_final_binnenwerk-1.pdf" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <name>Karl Pauwels</name>
+      <email>karl.pauwels@gmail.com</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>

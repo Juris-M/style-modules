@@ -57,8 +57,10 @@
       <else-if type="legal_case">
         <group delimiter=", " font-variant="normal" font-style="normal">
           <group delimiter=" ">
-            <text variable="jurisdiction" form="short"/>
-            <names variable="authority"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
           </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
@@ -109,25 +111,47 @@
             <label variable="number" form="short"/>
             <number variable="number"/>
           </group>
+          <text variable="container-title"/>
+          <group delimiter=" ">
+            <group delimiter=" ">
+              <text variable="country" form="short"/>
+              <text variable="jurisdiction" form="short"/>
+	        </group>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+          <group delimiter=" ">
+            <label variable="page" form="short"/>
+            <number variable="page"/>
+          </group>
         </group>
       </else-if>
       <else-if type="hearing">
-        <group delimiter=", ">
-          <names variable="authority">
-            <name/>
-            <institution/>
-          </names>
-          <names variable="committee">
-            <name/>
-            <institution/>
-          </names>
-          <group delimiter=" ">
-            <number variable="collection-number" form="ordinal"/>
-            <text value="Session"/>
-          </group>
-          <group delimiter=" ">
-            <text value="Meeting No."/>
-            <number variable="chapter-number"/>
+        <group delimiter=" of the ">
+          <group delimiter=", ">
+            <group delimiter=" statement at ">
+              <number variable="archive_location" form="ordinal"/>
+              <group delimiter=" ">
+                <text value="meeting no."/>
+                <number variable="chapter-number"/>
+              </group>
+            </group>
+            <names variable="committee">
+              <name/>
+              <institution/>
+            </names>
+            <names variable="authority">
+              <name/>
+              <institution/>
+            </names>
+            <group delimiter=" ">
+              <number variable="collection-number" form="ordinal"/>
+              <text value="Session"/>
+            </group>
+            <date variable="issued" form="text" date-parts="year-month-day"/>
           </group>
         </group>
       </else-if>
@@ -147,26 +171,10 @@
           </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </if>
-        <else-if type="report">
-          <group delimiter=" ">
-            <group delimiter=" ">
-              <text variable="country" form="short"/>
-              <text variable="jurisdiction" form="short"/>
-	        </group>
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
-          </group>
-          <date variable="issued" form="text" date-parts="year-month-day"/>
-        </else-if>
         <else-if type="legal_case">
           <group delimiter=" ">
             <text variable="country" form="short"/>
 	      </group>
-        </else-if>
-        <else-if type="hearing">
-          <date variable="issued" form="text" date-parts="year-month-day"/>
         </else-if>
       </choose>
     </group>

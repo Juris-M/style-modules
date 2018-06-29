@@ -180,7 +180,17 @@
     </group>
   </macro>
   <macro name="juris-pretitle-short">
-    <text value=""/>
+    <choose>
+      <if type="hearing">
+        <names variable="author">
+          <name/>
+          <institution/>
+          <substitute>
+            <names variable="authority"/>
+          </substitute>
+        </names>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-title-short">
     <choose>
@@ -233,6 +243,27 @@
             </group>
           </if>
         </choose>
+      </else-if>
+      <else-if type="hearing">
+        <group delimiter=" of the ">
+          <group delimiter=", ">
+            <choose>
+              <if disambiguate="true">
+                <group delimiter=" statement at ">
+                  <number variable="archive_location" form="ordinal"/>
+                  <group delimiter=" ">
+                    <text value="meeting no."/>
+                    <number variable="chapter-number"/>
+                  </group>
+                </group>
+                <names variable="committee">
+                  <name/>
+                  <institution/>
+                </names>
+              </if>            
+            </choose>
+          </group>
+        </group>
       </else-if>
     </choose>
   </macro>

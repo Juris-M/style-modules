@@ -69,7 +69,19 @@
   </macro>
   <macro name="juris-main">
     <choose>
-      <if type="legislation"/>
+      <if type="legislation">
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <text variable="country" form="short"/>
+            <text variable="jurisdiction" form="short"/>
+	      </group>
+          <group delimiter=" ">
+            <text value="Law no."/>
+            <number variable="number"/>
+          </group>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </if>
       <else-if type="legal_case">
         <group delimiter=", ">
           <text variable="document-name"/>
@@ -160,17 +172,7 @@
   <macro name="juris-tail">
     <group delimiter=", ">
       <choose>
-        <if type="legislation">
-          <group delimiter=" ">
-            <text variable="country" form="short"/>
-            <text variable="jurisdiction" form="short"/>
-	      </group>
-          <group delimiter=" ">
-            <text value="Law no."/>
-            <number variable="number"/>
-          </group>
-          <date variable="issued" form="text" date-parts="year-month-day"/>
-        </if>
+        <if type="legislation"/>
         <else-if type="legal_case">
           <group delimiter=" ">
             <text variable="country" form="short"/>
@@ -182,13 +184,25 @@
   <macro name="juris-pretitle-short">
     <choose>
       <if type="hearing">
-        <names variable="author">
-          <name/>
-          <institution/>
-          <substitute>
-            <names variable="authority"/>
-          </substitute>
-        </names>
+        <group delimiter=" ">
+          <names variable="author">
+            <name/>
+            <institution/>
+            <substitute>
+              <names variable="authority"/>
+            </substitute>
+          </names>
+          <choose>
+            <if variable="author">
+              <choose>
+                <if disambiguate="true">
+                  <number variable="archive_location" form="ordinal"/>
+                </if>
+              </choose>
+              <text value="statement"/>
+            </if>
+          </choose>
+        </group>
       </if>
     </choose>
   </macro>

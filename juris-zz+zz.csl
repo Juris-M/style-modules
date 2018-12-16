@@ -217,12 +217,23 @@
             </else>
           </choose>
           <choose>
-            <if>
-              <conditions match="any">
+            <if type="legal_case">
+              <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+              </group>
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text value="at"/>
+                  <text macro="juris-locator"/>
+                </group>
+              </group>
+            </if>
+            <else-if>
+             <conditions match="any">
                 <condition match="all" type="hearing" variable="committee"/>
                 <condition match="all" type="report" variable="title"/>
                 <condition match="all" type="report" variable="committee"/>
-                <condition match="all" type="legal_case" variable="document-name"/>
               </conditions>
               <group delimiter=", ">
                 <group delimiter=" ">
@@ -240,7 +251,7 @@
                   <text macro="juris-locator" label-form="symbol"/>
                 </group>
               </group>
-            </if>
+            </else-if>
             <else>
               <group delimiter=" ">
                 <group delimiter=", ">

@@ -37,8 +37,7 @@
     <if type="legal_case">
       <group delimiter=" ">
         <number variable="volume"/>
-        <text variable="container-title" 
-              form="short"/>
+        <text variable="container-title" form="short"/>
         <number variable="page-first"/>
       </group>
     </if>
@@ -60,13 +59,15 @@
       </choose>
     </else-if>
     <else-if type="bill">
-      <group delimiter=", " suffix=",">
-        <text variable="title"/>
+      <group delimiter=" " suffix=",">
         <number variable="number"/>
       </group>
     </else-if>
     <else>
-		<text variable="title"/>     
+		  <group prefix=", " delimiter=" ">
+	      <number variable="volume"/>
+	      <text variable="container-title" form="short"/>
+	    </group>
     </else>
   </choose>
 </macro>

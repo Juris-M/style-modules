@@ -96,7 +96,7 @@
           <date form="text" date-parts="year" variable="issued"/>
         </group>
       </else-if>
-      <else-if type="bill regulation">
+      <else-if type="bill">
         <group delimiter=" " prefix="(" suffix=")">
           <text variable="jurisdiction"/>
           <date form="text" date-parts="year" variable="issued"/>

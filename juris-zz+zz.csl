@@ -78,7 +78,6 @@
     <if type="legislation">
       <number variable="volume"/>
       <text variable="container-title" form="short"/>
-	   <text form="symbol" term="section" />  
       <group delimiter=", ">
         <text variable="section"/>
         <text variable="locator-extra"/>

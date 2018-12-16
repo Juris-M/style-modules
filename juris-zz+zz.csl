@@ -43,7 +43,7 @@
         <number variable="page-first"/>
       </group>
     </if>
-    <else>
+    <else-if type="legislation">
       <choose>
         <if number="number">
           <group delimiter=" " suffix=",">
@@ -59,6 +59,15 @@
           </group>
         </else>
       </choose>
+    </else-if>
+    <else-if type="bill">
+      <group delimiter=", " suffix=",">
+        <text variable="title"/>
+        <number variable="number"/>
+      </group>
+    </else-if>
+    <else>
+		<text variable="title"/>     
     </else>
   </choose>
 </macro>

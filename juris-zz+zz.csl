@@ -87,9 +87,10 @@
     <choose>
     <if type="legal_case">
     <group delimiter=" " prefix="(" suffix=")">
+      <text variable="jurisdiction"/>
       <names variable="authority">
         <name/>
-        <institution institution-parts="long"/>
+        <institution institution-parts="short"/>
       </names>
       <date form="text" date-parts="year" variable="issued"/>
     </group>

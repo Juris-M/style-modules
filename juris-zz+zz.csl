@@ -374,7 +374,7 @@
         </group>
 
         <choose>
-          <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
+          <if type="legislation" variable="gazette-flag" match="all"/>
           <else>
             <text macro="juris-tail"/>
           </else>

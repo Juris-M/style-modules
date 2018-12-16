@@ -138,15 +138,21 @@
   </choose>
 </macro>
 
-  <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
-  </macro>
+<macro name="juris-main-short">
+  <choose>
+    <if type="legislation" variable="gazette-flag" match="all"/>
+    <else>
+      <group delimiter=" ">
+        <number variable="volume"/>
+        <text variable="container-title" form="short"/>
+      </group>
+    </else>
+  </choose>
+</macro>
 
-  <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
-  </macro>
+<macro name="juris-tail-short">
+  <text value=""/>
+</macro>
 
   <macro name="juris-locator">
     <!-- The label and locator -->

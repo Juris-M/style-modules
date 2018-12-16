@@ -151,6 +151,10 @@
 </macro>
 
 <macro name="juris-tail-short">
+  <text value=""/>
+</macro>
+
+<macro name="juris-locator">
 <group delimiter=" ">
   <choose>
     <if locator="page"/>

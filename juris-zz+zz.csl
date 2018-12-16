@@ -102,9 +102,14 @@
           <date form="text" date-parts="year" variable="issued"/>
         </group>
       </else-if>
+      <else-if type="article-magazine article-newspaper" match="any">
+        <group delimiter=" " prefix="(" suffix=")">
+          <date form="text" variable="issued" date-parts="year-month-day"/>
+        </group>
+      </else-if>  
       <else>
         <group delimiter=" " prefix="(" suffix=")">
-        <date form="text" date-parts="year" variable="issued"/>
+          <date form="text" date-parts="year" variable="issued"/>
         </group>
       </else>
     </choose>

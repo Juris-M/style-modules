@@ -80,7 +80,6 @@
       <text variable="container-title" form="short"/>
 	   <text form="symbol" term="section" />  
       <group delimiter=", ">
-	      <text form="symbol" term="section" />
         <text variable="section"/>
         <text variable="locator-extra"/>
       </group>

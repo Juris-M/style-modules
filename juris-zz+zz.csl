@@ -223,10 +223,8 @@
               <text variable="container-title" form="short"/>
               </group>
               <group delimiter=" ">
-                <group delimiter=" ">
-                  <text value="at"/>
-                  <text macro="juris-locator"/>
-                </group>
+                <text value="at"/>
+                <text macro="juris-locator"/>
               </group>
             </if>
             <else-if>

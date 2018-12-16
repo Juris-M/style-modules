@@ -89,7 +89,7 @@
     <group delimiter=" " prefix="(" suffix=")">
       <names variable="authority">
         <name/>
-        <institution institution-parts="short"/>
+        <institution institution-parts="long"/>
       </names>
       <date form="text" date-parts="year" variable="issued"/>
     </group>

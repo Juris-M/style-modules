@@ -215,6 +215,7 @@
               <text macro="juris-title-short"/>
             </else>
           </choose>
+        </group>
           <choose>
             <if type="legal_case">
               <group delimiter=" ">
@@ -278,7 +279,7 @@
               </group>
             </else>
           </choose>
-        </group>
+        
         <group delimiter=" " require="empty-label">
           <text value="at"/>
           <text macro="juris-locator" label-form="symbol"/>

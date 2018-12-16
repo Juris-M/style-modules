@@ -203,7 +203,7 @@
         <condition match="all" type="hearing" variable="committee" position="far-note"/>
         <condition match="all" type="legal_case" position="far-note"/>
       </conditions>
-      <group delimiter=" ">
+      <group delimiter=", ">
         <group delimiter=" ">
           <group delimiter=", ">
           <choose>
@@ -374,7 +374,7 @@
         </group>
 
         <choose>
-          <if type="legislation" variable="gazette-flag" match="all"/>
+          <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
           <else>
             <text macro="juris-tail"/>
           </else>

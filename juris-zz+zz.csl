@@ -194,7 +194,7 @@
         <condition match="all" type="report" variable="title" position="far-note"/>
         <condition match="all" type="report" variable="committee" position="far-note"/>
         <condition match="all" type="hearing" variable="committee" position="far-note"/>
-        <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
+        <condition match="all" type="legal_case" position="far-note"/>
       </conditions>
       <group delimiter=" ">
         <group delimiter=", ">
@@ -202,7 +202,6 @@
             <if>
               <conditions match="all">
                 <condition type="legal_case"/>
-                <condition match="none" variable="document-name"/>
               </conditions>
               <text macro="juris-title-short" font-style="italic"/>
             </if>

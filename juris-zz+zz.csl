@@ -222,7 +222,7 @@
               <number variable="volume"/>
               <text variable="container-title" form="short"/>
               </group>
-              <group delimiter=", ">
+              <group delimiter=" ">
                 <group delimiter=" ">
                   <text value="at"/>
                   <text macro="juris-locator"/>

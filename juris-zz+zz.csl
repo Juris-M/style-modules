@@ -197,7 +197,8 @@
         <condition match="all" type="legal_case" position="far-note"/>
       </conditions>
       <group delimiter=" ">
-        <group delimiter=", ">
+        <group delimiter=" ">
+          <group delimiter=", ">
           <choose>
             <if>
               <conditions match="all">
@@ -279,7 +280,7 @@
               </group>
             </else>
           </choose>
-        
+        </group>
         <group delimiter=" " require="empty-label">
           <text value="at"/>
           <text macro="juris-locator" label-form="symbol"/>

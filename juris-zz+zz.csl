@@ -79,7 +79,7 @@
       <number variable="volume"/>
       <text variable="container-title" form="short"/>
       <group delimiter=", ">
-        <number variable="page-first"/>
+        <text variable="section"/>
         <text variable="locator-extra"/>
       </group>
       <group delimiter=" " prefix="(" suffix=")">
@@ -141,6 +141,12 @@
 <macro name="juris-main-short">
 <choose>
   <if type="legislation" variable="gazette-flag" match="all"/>
+  <else-if type="legal_case">
+    <group delimiter=" ">
+      <number variable="volume"/>
+      <text variable="container-title" form="short"/>
+    </group>
+  </else-if>  
   <else>
     <group delimiter=" ">
       <number variable="volume"/>

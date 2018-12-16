@@ -83,32 +83,30 @@
           <text variable="locator-extra"/>
         </group>
       </if>
-    </choose>
-    <choose>
-    <if type="legal_case">
-    <group delimiter=" " prefix="(" suffix=")">
-      <text variable="jurisdiction"/>
-      <names variable="authority">
-        <name/>
-        <institution institution-parts="short"/>
-      </names>
-      <date form="text" date-parts="year" variable="issued"/>
-    </group>
-    </if>
-    <else-if type="bill legislation regulation">
-      <group delimiter=" " prefix="(" suffix=")">
-      <names variable="authority">
-        <name/>
-        <institution institution-parts="short"/>
-      </names>
-      <date form="text" date-parts="year" variable="issued"/>
-    </group>
-    </else-if>
-    <else>
-      <group delimiter=" " prefix="(" suffix=")">
-      <date form="text" date-parts="year" variable="issued"/>
-    </group>
-    </else>
+      <else-if type="legal_case">
+        <group delimiter=" " prefix="(" suffix=")">
+          <text variable="jurisdiction"/>
+          <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+          </names>
+          <date form="text" date-parts="year" variable="issued"/>
+        </group>
+      </else-if>
+      <else-if type="bill legislation regulation">
+        <group delimiter=" " prefix="(" suffix=")">
+          <names variable="authority">
+          <name/>
+          <institution institution-parts="short"/>
+          </names>
+          <date form="text" date-parts="year" variable="issued"/>
+        </group>
+      </else-if>
+      <else>
+        <group delimiter=" " prefix="(" suffix=")">
+        <date form="text" date-parts="year" variable="issued"/>
+        </group>
+      </else>
     </choose>
   </group>
 </macro>

@@ -82,6 +82,9 @@
           <number variable="page-first"/>
           <text variable="locator-extra"/>
         </group>
+        <group delimiter=" " prefix="(" suffix=")">
+          <date form="text" date-parts="year" variable="issued"/>
+        </group>
       </if>
       <else-if type="legal_case">
         <group delimiter=" " prefix="(" suffix=")">
@@ -93,12 +96,9 @@
           <date form="text" date-parts="year" variable="issued"/>
         </group>
       </else-if>
-      <else-if type="bill legislation regulation">
+      <else-if type="bill regulation">
         <group delimiter=" " prefix="(" suffix=")">
-          <names variable="authority">
-          <name/>
-          <institution institution-parts="short"/>
-          </names>
+          <text variable="jurisdiction"/>
           <date form="text" date-parts="year" variable="issued"/>
         </group>
       </else-if>

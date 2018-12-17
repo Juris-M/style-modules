@@ -74,7 +74,7 @@
 </choose>
 </macro>
 
-
+<!-- Main (volume, publication, etc.) -->  
 <macro name="juris-main">
 <choose>
 	<if type="legal_case">
@@ -217,15 +217,25 @@
 
 <!-- Locator (pincite: page, section) -->  
 <macro name="juris-locator">
-<group delimiter=" ">
-  <choose>
-    <if locator="page"/>
-    <else>
-      <label variable="locator"/>
-    </else>
-  </choose>
-  <number variable="locator"/>
-</group>
+<choose>
+	<if type="bill">
+		<group delimiter=" ">
+			<text form="symbol" term="section"/>
+			<text variable="section"/>
+		</group>	
+	</if>
+	<else>
+		<group delimiter=" ">
+			<choose>
+				<if locator="page"/>
+				<else>
+				  <label variable="locator"/>
+				</else>
+			</choose>
+			<number variable="locator"/>
+		</group>
+	</else>
+</choose>
 </macro>
 
 <!-- URL (for online sources) -->

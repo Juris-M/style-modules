@@ -303,7 +303,7 @@
 	<else-if type="legislation regulation" match="any">
 	<group delimiter=" ">
 		<group delimiter="">
-			<text macro="juris-main-short"/>
+			<text macro="juris-main-short" label-form="symbol"/>
 			<text macro="juris-locator" prefix=", " label-form="symbol"/>
 		</group>
 	</group>

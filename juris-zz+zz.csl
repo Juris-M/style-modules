@@ -16,12 +16,24 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   
-  <macro name="juris-pretitle">
-    <!-- Fragment to precede title (rare) -->
-    <text value="[PRETITLE]"/>
-  </macro>
 
- <macro name="juris-title">
+
+<!-- MACROS FOR CITE CONTENTS -->  
+
+<!-- Pretitle (fragment to precede title) -->  
+
+<macro name="juris-pretitle">
+  <text value="[PRETITLE]"/>
+</macro>
+
+<macro name="juris-pretitle-short">
+  <text value="[PRETITLE-SHORT]"/>
+</macro>
+
+
+<!-- Title -->  
+
+<macro name="juris-title">
 <choose>
   <if type="legal_case">
     <text variable="title" form="short"/>
@@ -32,27 +44,71 @@
 </choose>
 </macro>
 
+<macro name="juris-title-short">
+<choose>
+  <if match="all" type="legal_case" variable="title-short">
+    <text variable="title-short" form="short"/>
+  </if>
+  <else-if type="legal_case">
+    <text variable="title" form="short"/>
+  </else-if>
+  <else-if variable="title-short">
+    <text variable="title-short"/>
+  </else-if>
+  <else>
+    <text variable="title"/>
+  </else>
+</choose>
+</macro>
+
+
+<!-- Main (volume, publication, number) -->  
+
 <macro name="juris-main">
 <choose>
-  <if type="legal_case">
-    <group delimiter=" ">
-      <number variable="volume"/>
-      <text variable="container-title" form="short"/>
-      <number variable="page-first"/>
-    </group>
+	<if type="legal_case">
+			<choose>
+		    <!-- Reported Cases -->
+				<if variable="container-title">
+					<group delimiter=" ">
+						<number variable="volume"/>
+						<text variable="container-title" form="short"/>
+						<number variable="page"/>
+					</group>
+				</if>	
+		    <!-- Unreported Cases -->
+				<else>
+					<group delimiter=", ">
+						<number variable="number"/>
+					</group>
+					<group delimiter=" " prefix=",">
+						<text value="slip op."/>
+					</group>
+				</else>
+				</choose>
   </if>
   <else-if type="legislation">
     <choose>
-      <if number="number">
+      <if variable="container-title">
+        
+	  <group delimiter=" ">
+  				<number variable="volume"/>
+  				<text variable="container-title"/>
+				</group>
+				<group delimiter=" ">
+					<text form="symbol" term="section" />
+					<text variable="section"/>
+				</group>
+      </if>
+			<else-if number="number">
         <group delimiter=" " suffix=",">
           <text value="Pub. L. No."/>
           <number variable="number"/>
         </group>
-      </if>
+			</else-if>
       <else>
         <group delimiter=" " suffix=",">
-          <label variable="number" 
-                 form="symbol"/>
+          <label variable="number" form="symbol"/>
           <number variable="number"/>
         </group>
       </else>
@@ -72,16 +128,30 @@
 </choose>
 </macro>
 
+<macro name="juris-main-short">
+<choose>
+  <if type="legislation" variable="gazette-flag" match="all"/>
+  <else-if type="legal_case">
+    <group delimiter=" ">
+      <number variable="volume"/>
+      <text variable="container-title" form="short"/>
+    </group>
+  </else-if>  
+  <else>
+    <group delimiter=" ">
+      <number variable="volume"/>
+      <text variable="container-title" form="short"/>
+    </group>
+  </else>
+</choose>
+</macro>
+
+<!-- Tail (jurisdiction, court, publisher, editor, date) -->  
+
 <macro name="juris-tail">
 <group delimiter=" ">
   <choose>
     <if type="legislation">
-      <number variable="volume"/>
-      <text variable="container-title" form="short"/>
-      <group delimiter=", ">
-        <text variable="section"/>
-        <text variable="locator-extra"/>
-      </group>
       <group delimiter=" " prefix="(" suffix=")">
         <date form="text" date-parts="year" variable="issued"/>
       </group>
@@ -116,49 +186,11 @@
 </group>
 </macro>
 
-  <macro name="juris-pretitle-short">
-    <!-- Fragment to precede short title (rare) -->
-    <text value="[PRETITLE-SHORT]"/>
-  </macro>
-
-<macro name="juris-title-short">
-<choose>
-  <if match="all" type="legal_case" variable="title-short">
-    <text variable="title-short" form="short"/>
-  </if>
-  <else-if type="legal_case">
-    <text variable="title" form="short"/>
-  </else-if>
-  <else-if variable="title-short">
-    <text variable="title-short"/>
-  </else-if>
-  <else>
-    <text variable="title"/>
-  </else>
-</choose>
-</macro>
-
-<macro name="juris-main-short">
-<choose>
-  <if type="legislation" variable="gazette-flag" match="all"/>
-  <else-if type="legal_case">
-    <group delimiter=" ">
-      <number variable="volume"/>
-      <text variable="container-title" form="short"/>
-    </group>
-  </else-if>  
-  <else>
-    <group delimiter=" ">
-      <number variable="volume"/>
-      <text variable="container-title" form="short"/>
-    </group>
-  </else>
-</choose>
-</macro>
-
 <macro name="juris-tail-short">
   <text value=""/>
 </macro>
+
+<!-- Locator (pincite: page, section) -->  
 
 <macro name="juris-locator">
 <group delimiter=" ">
@@ -171,6 +203,7 @@
   <number variable="locator"/>
 </group>
 </macro>
+
 
 
 <citation>

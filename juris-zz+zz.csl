@@ -304,9 +304,9 @@
 	<!-- Statutes & Regulations -->
 	<else-if type="legislation regulation" match="any">
 	<group delimiter=" ">
-		<group delimiter="">
+		<group delimiter=" ">
 			<text macro="juris-main-short"/>
-			<text macro="juris-locator" prefix=", "/>
+			<text macro="juris-locator"/>
 		</group>
 	</group>
 	</else-if>

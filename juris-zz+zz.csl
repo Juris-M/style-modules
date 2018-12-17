@@ -307,7 +307,7 @@
 	<group delimiter=" ">
 		<group delimiter="">
 			<text macro="juris-main-short"/>
-			<text macro="juris-locator" prefix=", " label-form="symbol"/>
+			<text macro="juris-locator" prefix=", "/>
 		</group>
 	</group>
 	</else-if>

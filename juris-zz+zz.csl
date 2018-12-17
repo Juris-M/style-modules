@@ -459,6 +459,8 @@
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-main"/>
+		</group>
+		<group delimiter=" ">
 			<text macro="juris-locator" prefix=", "/>
 		</group>
 		

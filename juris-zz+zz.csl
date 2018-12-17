@@ -219,8 +219,8 @@
 <macro name="juris-locator">
 <choose>
 	<if type="bill">
-		<group delimiter=" ">
-			<text form="symbol" term="section"/>
+		<group delimiter="">
+			<number variable="locator"/>
 		</group>	
 	</if>
 	<else>

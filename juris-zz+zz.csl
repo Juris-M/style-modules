@@ -308,7 +308,6 @@
 		<group delimiter=" ">
 			<text macro="juris-main-short"/>
 		</group>
-
 	</group>
 	</else-if>
 
@@ -447,7 +446,6 @@
 		<group delimiter=" ">
 			<text macro="juris-main"/>
 		</group>
-
 		<group delimiter=" ">
 			<text macro="juris-tail"/>
 		</group>
@@ -463,9 +461,7 @@
 		<group delimiter=" " suffix=",">
 			<text macro="juris-main"/>
 		</group>
-		<group delimiter=", ">
-			<text macro="juris-locator" label-form="symbol"/>
-		</group>
+
 		<group delimiter=" ">
 			<text macro="juris-tail"/>
 		</group>

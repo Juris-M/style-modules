@@ -90,14 +90,12 @@
   <else-if type="legislation">
     <choose>
       <if variable="container-title">
-        
-	  <group delimiter=" ">
+    	  <group delimiter=" ">
   				<number variable="volume"/>
   				<text variable="container-title"/>
 				</group>
 				<group delimiter=" ">
 					<text form="symbol" term="section" />
-					<text variable="section"/>
 				</group>
       </if>
 			<else-if number="number">

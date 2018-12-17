@@ -226,7 +226,7 @@
 			<choose>
 				<if locator="page"/>
 				<else>
-				  <label variable="locator"/>
+				  <label variable="locator" form="symbol"/>
 				</else>
 			</choose>
 			<number variable="locator"/>

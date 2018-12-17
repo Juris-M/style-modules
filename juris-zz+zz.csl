@@ -316,9 +316,11 @@
 		<group delimiter=" " suffix=",">
 			<text macro="juris-title-short"/>
 		</group>
-			<text macro="juris-main-short"/>
 		<group delimiter=" ">
-			<text macro="juris-locator" label-form="symbol"/>
+			<text macro="juris-main-short"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-locator" prefix=", " label-form="symbol"/>
 		</group>
 	</group>
 	</else-if>

@@ -107,7 +107,7 @@
 		</group>
   </else-if>
   <else-if type="bill">
-    <group delimiter=" " suffix=",">
+    <group delimiter=" ">
       <number variable="number"/>
     </group>
   </else-if>
@@ -457,7 +457,7 @@
 		<group delimiter=" " >
 			<text macro="juris-title"/>
 		</group>
-		<group delimiter=" " suffix=",">
+		<group delimiter=" ">
 			<text macro="juris-main"/>
 			<text macro="juris-locator" prefix=", "/>
 		</group>

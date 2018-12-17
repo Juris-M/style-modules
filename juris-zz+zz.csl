@@ -101,8 +101,8 @@
   <else-if type="legislation regulation" match="any">
 		<group delimiter=" ">
   		<number variable="volume"/>
-  		<text variable="container-title"/>
-		  <text variable="section" form="short"/>
+  		<text variable="container-title"  form="short"/>
+		  <text variable="section"/>
 		</group>
   </else-if>
   <else-if type="bill">
@@ -136,7 +136,7 @@
   <else-if type="legislation regulation" match="any">
    	<group delimiter=" ">
 		<number variable="volume"/>
-		<text variable="container-title"/>
+		<text variable="container-title"  form="short"/>
 		<text variable="section"/>
 		</group>
   </else-if>

@@ -281,6 +281,9 @@
 		<condition match="all" type="report" variable="committee" position="far-note"/>
 		<condition match="all" type="hearing" variable="committee" position="far-note"/>
 		<condition match="all" type="legal_case" position="far-note"/>
+		<condition match="all" type="legislation" position="far-note"/>
+		<condition match="all" type="regulation" position="far-note"/>
+		<condition match="all" type="bill" position="far-note"/>
 	</conditions>
 
 	<choose>

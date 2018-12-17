@@ -115,9 +115,15 @@
       <number variable="number"/>
     </group>
   </else-if>
-  <else>
-	  <group prefix=", " delimiter=" ">
+  <else-if type="article-journal">
+	  <group delimiter=" ">
       <number variable="volume"/>
+      <text variable="container-title" form="short"/>
+      <number variable="page"/>
+    </group>
+  </else-if>
+  <else>
+	  <group delimiter=" ">
       <text variable="container-title" form="short"/>
     </group>
   </else>
@@ -145,9 +151,14 @@
       <number variable="number"/>
     </group>
   </else-if>
-  <else>
-    <group delimiter=" ">
+  <else-if type="article-journal">
+	  <group delimiter=" ">
       <number variable="volume"/>
+      <text variable="container-title" form="short"/>
+    </group>
+  </else-if>
+  <else>
+	  <group delimiter=" ">
       <text variable="container-title" form="short"/>
     </group>
   </else>

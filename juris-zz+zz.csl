@@ -447,9 +447,7 @@
 		<group delimiter=" ">
 			<text macro="juris-main"/>
 		</group>
-		<group delimiter=" ">
-			<text macro="juris-locator" label-form="symbol"/>
-		</group>
+
 		<group delimiter=" ">
 			<text macro="juris-tail"/>
 		</group>

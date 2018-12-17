@@ -220,7 +220,7 @@
 <choose>
 	<if type="bill">
 		<group delimiter="">
-			<number variable="locator"/>
+			<number variable="locator" label-form="symbol"/>
 		</group>	
 	</if>
 	<else>
@@ -459,7 +459,7 @@
 		</group>
 		<group delimiter="">
 			<text macro="juris-main"/>
-			<text macro="juris-locator" prefix=", " label-form="symbol"/>
+			<text macro="juris-locator" prefix=", " />
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-tail"/>

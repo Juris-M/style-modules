@@ -128,7 +128,31 @@
 
 <macro name="juris-main-short">
 <choose>
-  <if type="legislation" variable="gazette-flag" match="all"/>
+  <if type="legislation">
+    <choose>
+      <if variable="container-title">
+    	  <group delimiter=" ">
+  				<number variable="volume"/>
+  				<text variable="container-title"/>
+				</group>
+				<group delimiter=" ">
+					<text form="symbol" term="section" />
+				</group>
+      </if>
+			<else-if number="number">
+        <group delimiter=" " suffix=",">
+          <text value="Pub. L. No."/>
+          <number variable="number"/>
+        </group>
+			</else-if>
+      <else>
+        <group delimiter=" " suffix=",">
+          <label variable="number" form="symbol"/>
+          <number variable="number"/>
+        </group>
+      </else>
+    </choose>
+  </if>
   <else-if type="legal_case">
     <group delimiter=" ">
       <number variable="volume"/>

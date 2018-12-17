@@ -454,15 +454,14 @@
 	<!-- Bills -->
 	<else-if type="bill">
 	<group delimiter=" ">
-		<group delimiter=" " suffix=",">
+		<group delimiter=" " >
 			<text macro="juris-title"/>
 		</group>
 		<group delimiter=" " suffix=",">
 			<text macro="juris-main"/>
+			<text macro="juris-locator" prefix=", "/>
 		</group>
-		<group delimiter=" " prefix=",">
-			<text macro="juris-locator"/>
-		</group>
+		
 		<group delimiter=" ">
 			<text macro="juris-tail"/>
 		</group>

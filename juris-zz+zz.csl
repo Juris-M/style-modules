@@ -318,8 +318,6 @@
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-main-short"/>
-		</group>
-		<group delimiter=" ">
 			<text macro="juris-locator" prefix=", " label-form="symbol"/>
 		</group>
 	</group>

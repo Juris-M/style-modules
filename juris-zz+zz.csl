@@ -100,10 +100,9 @@
   </if>
   <else-if type="legislation regulation" match="any">
 		<group delimiter=" ">
-		<number variable="volume"/>
-		<text variable="container-title"/>
-		<text form="symbol" term="section" />
-		<text variable="section"/>
+  		<number variable="volume"/>
+  		<text variable="container-title"/>
+  		<text variable="section"/>
 		</group>
   </else-if>
   <else-if type="bill">

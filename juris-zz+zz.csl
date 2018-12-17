@@ -102,8 +102,7 @@
 		<group delimiter=" ">
   		<number variable="volume"/>
   		<text variable="container-title"/>
-		  <text form="symbol" term="section"/>
-		  <text variable="section"/>
+		  <text variable="section" form="short"/>
 		</group>
   </else-if>
   <else-if type="bill">

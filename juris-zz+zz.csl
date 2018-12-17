@@ -102,6 +102,7 @@
 		<group delimiter=" ">
   		<number variable="volume"/>
   		<text variable="container-title"/>
+		  <text form="symbol" term="section" />
   		<text variable="section"/>
 		</group>
   </else-if>
@@ -445,7 +446,7 @@
 	<else-if type="legislation regulation" match="any">
 	<group delimiter=" ">
 		<group delimiter=" ">
-			<text macro="juris-main"  label-form="symbol"/>
+			<text macro="juris-main"/>
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-tail"/>

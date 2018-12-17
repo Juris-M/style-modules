@@ -445,7 +445,7 @@
 	<else-if type="legislation regulation" match="any">
 	<group delimiter=" ">
 		<group delimiter=" ">
-			<text macro="juris-main"/>
+			<text macro="juris-main"  label-form="symbol"/>
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-tail"/>

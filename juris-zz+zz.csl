@@ -137,7 +137,6 @@
    	<group delimiter=" ">
 		<number variable="volume"/>
 		<text variable="container-title"  form="short"/>
-		<text variable="section"/>
 		</group>
   </else-if>
   <else-if type="bill">

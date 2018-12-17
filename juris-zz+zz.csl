@@ -423,10 +423,10 @@
 		<group delimiter=" " suffix=",">
 			<text macro="juris-title"/>
 		</group>
-		<group delimiter=" ">
+		<group delimiter="">
 			<text macro="juris-main"/>
 		</group>
-		<group prefix="," delimiter=" ">
+		<group prefix=", " delimiter="">
 			<text macro="juris-locator"/>
 		</group>
 		<group delimiter=" ">

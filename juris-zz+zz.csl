@@ -425,9 +425,7 @@
 		</group>
 		<group delimiter="">
 			<text macro="juris-main"/>
-		</group>
-		<group prefix=", " delimiter="">
-			<text macro="juris-locator"/>
+			<text macro="juris-locator" prefix=", "/>
 		</group>
 		<group delimiter=" ">
 			<text macro="juris-tail"/>

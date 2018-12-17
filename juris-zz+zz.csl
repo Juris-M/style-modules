@@ -240,8 +240,6 @@
 </macro>
 
 
-
-
 <!-- Citation Layouts -->
 <citation>
 <layout>
@@ -270,255 +268,285 @@
 
 <!-- SHORT FORM -->
 <else-if>
-      <conditions match="any">
-        <condition match="all" position="near-note"/>
-        <condition match="all" type="report" variable="title" position="far-note"/>
-        <condition match="all" type="report" variable="committee" position="far-note"/>
-        <condition match="all" type="hearing" variable="committee" position="far-note"/>
-        <condition match="all" type="legal_case" position="far-note"/>
-      </conditions>
+	<conditions match="any">
+		<condition match="all" position="near-note"/>
+		<condition match="all" type="report" variable="title" position="far-note"/>
+		<condition match="all" type="report" variable="committee" position="far-note"/>
+		<condition match="all" type="hearing" variable="committee" position="far-note"/>
+		<condition match="all" type="legal_case" position="far-note"/>
+	</conditions>
 
 	<choose>
 
-<!-- Cases -->
-    <if type="legal_case">
-      <group delimiter=" " suffix=",">
-	    	<text macro="juris-title-short" font-style="italic"/>
-			</group>
-      <text macro="juris-main-short"/>
-      <group delimiter=" ">
-      	<text value="at"/>
-      	<text macro="juris-locator"/>
-      </group>
-		</if>
+	<!-- Cases -->
+	<if type="legal_case">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title-short" font-style="italic"/>
+		</group>
+			<text macro="juris-main-short"/>
+		<group delimiter=" ">
+			<text value="at"/>
+			<text macro="juris-locator"/>
+		</group>
+	</group>
+	</if>
 
-<!-- Statutes & Regulations -->
+	<!-- Statutes & Regulations -->
+	<else-if type="legislation regulation" match="any">
+	<group delimiter=" ">
+		<group delimiter=" ">
+			<text macro="juris-main-short"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-locator" label-form="symbol"/>
+		</group>
+	</group>
+	</else-if>
 
-		<else-if type="legislation regulation" match="any">
-      <text macro="juris-main-short"/>
-      <group delimiter=" ">
-      	<text macro="juris-locator" label-form="symbol"/>
-      </group>
-		</else-if>
+	<!-- Bills -->
+	<else-if type="bill">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title-short"/>
+		</group>
+			<text macro="juris-main-short"/>
+		<group delimiter=" ">
+			<text macro="juris-locator" label-form="symbol"/>
+		</group>
+	</group>
+	</else-if>
 
-<!-- Bills -->
+	<!-- Journal Articles -->
+	<else-if type="article-journal">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<group delimiter=" ">
+				<text value="supra" font-style="italic"/>
+				<text term="note"/>
+				<text variable="first-reference-note-number"/>
+			</group>
+			<group delimiter=" ">
+				<text value="at"/>
+				<text macro="juris-locator"/>
+			</group>
+		</group>
+	</group>
+	</else-if>
 
-		<else-if type="bill">
-      <group delimiter=" " suffix=",">
-	    	<text macro="juris-title-short"/>
+	<!-- Newspaper & Magazine Articles -->
+	<else-if type="article-newspaper article-magazine" match="any">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title-short"  font-style="italic"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<group delimiter=" ">
+				<text value="supra" font-style="italic"/>
+				<text term="note"/>
+				<text variable="first-reference-note-number"/>
 			</group>
-      <text macro="juris-main-short"/>
-      <group delimiter=" ">
-      	<text macro="juris-locator" label-form="symbol"/>
-      </group>
-		</else-if>
+			<group delimiter=" ">
+				<text value="at"/>
+				<text macro="juris-locator"/>
+			</group>
+		</group>
+	</group>
+	</else-if>
 
-<!-- Journal Articles -->
-		<else-if type="article-journal">
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-author-short"/>
+	<!-- Books -->
+	<else-if type="book">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<group delimiter=" ">
+				<text value="supra" font-style="italic"/>
+				<text term="note"/>
+				<text variable="first-reference-note-number"/>
 			</group>
-      <group delimiter=" " suffix=",">
-      	<text macro="juris-title-short"/>
+			<group delimiter=" ">
+				<text value="at"/>
+				<text macro="juris-locator"/>
 			</group>
-			<group delimiter=" " suffix=",">
-		    <group delimiter=" ">
-		      <text value="supra" font-style="italic"/>
-		      <text term="note"/>
-		      <text variable="first-reference-note-number"/>
-		    </group>
-		    <group delimiter=" ">
-		      <text value="at"/>
-		      <text macro="juris-locator"/>
-		    </group>
-			</group>
-    </else-if>
+		</group>
+	</group>
+	</else-if>
 
-<!-- Newspaper & Magazine Articles -->
-		<else-if type="article-newspaper article-magazine" match="any">
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-author-short"/>
+	<!-- Other Sources -->
+	<else>
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title-short"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<group delimiter=" ">
+				<text value="supra" font-style="italic"/>
+				<text term="note"/>
+				<text variable="first-reference-note-number"/>
 			</group>
-      <group delimiter=" " suffix=",">
-      	<text macro="juris-title-short"  font-style="italic"/>
+			<group delimiter=" ">
+				<text value="at"/>
+				<text macro="juris-locator"/>
 			</group>
-			<group delimiter=" " suffix=",">
-		    <group delimiter=" ">
-		      <text value="supra" font-style="italic"/>
-		      <text term="note"/>
-		      <text variable="first-reference-note-number"/>
-		    </group>
-		    <group delimiter=" ">
-		      <text value="at"/>
-		      <text macro="juris-locator"/>
-		    </group>
-			</group>
-    </else-if>
+		</group>
+		<group delimiter=" " prefix=",">
+			<text macro="juris-URL"/>
+		</group>
+	</group>
+	</else>
 
-<!-- Books -->
-		<else-if type="book">
-  		<group delimiter=" " suffix=",">
-      	<text macro="juris-author-short"/>
-      </group>
-			<group delimiter=" " suffix=",">
-		    <group delimiter=" ">
-		      <text value="supra" font-style="italic"/>
-		      <text term="note"/>
-		      <text variable="first-reference-note-number"/>
-		    </group>
-		    <group delimiter=" ">
-		      <text value="at"/>
-		      <text macro="juris-locator"/>
-		    </group>
-			</group>
-    </else-if>
-
-<!-- Other Sources -->
-		<else>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-author-short"/>
-			</group>
-      <group delimiter=" " suffix=",">
-      	<text macro="juris-title-short"/>
-			</group>
-			<group delimiter=" " suffix=",">
-		    <group delimiter=" ">
-		      <text value="supra" font-style="italic"/>
-		      <text term="note"/>
-		      <text variable="first-reference-note-number"/>
-		    </group>
-		    <group delimiter=" ">
-		      <text value="at"/>
-		      <text macro="juris-locator"/>
-		    </group>
-			</group>
-			<group delimiter=" " prefix=",">
-      <text macro="juris-URL"/>
-			</group>
-    </else>
-    
-  </choose>
+	</choose>
 </else-if>
 
 
 <!-- full form -->
 <else>
-  <choose>
+	<choose>
 
-<!-- Cases -->
-    <if type="legal_case">
-      <group delimiter=" " suffix=",">
-	    	<text macro="juris-title"/>
-			</group>
-      <group delimiter=" ">
-      <text macro="juris-main"/>
-			</group>
-      <group delimiter=" " prefix=",">
-      	<text macro="juris-locator"/>
-      </group>
-      <group delimiter=" ">
-      <text macro="juris-tail"/>
-			</group>
-		</if>
+	<!-- Cases -->
+	<if type="legal_case">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-main"/>
+		</group>
+		<group delimiter=" " prefix=",">
+			<text macro="juris-locator"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-tail"/>
+		</group>
+	</group>
+	</if>
 
-<!-- Statutes & Regulations -->
-		<else-if type="legislation regulation" match="any">
-      <text macro="juris-main"/>
-      <group delimiter=" ">
-      	<text macro="juris-locator" label-form="symbol"/>
-      </group>
-      <group delimiter=" ">
-      <text macro="juris-tail"/>
-			</group>
-		</else-if>
+	<!-- Statutes & Regulations -->
+	<else-if type="legislation regulation" match="any">
+	<group delimiter=" ">
+		<group delimiter=" ">
+			<text macro="juris-main"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-locator" label-form="symbol"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-tail"/>
+		</group>
+	</group>
+	</else-if>
 
-<!-- Bills -->
-		<else-if type="bill">
-      <group delimiter=" " suffix=",">
-	    	<text macro="juris-title"/>
-			</group>
-      <group delimiter=" " suffix=",">
-	      <text macro="juris-main"/>
-			</group>
-      <group delimiter=", ">
-      	<text macro="juris-locator" label-form="symbol"/>
-      </group>
-      <group delimiter=" ">
-	      <text macro="juris-tail"/>
-			</group>
-		</else-if>
+	<!-- Bills -->
+	<else-if type="bill">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-main"/>
+		</group>
+		<group delimiter=", ">
+			<text macro="juris-locator" label-form="symbol"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-tail"/>
+		</group>
+	</group>
+	</else-if>
 
-<!-- Journal Articles -->
-		<else-if type="article-journal">
+	<!-- Journal Articles -->
+	<else-if type="article-journal">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title" font-style="italic"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-main"/>
+		</group>
+		<group delimiter=" " prefix=",">
+			<text macro="juris-locator"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-tail"/>
+		</group>
+	</group>
+	</else-if>
+
+	<!-- Newspaper & Magazine Articles -->
+	<else-if type="article-newspaper article-magazine" match="any">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title" font-style="italic"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-main"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-tail"/>
+		</group>
+		<group delimiter=" ">
+			<text value="at"/>
+			<text macro="juris-locator"/>
+		</group>
+	</group>
+	</else-if>
+
+	<!-- Books -->
+	<else-if type="book">
+	<group delimiter=" ">
+		<group delimiter=" " suffix=",">
+			<text macro="juris-author"  font-variant="small-caps"/>
+		</group>
+		<group delimiter=" " suffix=",">
+			<text macro="juris-title"  font-variant="small-caps"/>
+			<text macro="juris-locator"/>
+		</group>
+		<group delimiter=" ">
+			<text macro="juris-tail"/>
+		</group>
+	</group>
+	</else-if>
+
+	<!-- Other Sources -->
+	<else>
+		<group delimiter=" ">
 			<group delimiter=" " suffix=",">
-      	<text macro="juris-author"/>
+				<text macro="juris-author"/>
 			</group>
-      <group delimiter=" " suffix=",">
-      	<text macro="juris-title" font-style="italic"/>
+			<group delimiter=" " suffix=",">
+				<text macro="juris-title"/>
 			</group>
 			<group delimiter=" ">
-      	<text macro="juris-main"/>
-			</group>
-      <group delimiter=" " prefix=",">
-      	<text macro="juris-locator"/>
-      </group>
-      <group delimiter=" ">
-      <text macro="juris-tail"/>
-			</group>
-    </else-if>
-
-<!-- Newspaper & Magazine Articles -->
-		<else-if type="article-newspaper article-magazine" match="any">
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-author"/>
-			</group>
-      <group delimiter=" " suffix=",">
-      	<text macro="juris-title" font-style="italic"/>
-			</group>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-main"/>
-			</group>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-tail"/>
+				<text macro="juris-main"/>
 			</group>
 			<group delimiter=" ">
-      	<text value="at"/>
-      	<text macro="juris-locator"/>
-      </group>
-    </else-if>
-
-<!-- Books -->
-		<else-if type="book">
-  		<group delimiter=" " suffix=",">
-      	<text macro="juris-author"  font-variant="small-caps"/>
-      </group>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-title"  font-variant="small-caps"/>
-      	<text macro="juris-locator"/>
-			</group>
-  		<group delimiter=" ">
-      	<text macro="juris-tail"/>
-      </group>
-    </else-if>
-
-<!-- Other Sources -->
-		<else>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-author"/>
-			</group>
-			<group delimiter=" " suffix=",">
-      	<text macro="juris-title"/>
-			</group>
-			<group delimiter=" ">
-      	<text macro="juris-main"/>
-			</group>
-      <group delimiter=" ">
-  	    <text macro="juris-tail"/>
+				<text macro="juris-tail"/>
 			</group>
 			<group delimiter=" " prefix=",">
-	      <text macro="juris-URL"/>
+				<text macro="juris-URL"/>
 			</group>
-    </else>
+		</group>
+	</else>
 
   </choose>
 </else>

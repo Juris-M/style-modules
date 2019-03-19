@@ -26,12 +26,15 @@
   </macro>
   <macro name="juris-title">
     <choose>
-      <if type="legal_case legislation">
+      <if type="legislation">
         <group delimiter=" ">
           <text variable="title"/>
           <date variable="issued" form="text" date-parts="year"/>
         </group>
       </if>
+      <else-if type="legal_case">
+        <text variable="title"/>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-main">

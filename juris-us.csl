@@ -202,7 +202,7 @@
       <else-if type="standard">
         <group delimiter=": ">
           <text variable="title"/>
-          <text variable="locator-extra"/>
+          <number variable="locator-extra"/>
         </group>
       </else-if>
       <else>
@@ -381,7 +381,7 @@
           <text variable="container-title" form="short"/>
           <group delimiter=", ">
             <number variable="page-first"/>
-            <text variable="locator-extra"/>
+            <number variable="locator-extra"/>
           </group>
         </if>
       </choose>

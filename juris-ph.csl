@@ -35,12 +35,23 @@
 
 <macro name="juris-main">
 	<choose>
-		<if type="legal_case" number="number">
-          <group delimiter=" " suffix=",">
-			<text value="G.R. No."/>
-			<number variable="number"/>
-          </group>
-		</if>
+	<if type="legal_case">
+		<choose>
+			<if number="number">
+				<group delimiter=" " suffix=",">
+					<text value="G.R. No."/>
+					<number variable="number"/>
+				</group>
+			</if>
+			<else>
+			<group delimiter=" ">
+				<number variable="volume"/>
+				<text variable="container-title" form="short"/>
+				<number variable="page-first"/>
+			</group>
+			</else>
+		</choose>
+	</if>
 	</choose>
 </macro>
 

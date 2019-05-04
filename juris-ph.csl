@@ -48,15 +48,6 @@
 				<number variable="volume"/>
 				<text variable="container-title" form="short"/>
 				<number variable="page-first"/>
-				<group delimiter=" ">
-					<choose>
-						<if locator="page"/>
-						<else>
-							<label variable="locator"/>
-						</else>
-					</choose>
-					<number variable="locator"/>
-				</group>				
 			</group>
 			</else>
 		</choose>

@@ -68,7 +68,7 @@
 	<group delimiter=" ">
 		<choose>
 		    <if type="legal_case">
-			<group delimiter=" " prefix="," suffix=".">
+			<group delimiter=" " suffix=".">
 				<date form="text" variable="issued"/>
 			</group>
 			</if>

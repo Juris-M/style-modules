@@ -87,10 +87,22 @@
     <text value="[TAIL-SHORT]"/>
   </macro>
 
-  <macro name="juris-locator">
-    <!-- The label and locator -->
-    <text value="[LOCATOR]"/>
-  </macro>
+<macro name="juris-locator">
+	<group delimiter=" ">
+		<choose>
+			<if number="number"/>
+			<else>
+			<choose>
+				<if locator="page"/>
+				<else>
+					<label variable="locator"/>
+				</else>
+			</choose>
+			<number variable="locator"/>
+			</else>
+		</choose>
+	</group>
+</macro>
 
   <citation>
     <layout>

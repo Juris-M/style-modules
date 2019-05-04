@@ -64,10 +64,17 @@
 	</choose>
 </macro>
 
-  <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL]"/>
-  </macro>
+<macro name="juris-tail">
+	<group delimiter=" ">
+		<choose>
+		    <if type="legal_case">
+			<group delimiter=" " prefix="(" suffix=").">
+				<date form="text" variable="issued"/>
+			</group>
+			</if>
+		</choose>
+	</group>
+</macro>
 
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->

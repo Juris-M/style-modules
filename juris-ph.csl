@@ -35,10 +35,10 @@
 
 <macro name="juris-main">
 	<choose>
-		<if type="legal_case">
+		<if type="legal_case" number="number">
           <group delimiter=" " suffix=",">
-            <text value="G.R. No."/>
-            <number variable="number"/>
+			<text value="G.R. No."/>
+			<number variable="number"/>
           </group>
 		</if>
 	</choose>

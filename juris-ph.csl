@@ -33,35 +33,16 @@
     </choose>
   </macro>
 
-  <macro name="juris-main">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <number variable="volume"/>
-          <text variable="container-title" 
-                form="short"/>
-          <number variable="page-first"/>
-        </group>
-      </if>
-      <else>
-        <choose>
-          <if number="number">
-            <group delimiter=" " suffix=",">
-              <text value="Pub. L. No."/>
-              <number variable="number"/>
-            </group>
-          </if>
-          <else>
-            <group delimiter=" " suffix=",">
-              <label variable="number" 
-                     form="symbol"/>
-              <number variable="number"/>
-            </group>
-          </else>
-        </choose>
-      </else>
-    </choose>
-  </macro>  
+<macro name="juris-main">
+	<choose>
+		<if type="legal_case">
+          <group delimiter=" " suffix=",">
+            <text value="G.R. No."/>
+            <number variable="number"/>
+          </group>
+		</if>
+	</choose>
+</macro>
 
 
   <macro name="juris-tail">

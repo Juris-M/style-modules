@@ -33,9 +33,6 @@
       <if type="regulation">
         <text variable="title"/>
       </if>
-      <else-if type="legal_case">
-        <text variable="title"/>
-      </else-if>
     </choose>
   </macro>
   <macro name="juris-main">
@@ -61,9 +58,19 @@
         <group delimiter=", ">
           <names variable="authority">
             <name/>
-            <institution form="short" reverse-order="true"/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
           </names>
+          <group delimiter=" ">
+            <number variable="division" form="ordinal"/>
+            <text variable="division-name"/>
+          </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
+          <group delimiter=" ">
+            <label variable="number" form="short"/>
+            <number variable="number"/>
+          </group>
         </group>
       </else-if>
     </choose>

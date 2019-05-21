@@ -31,15 +31,19 @@
     <choose>
       <if type="legal_case">
         <group delimiter=", ">
-          <choose>
-            <if variable="genre document-name">
-              <group delimiter=" ">
-                <text variable="genre"/>
-                <text variable="document-name"/>
-              </group>
-            </if>
-          </choose>
-          <text variable="jurisdiction" form="short"/>
+          <group delimiter=" ">
+            <text variable="genre"/>
+            <text variable="document-name"/>
+          </group>
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short">
+                <institution-part name="short"/>
+              </institution>
+            </names>
+          </group>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
           <number variable="number"/>
         </group>
       </if>
@@ -65,14 +69,17 @@
     <choose>
       <if type="legal_case">
         <group delimiter=", ">
+          <text variable="genre"/>
           <choose>
-            <if variable="genre document-name">
+            <if disambiguate="true">
               <group delimiter=" ">
-                <text variable="genre"/>
+                <names variable="authority">
+                  <name/>
+                  <institution form="short"/>
+                </names>
               </group>
             </if>
           </choose>
-          <text variable="jurisdiction" form="short"/>
           <number variable="number"/>
         </group>
       </if>

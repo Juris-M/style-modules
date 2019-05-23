@@ -425,10 +425,7 @@
             </group>
           </else-if>
           <else-if type="legal_case">
-            <group delimiter=" ">
-              <text variable="country" form="short"/>
-              <text variable="jurisdiction" form="short"/>
-            </group>
+            <text variable="country" form="short"/>
             <names variable="authority">
               <name/>
               <institution institution-parts="short"/>

@@ -39,8 +39,8 @@
               </institution>
             </names>
             <date variable="issued">
-              <date-part name="day" form="numeric" suffix="."/>
-              <date-part name="month" form="numeric" suffix="."/>
+              <date-part name="day" form="numeric-leading-zeros" suffix="."/>
+              <date-part name="month" form="numeric-leading-zeros" suffix="."/>
               <date-part name="year" form="numeric"/>
             </date>
           </group>
@@ -74,7 +74,11 @@
           <institution-part name="short"/>
         </institution>
       </names>
-      <date variable="issued" form="text" date-parts="year-month-day"/>
+      <date variable="issued">
+        <date-part name="day" form="numeric-leading-zeros" suffix="."/>
+        <date-part name="month" form="numeric-leading-zeros" suffix="."/>
+        <date-part name="year" form="numeric"/>
+      </date>
     </group>
   </macro>
 

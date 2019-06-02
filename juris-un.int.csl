@@ -35,23 +35,38 @@
           </names>
           <text variable="event" form="short"/>
           <number variable="number"/>
+          <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
+          <choose>
+            <if variable="container-title" match="all">
+              <text variable="container-title" form="short"/>
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <group delimiter=" ">
+                    <number variable="chapter-number" form="ordinal"/>
+                    <text value="Session"/>
+                  </group>
+                  <group delimiter=" ">
+                    <text value="Supp."/>
+                    <number variable="supplement"/>
+                  </group>
+                </group>
+                <number variable="page"/>
+              </group>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <text value="U.N. Doc."/>
+                <text variable="archive_location"/>
+              </group>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>
   </macro>
 
   <macro name="juris-tail">
-    <choose>
-      <if type="bill">
-        <group delimiter=" ">
-          <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
-          <group delimiter=" ">
-            <text value="U.N. Doc."/>
-            <text variable="archive_location"/>
-          </group>
-        </group>
-      </if>
-    </choose>
+    <text value=""/>
   </macro>
   
   <macro name="juris-pretitle-short">
@@ -63,7 +78,18 @@
   </macro>
 
   <macro name="juris-main-short">
-    <text macro="juris-main"/>
+    <choose>
+      <if type="bill">
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <text variable="event" form="short"/>
+          <number variable="number"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">

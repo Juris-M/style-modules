@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Austria</title>
-    <id>http://citationstylist.org/modules/juris-at</id>
-    <link href="http://citationstylist/modules/juris-at" rel="self"/>
+    <title>Czech Republic</title>
+    <id>http://citationstylist.org/modules/juris-cz</id>
+    <link href="http://citationstylist/modules/juris-cz" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Austria</summary>
+    <summary>Juris-M style module for Czech Republic</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
@@ -42,7 +42,7 @@
             <date-part name="month" form="numeric-leading-zeros" suffix="."/>
             <date-part name="year" form="numeric"/>
           </date>
-          <number variable="number"/>
+		  <number variable="number"/>
         </group>
       </if>
     </choose>

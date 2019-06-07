@@ -64,20 +64,28 @@
   </macro>
 
   <macro name="juris-main-short">
-    <group delimiter=", ">
-      <names variable="authority">
-        <name/>
-        <institution institution-parts="short">
-          <institution-part name="long"/>
-          <institution-part name="short"/>
-        </institution>
-      </names>
-      <date variable="issued">
-        <date-part name="day" form="numeric-leading-zeros" suffix="."/>
-        <date-part name="month" form="numeric-leading-zeros" suffix="."/>
-        <date-part name="year" form="numeric"/>
-      </date>
-    </group>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <date variable="issued">
+            <date-part name="day" form="numeric-leading-zeros" suffix="."/>
+            <date-part name="month" form="numeric-leading-zeros" suffix="."/>
+            <date-part name="year" form="numeric"/>
+          </date>
+          <choose>
+            <if disambiguate="true">
+              <number variable="number"/>
+            </if>
+          </choose>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">

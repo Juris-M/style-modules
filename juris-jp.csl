@@ -54,27 +54,13 @@
       <else-if type="report">
         <text variable="title"/>
       </else-if>
-      <else-if type="legal_case">
-        <group delimiter=", " font-variant="normal" font-style="normal">
-          <group delimiter=" ">
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
-          </group>
-          <date variable="issued" form="text" date-parts="year-month-day"/>
-        </group>
-      </else-if>
     </choose>
   </macro>
   <macro name="juris-main">
     <choose>
       <if type="legislation">
         <group delimiter=", ">
-          <group delimiter=" ">
-            <text variable="country" form="short"/>
-            <text variable="jurisdiction" form="short"/>
-	      </group>
+          <text variable="jurisdiction" form="short"/>
           <group delimiter=" ">
             <text value="Law no."/>
             <number variable="number"/>
@@ -83,37 +69,35 @@
         </group>
       </if>
       <else-if type="legal_case">
-        <group delimiter=", ">
-          <text variable="document-name"/>
+        <group delimiter=", " font-variant="normal" font-style="normal">
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <text variable="genre" form="short"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+          <choose>
+            <if disambiguate="true">
+              <number variable="number"/>
+            </if>
+          </choose>
           <choose>
             <if variable="container-title">
               <group delimiter=", ">
                 <group delimiter=" ">
-                  <text variable="container-title"/>
-                  <group delimiter=" ">
-                    <label variable="volume" form="short"/>
-                    <number variable="volume"/>
-                  </group>
-                </group>
-                <group delimiter=" ">
-                  <label variable="page" form="short"/>
+                  <number variable="volume"/>
+                  <text variable="container-title" form="short"/>
+                  <number variable="issue" prefix="(" suffix=")"/>
                   <number variable="page"/>
                 </group>
               </group>
             </if>
             <else>
-                <group delimiter=" ">
-                  <text variable="genre"/>
-                  <group>
-                    <date variable="submitted">
-                      <date-part name="year" form="imperial"/>
-                    </date>
-                    <number variable="call-number" prefix="(" suffix=")"/>
-                    <number variable="number"/>
-                  </group>
-                </group>
-              </else>
-            </choose>
+              <number variable="number"/>
+            </else>
+          </choose>
         </group>
       </else-if>
       <else-if type="report">
@@ -170,16 +154,22 @@
     </choose>
   </macro>
   <macro name="juris-tail">
-    <group delimiter=", ">
       <choose>
-        <if type="legislation"/>
+        <if type="legislation">
+          <text variable="country" form="short" prefix="[" suffix="]"/>
+        </if>
         <else-if type="legal_case">
           <group delimiter=" ">
-            <text variable="country" form="short"/>
-	      </group>
+            <group delimiter=" " prefix="(" suffix=")">
+              <text value="access:"/>
+              <text variable="URL"/>
+            </group>
+            <group delimiter=" ">
+              <text variable="country" form="short" prefix="[" suffix="]"/>
+	        </group>
+          </group>
         </else-if>
       </choose>
-    </group>
   </macro>
   <macro name="juris-pretitle-short">
     <choose>
@@ -242,11 +232,21 @@
         </choose>
       </if>
       <else-if type="legal_case">
-        <choose>
-          <if disambiguate="true">
-            <text macro="juris-main"/>
-          </if>
-        </choose>
+        <group delimiter=", " font-variant="normal" font-style="normal">
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <text variable="genre" form="short"/>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+          <choose>
+            <if disambiguate="true">
+              <number variable="number"/>
+            </if>
+          </choose>
+        </group>
       </else-if>
       <else-if type="report">
         <choose>
@@ -282,16 +282,24 @@
     </choose>
   </macro>
   <macro name="juris-tail-short">
-    <choose>
-      <if type="legislation"/>
-      <else-if type="legal_case"/>
-    </choose>
+    <text value=""/>
   </macro>
   <macro name="juris-locator">
-    <group delimiter=" ">
-      <label variable="locator"/>
-      <number variable="locator"/>
-    </group>
+    <choose>
+      <if type="legal_case">
+          <number variable="locator"/>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <choose>
+            <if locator="page" match="none">
+              <label variable="locator"/>
+            </if>
+          </choose>
+          <number variable="locator"/>
+        </group>
+      </else>
+    </choose>
   </macro>
 
   <citation>

@@ -367,6 +367,21 @@
           </group>
         </group>
       </else-if>
+      <else-if type="patent">
+        <group delimiter=" ">
+          <text variable="country" form="short"/>
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+              <text value="no."/>
+            </if>
+            <else>
+              <text value="Patent No."/>
+            </else>
+          </choose>
+          <number variable="number"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -682,6 +697,12 @@
             <condition match="any" type="legal_case"/>
             <condition match="none" variable="title"/>
           </conditions>
+        </else-if>
+        <else-if type="patent" match="any">
+          <group delimiter=" ">
+            <number variable="number"/>
+            <text value="Patent"/>
+          </group>
         </else-if>
         <else>
           <group delimiter=" ">

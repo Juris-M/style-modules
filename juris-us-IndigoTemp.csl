@@ -97,7 +97,9 @@
             </group>
           </if>
           <else>
-            <text variable="title" form="short"/>
+            <group is-parallel="first">
+              <text variable="title" form="short"/>
+            </group>
           </else>
         </choose>
       </if>
@@ -361,6 +363,21 @@
           </group>
         </group>
       </else-if>
+      <else-if type="patent">
+        <group delimiter=" ">
+          <text variable="country" form="short"/>
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+              <text value="no."/>
+            </if>
+            <else>
+              <text value="Patent No."/>
+            </else>
+          </choose>
+          <number variable="call-number"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -407,11 +424,13 @@
 	        </group>
           </else-if>
           <else-if type="legal_case">
-            <text variable="country" form="short"/>
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
+            <group is-parallel="first">
+              <text variable="country" form="short"/>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+            </group>
           </else-if>
           <else>
             <names variable="authority">
@@ -467,10 +486,14 @@
                 <date form="text" date-parts="year-month-day" variable="issued"/>
               </else-if>
               <else-if variable="issued">
-                <date form="text" date-parts="year" variable="issued"/>
+                <group is-parallel="last">
+                  <date form="text" date-parts="year" variable="issued"/>
+                </group>
               </else-if>
               <else>
-                <date form="text" date-parts="year" variable="publication-date"/>
+                <group is-parallel="last">
+                  <date form="text" date-parts="year" variable="publication-date"/>
+                </group>
               </else>
             </choose>
           </else-if>
@@ -521,10 +544,14 @@
   <macro name="juris-title-short">
     <choose>
       <if match="all" type="legal_case" variable="title-short title">
-        <text variable="title-short" form="short"/>
+        <group is-parallel="first">
+          <text variable="title-short" form="short"/>
+        </group>
       </if>
       <else-if type="legal_case">
-        <text variable="title" form="short"/>
+        <group is-parallel="first">
+          <text variable="title" form="short"/>
+        </group>
       </else-if>
       <else-if type="bill"/>
       <else-if>

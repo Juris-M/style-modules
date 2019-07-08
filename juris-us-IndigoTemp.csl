@@ -424,7 +424,7 @@
 	        </group>
           </else-if>
           <else-if type="legal_case">
-            <group is-parallel="last">
+            <group delimiter=" " is-parallel="last">
               <text variable="country" form="short"/>
               <names variable="authority">
                 <name/>

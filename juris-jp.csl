@@ -111,7 +111,6 @@
           <group delimiter=" ">
             <group delimiter=" ">
               <text variable="country" form="short"/>
-              <text variable="jurisdiction" form="short"/>
 	        </group>
             <names variable="authority">
               <name/>

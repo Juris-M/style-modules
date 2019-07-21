@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Austria</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case regulation legislation"/>
   </info>
   
   <macro name="juris-pretitle">
@@ -24,16 +24,50 @@
 
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <text variable="title"/>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
-    <text value=""/>
+    <choose>
+      <if type="regulation legislation" match="any">
+        <group delimiter=" ">
+          <text variable="title"/>
+          <group delimiter=", " prefix="(" suffix=")">
+            <group delimiter=" ">
+              <text value="promulgated by the"/>
+              <names variable="authority">
+                <name/>
+                <institution/>
+              </names>
+            </group>
+            <date variable="issued" form="text" date-parts="year-month-day"/>
+            <group delimiter=" ">
+              <text value="effective"/>
+              <date variable="available-date" form="text" date-parts="year-month-day"/>
+            </group>
+          </group>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" " prefix="(" suffix=")">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-pretitle-short">
@@ -56,7 +90,17 @@
   </macro>
 
   <macro name="juris-locator">
-    <text value=""/>
+    <group delimiter=" ">
+      <choose>
+        <if locator="page">
+          <text value="at"/>
+        </if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
 
 </style>

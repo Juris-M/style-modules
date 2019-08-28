@@ -200,8 +200,24 @@
       <else-if type="bill">
         <group delimiter=" ">
           <number variable="number"/>
-          <number variable="chapter-number"/>
-          <text variable="genre"/>
+          <group delimiter=" ">
+          <choose>
+            <if is-numeric="chapter-number">
+              <number variable="chapter-number" form="roman" suffix="."/>
+            </if>
+            <else>
+              <number variable="chapter-number"/>
+            </else>
+          </choose>
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+            </if>
+            <else>
+              <text value="GP"/>
+            </else>
+          </choose>
+        </group>
         </group>
       </else-if>
     </choose>

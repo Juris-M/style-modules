@@ -55,11 +55,7 @@
                   <condition variable="container-title" match="none"/>
                   <condition context="bibliography"/>
                 </conditions>
-                <date variable="issued">
-                  <date-part name="day" form="numeric-leading-zeros" suffix="."/>
-                  <date-part name="month" form="numeric-leading-zeros" suffix="."/>
-                  <date-part name="year" form="long"/>
-                </date>
+                <date variable="issued" form="numeric"/>
               </if>
             </choose>
             <number variable="number"/>
@@ -74,9 +70,7 @@
               <number variable="volume"/>
               <number variable="number"/>
             </group>
-            <date variable="issued">
-              <date-part name="year" form="long"/>
-            </date>
+            <date variable="issued" date-parts="year" form="numeric"/>
           </group>
           <text variable="references" prefix="idF "/>
         </group>
@@ -182,11 +176,7 @@
           <group delimiter=", ">
             <choose>
               <if variable="container-title" match="none">
-                <date variable="issued">
-                  <date-part name="day" form="numeric-leading-zeros" suffix="."/>
-                  <date-part name="month" form="numeric-leading-zeros" suffix="."/>
-                  <date-part name="year" form="long"/>
-                </date>
+                <date variable="issued" form="numeric"/>
               </if>
             </choose>
             <number variable="number"/>
@@ -198,9 +188,7 @@
           <text variable="container-title" form="short"/>
           <group delimiter="/">
             <number variable="volume"/>
-            <date variable="issued">
-              <date-part name="year" form="long"/>
-            </date>
+            <date variable="issued" date-parts="year" form="numeric"/>
           </group>
           <choose>
             <if disambiguate="true">

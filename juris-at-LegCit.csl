@@ -151,7 +151,14 @@
               </group>
               <group delimiter=" ">
                 <number variable="page"/>
-                <text macro="juris-locator" prefix="(" suffix=")"/>
+                <choose>
+                  <if locator="page">
+                    <text macro="juris-locator" prefix="(" suffix=")"/>
+                  </if>
+                  <else>
+                    <text macro="juris-locator"/>
+                  </else>
+                </choose>
               </group>
             </if>
             <else>

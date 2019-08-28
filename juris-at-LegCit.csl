@@ -97,8 +97,15 @@
       <if type="legal_case">
         <group delimiter=" ">
           <text variable="container-title" prefix="= "/>
-          <number variable="volume"/>
-          <date variable="publication-date" date-parts="year" form="numeric"/>
+          <group delimiter=", ">
+            <group delimiter="/">
+              <number variable="volume"/>
+              <date variable="publication-date" date-parts="year" form="numeric"/>
+              <number variable="container-number"/>
+              <number variable="issue"/>
+            </group>
+            <number variable="page"/>
+          </group>
           <text variable="references" prefix="= "/>
         </group>
       </if>
@@ -131,7 +138,40 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if type="legal_case">
+      <if type="legal_case" variable="commenter locator" match="all">
+        <group delimiter=", ">
+          <names variable="commenter" font-style="italic">
+            <name form="short"/>
+          </names>
+          <choose>
+            <if variable="page">
+              <group delimiter=" ">
+                <text variable="container-title" form="short"/>
+                <group delimiter="/">
+                  <number variable="volume"/>
+                  <number variable="collection-number"/>
+                </group>
+              </group>
+              <group delimiter=" ">
+                <number variable="page"/>
+                <text macro="juris-locator" prefix="(" suffix=")"/>
+              </group>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <text variable="container-title" form="short"/>
+                <group delimiter="/">
+                  <number variable="volume"/>
+                  <number variable="collection-number"/>
+                  <number variable="issue"/>
+                </group>
+              </group>
+              <text macro="juris-locator"/>
+            </else>
+          </choose>
+        </group>
+      </if>
+      <else-if type="legal_case">
         <group delimiter=" ">
           <names variable="authority">
             <name/>
@@ -152,7 +192,7 @@
             <number variable="number"/>
           </group>
         </group>
-      </if>
+      </else-if>
       <else-if type="legislation">
         <group delimiter=" ">
           <text variable="container-title" form="short"/>

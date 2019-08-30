@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 3.</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <updated>2019-08-30T12:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -48,6 +48,7 @@
               <institution-part name="short"/>
             </institution>
           </names>
+          <text variable="genre" prefix="(" suffix=")"/>
           <group delimiter=", ">
             <choose>
               <if>
@@ -137,9 +138,11 @@
     <choose>
       <if type="legal_case" variable="commenter locator" match="all">
         <group delimiter=", ">
+          <!--
           <names variable="commenter" font-style="italic">
             <name form="short"/>
           </names>
+          -->
           <choose>
             <if variable="page">
               <group delimiter=" ">
@@ -183,14 +186,15 @@
               <institution-part name="short"/>
             </institution>
           </names>
-          <group delimiter=", ">
-            <choose>
-              <if variable="container-title" match="none">
-                <date variable="issued" form="numeric"/>
-              </if>
-            </choose>
-            <number variable="number"/>
-          </group>
+          <text variable="genre" prefix="(" suffix=")"/>
+          <choose>
+            <if variable="number">
+              <number variable="number"/>
+            </if>
+            <else>
+              <date variable="issued" form="numeric"/>
+            </else>
+          </choose>
         </group>
       </else-if>
       <else-if type="legislation">

@@ -125,13 +125,13 @@
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
-    <if variable="hereinafter">
-      <text variable="hereinafter"/>
-    </if>
-    <else>
-      <text variable="title" form="short"/>
-    </else>
-      </choose>
+      <if variable="hereinafter">
+        <text variable="hereinafter"/>
+      </if>
+      <else>
+        <text variable="title" form="short"/>
+      </else>
+    </choose>
   </macro>
 
   <macro name="juris-main-short">
@@ -139,9 +139,9 @@
       <if type="legal_case" variable="commenter locator" match="all">
         <group delimiter=", ">
           <!--
-          <names variable="commenter" font-style="italic">
+            <names variable="commenter" font-style="italic">
             <name form="short"/>
-          </names>
+            </names>
           -->
           <choose>
             <if variable="page">
@@ -215,23 +215,23 @@
         <group delimiter=" ">
           <number variable="number"/>
           <group delimiter=" ">
-          <choose>
-            <if is-numeric="chapter-number">
-              <number variable="chapter-number" form="roman" suffix="."/>
-            </if>
-            <else>
-              <number variable="chapter-number"/>
-            </else>
-          </choose>
-          <choose>
-            <if variable="genre">
-              <text variable="genre"/>
-            </if>
-            <else>
-              <text value="GP"/>
-            </else>
-          </choose>
-        </group>
+            <choose>
+              <if is-numeric="chapter-number">
+                <number variable="chapter-number" form="roman" suffix="."/>
+              </if>
+              <else>
+                <number variable="chapter-number"/>
+              </else>
+            </choose>
+            <choose>
+              <if variable="genre">
+                <text variable="genre"/>
+              </if>
+              <else>
+                <text value="GP"/>
+              </else>
+            </choose>
+          </group>
         </group>
       </else-if>
     </choose>

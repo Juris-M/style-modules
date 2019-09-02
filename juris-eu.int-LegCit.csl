@@ -2,8 +2,8 @@
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
     <title>European Union</title>
-    <id>http://citationstylist.org/modules/juris-eu.int</id>
-    <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
+    <id>http://citationstylist.org/modules/juris-eu.int-LegCit</id>
+    <link href="http://citationstylist/modules/juris-eu.int-LegCit" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Alexander Schuster</name>
@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2016-09-06T22:06:38+00:00</updated>
+    <updated>2019-09-02T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>

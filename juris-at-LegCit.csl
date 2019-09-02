@@ -198,18 +198,11 @@
         </group>
       </else-if>
       <else-if type="legislation">
-        <group delimiter=" ">
-          <text variable="container-title" form="short"/>
-          <group delimiter="/">
-            <number variable="volume"/>
-            <date variable="issued" date-parts="year" form="numeric"/>
-          </group>
-          <choose>
-            <if disambiguate="true">
-              <text variable="references" prefix="idF "/>
-            </if>
-          </choose>
-        </group>
+        <choose>
+          <if disambiguate="true">
+            <text variable="references" prefix="idF "/>
+          </if>
+        </choose>
       </else-if>
       <else-if type="bill">
         <group delimiter=" ">

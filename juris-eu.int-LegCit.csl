@@ -148,7 +148,6 @@
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
   </macro>
 
   <macro name="juris-tail-short">

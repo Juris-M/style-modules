@@ -6,8 +6,12 @@
     <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>aAlexander Schuster</name>
+      <name>Alexander Schuster</name>
       <email>alexander.schuster@unitn.it</email>
+    </author>
+    <author>
+      <name>Georg Mayr-Duffner</name>
+      <email>georg.mayr-duffner@wu.ac.at</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>

@@ -20,7 +20,7 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
-  
+
   <locale>
     <terms>
       <term name="paragraph">
@@ -41,38 +41,35 @@
       </term>
     </terms>
   </locale>
-  
+
   <macro name="juris-pretitle">
-      <choose>
-        <if type="regulation">
-          <group delimiter=" ">
-            <text variable="genre"/>
-            <names variable="authority" prefix="(" suffix=")">
-              <name/>
-              <institution institution-parts="short"/>
-            </names>
-            <number variable="issue"/>
-            <date variable="issued" form="numeric"/>
-          </group>
-        </if>
-        <else-if type="legislation" variable="genre" match="all">
-          <group delimiter=" ">
-            <text variable="genre"/>
-            <number variable="number"/>
-            <text value="vom"/>
-            <date variable="issued" form="numeric"/>
-          </group>
-        </else-if>
-      </choose>
+    <choose>
+      <if type="regulation">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <names variable="authority" prefix="(" suffix=")">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <number variable="issue"/>
+          <date variable="issued" form="numeric"/>
+        </group>
+      </if>
+      <else-if type="legislation" variable="genre" match="all">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <number variable="number"/>
+          <text value="vom"/>
+          <date variable="issued" form="numeric"/>
+        </group>
+      </else-if>
+    </choose>
   </macro>
-  
+
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
-        <group delimiter=" " suffix=",">
-          <text variable="title"/>
-          <number variable="number"/>
-        </group>
+        <text variable="title" prefix="(" suffix=")"/>
       </if>
       <else-if type="legislation">
         <text variable="title"/>
@@ -87,10 +84,24 @@
     <choose>
       <if type="legal_case">
         <group delimiter=" ">
-          <group delimiter=" " prefix="Judgment of" suffix=",">
-            <date variable="issued" form="text"/>
-            <number variable="number"/>
-          </group>
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <text variable="genre" prefix="(" suffix=")"/>
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition variable="container-title" match="none"/>
+                <condition context="bibliography"/>
+              </conditions>
+              <date variable="issued" form="numeric"/>
+            </if>
+          </choose>
+          <text value="Rs"/>
+          <number variable="number"/>
         </group>
       </if>
       <else-if type="legislation">
@@ -128,7 +139,6 @@
             <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
           </if>
         </choose>
-        
       </if>
       <else-if type="legislation">
         <text variable="title-short" prefix="[" suffix="]"/>
@@ -139,10 +149,21 @@
   <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
+
   <macro name="juris-title-short">
     <choose>
       <if type="legal_case">
-        <text variable="title"/>
+        <group delimiter=" ">
+          <text value="Rs"/>
+          <choose>
+            <if variable="title-short">
+              <text variable="title" form="short"/>
+            </if>
+            <else>
+              <number variable="number"/>
+            </else>
+          </choose>
+        </group>
       </if>
       <else-if type="regulation legislation">
         <text variable="title" form="short"/>
@@ -152,6 +173,13 @@
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
+    <names variable="authority">
+      <name/>
+      <institution institution-parts="short">
+        <institution-part name="short"/>
+      </institution>
+    </names>
+    <text variable="genre" prefix="(" suffix=")"/>
   </macro>
 
   <macro name="juris-tail-short">

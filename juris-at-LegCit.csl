@@ -240,6 +240,9 @@
       <choose>
         <if locator="page">
         </if>
+        <else-if locator="section">
+          <label variable="locator" form="symbol"/>
+        </else-if>
         <else>
           <label variable="locator" form="short"/>
         </else>

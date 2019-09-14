@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 3.</summary>
-    <updated>2019-08-30T12:06:38+00:00</updated>
+    <updated>2019-09-14T14:14:27+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -41,7 +41,7 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
+        <group delimiter=" " is-parallel="first">
           <names variable="authority">
             <name/>
             <institution institution-parts="short">
@@ -96,7 +96,7 @@
             <group delimiter="/">
               <number variable="volume"/>
               <date variable="publication-date" date-parts="year" form="numeric"/>
-              <number variable="container-number"/>
+              <number variable="collection-number"/>
               <number variable="issue"/>
             </group>
             <number variable="page"/>
@@ -138,121 +138,168 @@
     <choose>
       <if type="legal_case" variable="commenter locator" match="all">
         <group delimiter=", ">
-          <!--
-            <names variable="commenter" font-style="italic">
-            <name form="short"/>
-            </names>
-          -->
-          <choose>
-            <if variable="page">
-              <group delimiter=" ">
-                <text variable="container-title" form="short"/>
-                <group delimiter="/">
-                  <number variable="volume"/>
-                  <number variable="collection-number"/>
-                </group>
-              </group>
-              <group delimiter=" ">
-                <number variable="page"/>
+          <text value="here be the commenter’s name in italics"/>
+            <!--
+              <names variable="commenter" font-style="italic">
+              <name form="short"/>
+              </names>
+            -->
+              <choose>
+                <if variable="page">
+                  <group delimiter=" ">
+                    <text variable="container-title" form="short"/>
+                    <group delimiter="/">
+                      <number variable="volume"/>
+                      <number variable="collection-number"/>
+                    </group>
+                    <date date-parts="year" form="numeric" variable="publication-date"/>
+                  </group>
+                  <group delimiter=" ">
+                    <number variable="page"/>
+                    <choose>
+                      <if locator="page">
+                        <text macro="juris-locator" prefix="(" suffix=")"/>
+                      </if>
+                      <else>
+                        <text macro="juris-locator"/>
+                      </else>
+                    </choose>
+                  </group>
+                </if>
+                <else>
+                  <group delimiter=" ">
+                    <text variable="container-title" form="short"/>
+                    <group delimiter="/">
+                      <number variable="volume"/>
+                      <number variable="collection-number"/>
+                      <number variable="issue"/>
+                    </group>
+                  </group>
+                  <text macro="juris-locator"/>
+                </else>
+              </choose>
+            </group>
+          </if>
+          <else-if type="legal_case">
+            <group delimiter=" = ">
+              <group delimiter=" " is-parallel="first">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+                <text variable="genre" prefix="(" suffix=")"/>
                 <choose>
-                  <if locator="page">
-                    <text macro="juris-locator" prefix="(" suffix=")"/>
+                  <if variable="number">
+                    <number variable="number"/>
                   </if>
                   <else>
-                    <text macro="juris-locator"/>
+                    <date variable="issued" form="numeric"/>
                   </else>
                 </choose>
               </group>
-            </if>
-            <else>
+              <choose>
+                <if variable="locator">
               <group delimiter=" ">
-                <text variable="container-title" form="short"/>
-                <group delimiter="/">
-                  <number variable="volume"/>
-                  <number variable="collection-number"/>
-                  <number variable="issue"/>
-                </group>
+                <choose>
+                  <if variable="page">
+                    <text variable="container-title" form="short"/>
+                    <group delimiter="/">
+                      <number variable="volume"/>
+                      <number variable="collection-number"/>
+                    </group>
+                    <date date-parts="year" form="numeric" variable="publication-date"/>
+                    <number variable="page"/>
+                    <choose>
+                      <if locator="page">
+                        <text macro="juris-locator" prefix="(" suffix=")"/>
+                      </if>
+                      <else>
+                        <text macro="juris-locator"/>
+                      </else>
+                    </choose>
+                  </if>
+                  <else>
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=", ">
+                      <group delimiter="/">
+                        <number variable="volume"/>
+                        <number variable="collection-number"/>
+                        <number variable="issue"/>
+                      </group>
+                      <choose>
+                        <if locator="page">
+                          <text macro="juris-locator"/>
+                        </if>
+                      </choose>
+                    </group>
+                    <if locator="page" match="none">
+                      <text macro="juris-locator"/>
+                    </if>
+                  </else>
+                </choose>
               </group>
-              <text macro="juris-locator"/>
-            </else>
-          </choose>
-        </group>
-      </if>
-      <else-if type="legal_case">
-        <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
-          <text variable="genre" prefix="(" suffix=")"/>
-          <choose>
-            <if variable="number">
+                </if>
+              </choose>
+            </group>
+          </else-if>
+          <else-if type="legislation">
+            <choose>
+              <if disambiguate="true">
+                <text variable="references" prefix="idF "/>
+              </if>
+            </choose>
+          </else-if>
+          <else-if type="bill">
+            <group delimiter=" ">
               <number variable="number"/>
+              <group delimiter=" ">
+                <choose>
+                  <if is-numeric="chapter-number">
+                    <number variable="chapter-number" form="roman" suffix="."/>
+                  </if>
+                  <else>
+                    <number variable="chapter-number"/>
+                  </else>
+                </choose>
+                <choose>
+                  <if variable="genre">
+                    <text variable="genre"/>
+                  </if>
+                  <else>
+                    <text value="GP"/>
+                  </else>
+                </choose>
+              </group>
+            </group>
+          </else-if>
+        </choose>
+      </macro>
+
+      <macro name="juris-tail-short">
+        <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+        <text value=""/>
+      </macro>
+
+      <macro name="juris-locator">
+        <group delimiter=" ">
+          <choose>
+            <if locator="page">
             </if>
+            <else-if locator="section">
+              <label variable="locator" form="symbol"/>
+            </else-if>
             <else>
-              <date variable="issued" form="numeric"/>
+              <label variable="locator" form="short"/>
             </else>
           </choose>
+          <number variable="locator"/>
         </group>
-      </else-if>
-      <else-if type="legislation">
-        <choose>
-          <if disambiguate="true">
-            <text variable="references" prefix="idF "/>
-          </if>
-        </choose>
-      </else-if>
-      <else-if type="bill">
-        <group delimiter=" ">
-          <number variable="number"/>
-          <group delimiter=" ">
-            <choose>
-              <if is-numeric="chapter-number">
-                <number variable="chapter-number" form="roman" suffix="."/>
-              </if>
-              <else>
-                <number variable="chapter-number"/>
-              </else>
-            </choose>
-            <choose>
-              <if variable="genre">
-                <text variable="genre"/>
-              </if>
-              <else>
-                <text value="GP"/>
-              </else>
-            </choose>
-          </group>
-        </group>
-      </else-if>
-    </choose>
-  </macro>
+      </macro>
 
-  <macro name="juris-tail-short">
-    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
-  </macro>
-
-  <macro name="juris-locator">
-    <group delimiter=" ">
-      <choose>
-        <if locator="page">
-        </if>
-        <else-if locator="section">
-          <label variable="locator" form="symbol"/>
-        </else-if>
-        <else>
-          <label variable="locator" form="short"/>
-        </else>
-      </choose>
-      <number variable="locator"/>
-    </group>
-  </macro>
-
-  <citation>
-    <layout>
-    </layout>
-  </citation>
-</style>
+      <citation>
+        <layout>
+        </layout>
+      </citation>
+    </style>

@@ -41,7 +41,7 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" " is-parallel="first">
+        <group delimiter=" " is-parallel="first" parallel-delimiter-override=" = ">
           <group no-repeat="authority">
             <names variable="authority">
               <name/>
@@ -184,7 +184,7 @@
           </if>
           <else-if type="legal_case">
             <group delimiter=" = ">
-              <group delimiter=" " is-parallel="first">
+              <group delimiter=" " is-parallel="first" parallel-delimiter-override=" = ">
                 <group no-repeat="authority">
                   <names variable="authority">
                     <name/>

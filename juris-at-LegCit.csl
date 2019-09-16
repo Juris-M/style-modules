@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 3.</summary>
-    <updated>2019-09-14T14:14:27+02:00</updated>
+    <updated>2019-09-16T09:53:52+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -204,46 +204,46 @@
                 </choose>
               </group>
               <choose>
-                <if variable="locator">
-              <group delimiter=" ">
-                <choose>
-                  <if variable="page">
-                    <text variable="container-title" form="short"/>
-                    <group delimiter="/">
-                      <number variable="volume"/>
-                      <number variable="collection-number"/>
-                    </group>
-                    <date date-parts="year" form="numeric" variable="publication-date"/>
-                    <number variable="page"/>
+                <if variable="locator container-title" match="all">
+                  <group delimiter=" ">
                     <choose>
-                      <if locator="page">
-                        <text macro="juris-locator" prefix="(" suffix=")"/>
+                      <if variable="page">
+                        <text variable="container-title" form="short"/>
+                        <group delimiter="/">
+                          <number variable="volume"/>
+                          <number variable="collection-number"/>
+                        </group>
+                        <date date-parts="year" form="numeric" variable="publication-date"/>
+                        <number variable="page"/>
+                        <choose>
+                          <if locator="page">
+                            <text macro="juris-locator" prefix="(" suffix=")"/>
+                          </if>
+                          <else>
+                            <text macro="juris-locator"/>
+                          </else>
+                        </choose>
                       </if>
                       <else>
-                        <text macro="juris-locator"/>
-                      </else>
-                    </choose>
-                  </if>
-                  <else>
-                    <text variable="container-title" form="short"/>
-                    <group delimiter=", ">
-                      <group delimiter="/">
-                        <number variable="volume"/>
-                        <number variable="collection-number"/>
-                        <number variable="issue"/>
-                      </group>
-                      <choose>
-                        <if locator="page">
+                        <text variable="container-title" form="short"/>
+                        <group delimiter=", ">
+                          <group delimiter="/">
+                            <number variable="volume"/>
+                            <number variable="collection-number"/>
+                            <number variable="issue"/>
+                          </group>
+                          <choose>
+                            <if locator="page">
+                              <text macro="juris-locator"/>
+                            </if>
+                          </choose>
+                        </group>
+                        <if locator="page" match="none">
                           <text macro="juris-locator"/>
                         </if>
-                      </choose>
-                    </group>
-                    <if locator="page" match="none">
-                      <text macro="juris-locator"/>
-                    </if>
-                  </else>
-                </choose>
-              </group>
+                      </else>
+                    </choose>
+                  </group>
                 </if>
               </choose>
             </group>

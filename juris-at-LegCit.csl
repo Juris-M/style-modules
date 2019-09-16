@@ -42,12 +42,14 @@
     <choose>
       <if type="legal_case">
         <group delimiter=" " is-parallel="first">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
+          <group no-repeat="authority">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short">
+                <institution-part name="short"/>
+              </institution>
+            </names>
+          </group>
           <text variable="genre" prefix="(" suffix=")"/>
           <group delimiter=", ">
             <choose>
@@ -183,12 +185,14 @@
           <else-if type="legal_case">
             <group delimiter=" = ">
               <group delimiter=" " is-parallel="first">
-                <names variable="authority">
-                  <name/>
-                  <institution institution-parts="short">
-                    <institution-part name="short"/>
-                  </institution>
-                </names>
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </group>
                 <text variable="genre" prefix="(" suffix=")"/>
                 <choose>
                   <if variable="number">

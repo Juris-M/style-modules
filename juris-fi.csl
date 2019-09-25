@@ -17,7 +17,12 @@
     <law-module types="legal_case"/>
   </info>
   <locale>
-	<court-class name="admin" country="fi" courts="hao kho"/>
+    <court-class name="admin1" country="fi" courts="kho"/>
+    <court-class name="admin2" country="fi" courts="hao"/>
+    <court-class name="ord1" country="fi" courts="kko"/>
+    <court-class name="ord2" country="fi" courts="ho"/>
+    <court-class name="ord3" country="fi" courts="ko"/>
+    <court-class name="special" country="fi" courts="vako impeachment mao tt"/>
   </locale>
   <macro name="juris-pretitle">
 	<text value=""/>
@@ -28,25 +33,28 @@
   <macro name="juris-main">
 	<choose>
 	  <if type="legal_case">
-		<group delimiter=" ">
-		  <names variable="authority">
-			<name/>
-			<institution institution-parts="short"/>
-		  </names>
-		  <names variable="authority" prefix="[" suffix="]">
-			<name/>
-			<institution form="short"/>
-		  </names>
-		  <choose>
-			<if court-class="admin">
-			  <date variable="issued">
-				<date-part name="day" form="numeric" suffix="."/>
-				<date-part name="month" form="numeric" suffix="."/>
-				<date-part name="year" form="numeric"/>
-			  </date>
-			</if>
-		  </choose>
-		  <number variable="number"/>
+		<group delimiter=", ">
+		  <group delimiter=" ">
+			<names variable="authority">
+			  <name/>
+			  <institution institution-parts="short"/>
+			</names>
+			<names variable="authority" prefix="[" suffix="]">
+			  <name/>
+			  <institution form="short"/>
+			</names>
+			<choose>
+			  <if court-class="admin1 admin2 ord2 ord3" match="any">
+				<date variable="issued">
+				  <date-part name="day" form="numeric" suffix="."/>
+				  <date-part name="month" form="numeric" suffix="."/>
+				  <date-part name="year" form="numeric"/>
+				</date>
+			  </if>
+			</choose>
+			<number variable="number"/>
+		  </group>
+		  <text variable="document-name"/>
 		</group>
 	  </if>
 	</choose>

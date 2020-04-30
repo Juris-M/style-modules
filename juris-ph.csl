@@ -27,9 +27,6 @@
       <if type="legal_case">
         <text variable="title-short" form="short" font-style="italic"/>
       </if>
-      <else>
-        <text variable="title-short" form="short" font-style="italic"/>
-      </else>
     </choose>
   </macro>
 
@@ -44,13 +41,6 @@
 					<number variable="number" suffix=","/>
 				</group>
 			</if>
-			<else>
-			<group delimiter=" ">
-				<number variable="volume"/>
-				<text variable="container-title" form="short"/>
-				<number variable="page-first"/>
-			</group>
-			</else>
 		</choose>
 	</if>
 	</choose>

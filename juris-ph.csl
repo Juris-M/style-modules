@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Philippines</title>
+    <title>EUP Philippines</title>
     <id>http://citationstylist.org/modules/juris-ph</id>
     <link href="http://citationstylist/modules/juris-ph" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>YOUR-NAME-HERE</name>
-      <email>YOUR-EMAIL-ADDRESS-HERE</email>
+      <name>Eduardo Poquiz</name>
+      <email>poquiz@gmail.com</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Philippines</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <summary>Draft Juris-M style module for Philippines Jurisprudence</summary>
+    <updated>2020-04-30T22:00:00.000000</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -25,7 +25,7 @@
   <macro name="juris-title">
     <choose>
       <if type="legal_case">
-        <text variable="title" form="short" font-style="italic"/>
+        <text variable="title-short" form="short" font-style="italic"/>
       </if>
       <else>
         <text variable="title"/>
@@ -38,9 +38,10 @@
 	<if type="legal_case">
 		<choose>
 			<if number="number">
-				<group delimiter=" " suffix=",">
-					<text value="G.R. No."/>
-					<number variable="number"/>
+				<group delimiter=" ">
+					<text value="G.R."/>
+					<text value="No."/>
+					<number variable="number" suffix=","/>
 				</group>
 			</if>
 			<else>
@@ -60,7 +61,11 @@
 		<choose>
 		    <if type="legal_case">
 			<group delimiter=" " suffix=".">
-				<date form="text" variable="issued"/>
+				<date variable="issued">
+				  <date-part name="day" suffix=" "/>
+				  <date-part name="month" suffix=" "/>
+				  <date-part name="year"/>
+				</date>
 			</group>
 			</if>
 		</choose>
@@ -72,19 +77,41 @@
     <text value="[PRETITLE-SHORT]"/>
   </macro>
 
-  <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value="[TITLE-SHORT]"/>
-  </macro>
+<macro name="juris-title-short">
+  <choose>
+    <if match="all" type="legal_case" variable="title-short">
+      <text variable="title-short" form="short"/>
+    </if>
+    <else-if type="legal_case">
+      <text variable="title" form="short"  font-style="italic"/>
+    </else-if>
+    <else-if variable="title-short">
+      <text variable="title-short"/>
+    </else-if>
+    <else>
+      <text variable="title"/>
+    </else>
+  </choose>
+</macro>
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value="[TAIL-SHORT]"/>
+	<group delimiter=" ">
+		<choose>
+		    <if type="legal_case">
+			<group delimiter=" " suffix=".">
+				<date variable="issued" prefix="(" suffix=")">
+				  <date-part name="year"/>
+				</date>
+			</group>
+			</if>
+		</choose>
+	</group>
   </macro>
 
 <macro name="juris-locator">

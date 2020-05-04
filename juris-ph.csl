@@ -14,9 +14,15 @@
     <summary>Draft Juris-M style module for Philippines Jurisprudence</summary>
     <updated>2020-04-30T22:00:00.000000</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation regulation"/>
+    <law-module types="legal_case legislation regulation hearing bill report"/>
   </info>
   
+  <locale>
+    <terms>
+      <term name="ibid">id.</term>
+    </terms>
+  </locale>
+
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <text value="[PRETITLE]"/>
@@ -35,10 +41,10 @@
 	<if type="legal_case">
 		<choose>
 			<if number="number">
-				<group delimiter=" ">
+				<group delimiter=" " suffix=",">
 					<text value="G.R."/>
 					<text value="No."/>
-					<number variable="number" suffix=","/>
+					<number variable="number"/>
 				</group>
 			</if>
 		</choose>

@@ -30,9 +30,15 @@
 
   <macro name="juris-title">
     <choose>
-      <if type="legal_case">
-        <text variable="title-short" form="short" font-style="italic"/>
+      <if match="all" type="legal_case" variable="title-short">
+        <text macro="phjur-title-short"/>
       </if>
+      <else-if type="legal_case">
+        <text macro="phjur-title"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
     </choose>
   </macro>
 
@@ -74,21 +80,18 @@
   </macro>
 
 <macro name="juris-title-short">
-  <choose>
-    <if match="all" type="legal_case" variable="title-short">
-      <text variable="title-short" form="short"/>
-    </if>
-    <else-if type="legal_case">
-      <text variable="title" form="short"  font-style="italic"/>
-    </else-if>
-    <else-if variable="title-short">
-      <text variable="title-short"/>
-    </else-if>
-    <else>
-      <text variable="title"/>
-    </else>
-  </choose>
-</macro>
+    <choose>
+      <if match="all" type="legal_case" variable="title-short">
+        <text macro="phjur-title-short"/>
+      </if>
+      <else-if type="legal_case">
+        <text macro="phjur-title"/>
+      </else-if>
+      <else>
+        <text variable="title-short"/>
+      </else>
+    </choose>
+  </macro>
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
@@ -125,6 +128,14 @@
 			</else>
 		</choose>
 	</group>
+</macro>
+
+<macro name="phjur-title">
+  <text variable="title" font-style="italic"/>
+</macro>
+
+<macro name="phjur-title-short">
+  <text variable="title-short" form="short" font-style="italic"/>  
 </macro>
 
   <citation>

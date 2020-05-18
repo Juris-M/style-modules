@@ -43,10 +43,11 @@
   </macro>
 
   <macro name="juris-main">
-	  <group delimiter=" " suffix=",">
+	  <group delimiter=" ">
   	  <choose>
           <if match="all" type="legal_case">
-            <text macro="phjur-main-gr"/>
+            <text macro="phjur-main-gr" suffix=","/>
+            <text macro="phjur-date-gr"/>
           </if>
       </choose>
     </group>
@@ -83,18 +84,18 @@
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-    <text value=""/>
+	<group delimiter=" ">
+		<choose>
+		    <if type="legal_case">
+          <text macro="phjur-year"/>
+			</if>
+		</choose>
+	</group>
   </macro>
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-	<group delimiter=" ">
-		<choose>
-		    <if type="legal_case">
-          <text macro="phjur-tail-year"/>
-			</if>
-		</choose>
-	</group>
+    <text value=""/>
   </macro>
 
   <macro name="juris-locator">
@@ -129,7 +130,7 @@
 		</group>
   </macro>
   
-  <macro name="phjur-tail-gr">
+  <macro name="phjur-date-gr">
     <group delimiter=" ">
 			<date variable="issued">
 			  <date-part name="day" suffix=" "/>
@@ -139,7 +140,7 @@
 		</group>      
   </macro>
   
-  <macro name="phjur-tail-year">
+  <macro name="phjur-year">
     <group delimiter=" " prefix="(" suffix=")">
       <date variable="issued">
 			  <date-part name="year"/>
@@ -151,7 +152,7 @@
     <layout>
       <choose>
         <if position="ibid-with-locator">
-          <group delimiter=" ">
+          <group delimiter=" " suffix=".">
             <text term="ibid" font-style="italic"/>
             <group delimiter=" ">
               <text value="at"/>
@@ -176,15 +177,17 @@
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
             <condition match="all" type="legal_case" position="far-note"/>
           </conditions>
-          <group delimiter=" ">
+          <group delimiter=" " suffix=".">
             <group delimiter=", ">
               <choose>
                 <if>
                   <conditions match="all">
                     <condition type="legal_case"/>
-                    <condition match="none" variable="document-name"/>
                   </conditions>
-                  <text macro="juris-title-short" font-style="italic"/>
+                  <group delimiter=" ">
+                    <text macro="juris-title-short" font-style="italic"/>
+                    <text macro="phjur-year"/>
+                  </group>
                 </if>
                 <else-if type="hearing">
                   <text macro="juris-title-short" font-style="italic"/>
@@ -198,20 +201,22 @@
               </choose>
               <choose>
                 <if>
-                  <conditions match="all">
-                    <condition type="legal_case"/>
-                    <condition match="none" variable="document-name"/>
+                  <conditions match="any">
+                    <condition match="all" type="legal_case"/>
                   </conditions>
-                  <text macro="juris-tail-short"/>
+                  <group delimiter=", ">
+                    <group delimiter=" ">
+                      <text value="supra" font-style="italic"/>
+                      <text term="note"/>
+                      <text variable="first-reference-note-number"/>
+                    </group>
+                  </group>
                 </if>
-              </choose>
-              <choose>
-                <if>
+                <else-if>
                   <conditions match="any">
                     <condition match="all" type="hearing" variable="committee"/>
                     <condition match="all" type="report" variable="title"/>
                     <condition match="all" type="report" variable="committee"/>
-                    <condition match="all" type="legal_case"/>
                   </conditions>
                   <group delimiter=", ">
                     <group delimiter=" ">
@@ -229,7 +234,7 @@
                       <text macro="juris-locator" label-form="symbol"/>
                     </group>
                   </group>
-                </if>
+                </else-if>
                 <else>
                   <group delimiter=" ">
                     <group delimiter=", ">
@@ -272,7 +277,7 @@
         </else-if>
         <else>
           <!-- full form -->
-          <group delimiter=", ">
+          <group delimiter=", " suffix=".">
             <group delimiter=" ">
               <group delimiter=", ">
                 <choose>

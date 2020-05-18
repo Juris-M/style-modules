@@ -42,44 +42,32 @@
     </choose>
   </macro>
 
-<macro name="juris-main">
-	<choose>
-	<if type="legal_case">
-		<choose>
-			<if number="number">
-				<group delimiter=" " suffix=",">
-					<text value="G.R."/>
-					<text value="No."/>
-					<number variable="number"/>
-				</group>
-			</if>
-		</choose>
-	</if>
-	</choose>
-</macro>
+  <macro name="juris-main">
+	  <group delimiter=" " suffix=",">
+  	  <choose>
+          <if match="all" type="legal_case">
+            <text macro="phjur-main-gr"/>
+          </if>
+      </choose>
+    </group>
+  </macro>
 
-<macro name="juris-tail">
-	<group delimiter=" ">
-		<choose>
+  <macro name="juris-tail">
+	  <group delimiter=" ">
+		  <choose>
 		    <if type="legal_case">
-			<group delimiter=" " suffix=".">
-				<date variable="issued">
-				  <date-part name="day" suffix=" "/>
-				  <date-part name="month" suffix=" "/>
-				  <date-part name="year"/>
-				</date>
-			</group>
-			</if>
-		</choose>
-	</group>
-</macro>
+          <text macro="phjur-tail-gr"/>
+			  </if>
+		  </choose>
+	  </group>
+  </macro>
 
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->
     <text value="[PRETITLE-SHORT]"/>
   </macro>
 
-<macro name="juris-title-short">
+  <macro name="juris-title-short">
     <choose>
       <if match="all" type="legal_case" variable="title-short">
         <text macro="phjur-title-short"/>
@@ -103,18 +91,14 @@
 	<group delimiter=" ">
 		<choose>
 		    <if type="legal_case">
-			<group delimiter=" " suffix=".">
-				<date variable="issued" prefix="(" suffix=")">
-				  <date-part name="year"/>
-				</date>
-			</group>
+          <text macro="phjur-tail-year"/>
 			</if>
 		</choose>
 	</group>
   </macro>
 
-<macro name="juris-locator">
-	<group delimiter=" ">
+  <macro name="juris-locator">
+	  <group delimiter=" ">
 		<choose>
 			<if number="number"/>
 			<else>
@@ -128,15 +112,40 @@
 			</else>
 		</choose>
 	</group>
-</macro>
+  </macro>
 
-<macro name="phjur-title">
-  <text variable="title" font-style="italic"/>
-</macro>
+  <macro name="phjur-title">
+    <text variable="title" font-style="italic"/>
+  </macro>
 
-<macro name="phjur-title-short">
-  <text variable="title-short" form="short" font-style="italic"/>  
-</macro>
+  <macro name="phjur-title-short">
+    <text variable="title-short" form="short" font-style="italic"/>  
+  </macro>
+
+  <macro name="phjur-main-gr">
+	  <group delimiter=" ">
+		  <text value="G.R. No."/>
+		  <number variable="number"/>
+		</group>
+  </macro>
+  
+  <macro name="phjur-tail-gr">
+    <group delimiter=" ">
+			<date variable="issued">
+			  <date-part name="day" suffix=" "/>
+			  <date-part name="month" form="short" suffix=" "/>
+			  <date-part name="year"/>
+			</date>
+		</group>      
+  </macro>
+  
+  <macro name="phjur-tail-year">
+    <group delimiter=" " prefix="(" suffix=")">
+      <date variable="issued">
+			  <date-part name="year"/>
+			 </date>
+    </group>
+  </macro>
 
   <citation>
     <layout>
@@ -165,7 +174,7 @@
             <condition match="all" type="report" variable="title" position="far-note"/>
             <condition match="all" type="report" variable="committee" position="far-note"/>
             <condition match="all" type="hearing" variable="committee" position="far-note"/>
-            <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
+            <condition match="all" type="legal_case" position="far-note"/>
           </conditions>
           <group delimiter=" ">
             <group delimiter=", ">
@@ -189,11 +198,20 @@
               </choose>
               <choose>
                 <if>
+                  <conditions match="all">
+                    <condition type="legal_case"/>
+                    <condition match="none" variable="document-name"/>
+                  </conditions>
+                  <text macro="juris-tail-short"/>
+                </if>
+              </choose>
+              <choose>
+                <if>
                   <conditions match="any">
                     <condition match="all" type="hearing" variable="committee"/>
                     <condition match="all" type="report" variable="title"/>
                     <condition match="all" type="report" variable="committee"/>
-                    <condition match="all" type="legal_case" variable="document-name"/>
+                    <condition match="all" type="legal_case"/>
                   </conditions>
                   <group delimiter=", ">
                     <group delimiter=" ">

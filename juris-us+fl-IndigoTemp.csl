@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States: Alabama</title>
-    <id>http://juris-m.github.io/modules/juris-us:al</id>
-    <link href="http://juris-m.github.io/modules/juris-us:al" rel="self"/>
+    <title>United States: Florida</title>
+    <id>http://juris-m.github.io/modules/juris-us:fl</id>
+    <link href="http://juris-m.github.io/modules/juris-us:fl" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>

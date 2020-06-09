@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States</title>
-    <id>http://juris-m.github.io/modules/juris-us</id>
-    <link href="http://juris-m.github.io/modules/juris-us" rel="self"/>
+    <title>Guam</title>
+    <id>http://juris-m.github.io/modules/juris-us:gu</id>
+    <link href="http://juris-m.github.io/modules/juris-us:gu" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -82,8 +82,6 @@
   </macro>
   <macro name="juris-title">
     <choose>
-
-      
       <if type="regulation">
         <choose>
           <if>
@@ -706,6 +704,7 @@
       </else-if>
       <else-if type="legal_case">
         <!-- starting over with these -->
+        <group parallel-delimiter-override="; ">
         <choose>
           <if>
             <conditions match="all">
@@ -1082,6 +1081,7 @@
             <group><text value="Oops. Novel citation pattern."/></group>
           </else>
         </choose>
+        </group>
       </else-if>
       <else-if type="bill">
         <group delimiter=", ">
@@ -1232,11 +1232,8 @@
                 </else>
               </choose>
               <group delimiter=" ">
-                <group delimiter=" ">
-                  <label variable="number" form="short" text-case="capitalize-first"/>
-                  <number variable="number"/>
-                </group>
-                <text variable="status"/>
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
               </group>
             </group>
           </else>
@@ -1632,9 +1629,9 @@
             </conditions>
             <text variable="genre"/>
           </else-if>
-          <else-if match="none" type="patent">
+          <else>
             <text variable="status"/>
-          </else-if>
+          </else>
         </choose>
       </group>
     </group>

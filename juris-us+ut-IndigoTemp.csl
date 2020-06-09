@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States: Utah</title>
+    <title>Utah</title>
     <id>http://juris-m.github.io/modules/juris-us:ut</id>
     <link href="http://juris-m.github.io/modules/juris-us:ut" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <law-module types="locator"/>
+    <law-module types="legal_case locator"/>
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -47,28 +47,1872 @@
     </date>
   </locale>
   <macro name="juris-pretitle">
-    <text value="BOGUS"/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="document-name">
+            <group delimiter=" ">
+              <text variable="document-name"/>
+              <text macro="juris-locator"/>
+            </group>
+          </if>
+        </choose>
+      </if>
+      <else-if type="report">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" type="report"/>
+              <condition match="any" variable="title committee"/>
+              <condition match="all" variable="author"/>
+            </conditions>
+            <names variable="author">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </if>
+          <else-if match="none" variable="call-number">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short" delimiter=", "/>
+            </names>
+          </else-if>
+        </choose>
+      </else-if>
+    </choose>
   </macro>
   <macro name="juris-title">
-    <text value="BOGUS"/>
+    <choose>
+
+      
+      <if type="regulation">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" variable="authority genre volume container-title page"/>
+              <condition match="none" variable="gazette-ref"/>
+            </conditions>
+            <names variable="dummy">
+              <name/>
+              <institution institution-parts="short"/>
+              <substitute>
+                <text variable="title"/>
+              </substitute>
+            </names>
+            <text variable="title"/>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="authority" has-subunit="authority"/>
+              <condition match="none" variable="genre"/>
+            </conditions>
+            <group delimiter=" ">
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short" stop-last="1"/>
+                <substitute>
+                  <text variable="genre"/>
+                </substitute>
+              </names>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title gazette-flag"/>
+              <condition match="none" variable="number"/>
+            </conditions>
+          </else-if>
+          <else>
+            <group delimiter=" ">
+              <group delimiter=" of ">
+                <names variable="dummy">
+                  <name/>
+                  <substitute>
+                    <text variable="title"/>
+                  </substitute>
+                </names>
+                <choose>
+                  <if variable="title">
+                    <number variable="collection-number"/>
+                  </if>
+                </choose>
+              </group>
+              <choose>
+                <if variable="title">
+                  <group delimiter=" ">
+                    <label variable="number" form="short" text-case="capitalize-first"/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+              </choose>
+            </group>
+          </else>
+        </choose>
+      </if>
+
+      <!-- juris-title -->
+      <else-if match="any" type="legislation">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" variable="gazette-flag container-title volume page publication-date"/>
+              <condition match="none" variable="issued"/>
+            </conditions>
+          </if>
+          <else-if match="all" variable="container-title collection-number gazette-flag">
+            <group delimiter=" of ">
+              <names variable="dummy">
+                <name/>
+                <substitute>
+                  <text variable="title"/>
+                </substitute>
+              </names>
+              <choose>
+                <if variable="title">
+                  <number variable="collection-number"/>
+                </if>
+              </choose>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title volume publisher publication-date"/>
+            </conditions>
+            <names variable="dummy">
+              <name/>
+              <institution institution-parts="short"/>
+              <substitute>
+                <text variable="title"/>
+              </substitute>
+            </names>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="issued"/>
+            </conditions>
+            <names variable="dummy">
+              <name/>
+              <institution institution-parts="short"/>
+              <substitute>
+                <text variable="title"/>
+              </substitute>
+            </names>
+          </else-if>
+        </choose>
+      </else-if>
+      
+      <else-if type="legal_case">
+        <group parallel-first="title">
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <text variable="title"/>
+            </substitute>
+          </names>
+        </group>
+      </else-if>
+      <else-if type="bill">
+        <choose>
+          <if variable="event"/>
+          <else-if variable="title">
+            <group delimiter=" of ">
+              <text variable="title"/>
+              <!-- date variable="issued" form="text" date-parts="year"/ -->
+            </group>
+          </else-if>
+        </choose>
+      </else-if>
+
+      
+      <else-if match="all" type="hearing">
+        <group delimiter=": ">
+          <group delimiter=" of ">
+            <text variable="title" text-case="title"/>
+            <choose>
+              <if match="all" variable="title number">
+                <date variable="issued" form="text" date-parts="year"/>
+              </if>
+            </choose>
+          </group>
+          <group delimiter=" ">
+            <text value="Hearing"/>
+            <group delimiter=" ">
+              <text value="on"/>
+              <number variable="number"/>
+            </group>
+            <group delimiter=" ">
+              <text value="Before the"/>
+              <text variable="section"/>
+            </group>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="report">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="any" variable="title committee"/>
+            </conditions>
+            <group delimiter=", ">
+              <choose>
+                <if match="all" variable="author"/>
+                <else-if match="all" variable="committee">
+                  <names variable="committee">
+                    <name/>
+                    <institution institution-parts="short"/>
+                  </names>
+                </else-if>
+              </choose>
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="none" variable="number"/>
+                    <condition match="all" variable="collection-number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <number variable="collection-number" form="ordinal"/>
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short" use-last="1"/>
+                    </names>
+                  </group>
+                </if>
+              </choose>
+              <text variable="title"/>
+            </group>
+          </if>
+          <else-if variable="number">
+            <group delimiter=" ">
+              <names variable="authority">
+                <name/>
+                <institution stop-last="1" institution-parts="short"/>
+              </names>
+              <choose>
+                <if match="any" variable="genre">
+                  <text variable="genre" form="short"/>
+                </if>
+                <else>
+                  <text value="Rep."/>
+                </else>
+              </choose>
+              <group delimiter=" ">
+                <label variable="number" form="symbol" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if match="none" variable="number">
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <number variable="collection-number" form="ordinal"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short" use-last="1"/>
+                </names>
+              </group>
+              <text variable="title"/>
+            </group>
+          </else-if>
+        </choose>
+      </else-if>
+      <else-if type="patent">
+        <names variable="dummy">
+          <name/>
+          <substitute>
+            <text variable="title"/>
+          </substitute>
+        </names>
+      </else-if>
+    </choose>
   </macro>
   <macro name="juris-main">
-    <text value="BOGUS"/>
+    <choose>
+      <if match="any" type="regulation">
+        <group delimiter=" ">
+          <!-- renders only if title not blocked by cs:substitute in juris-title -->
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <text variable="title"/>
+            </substitute>
+          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="authority genre volume container-title page"/>
+                <condition match="none" variable="gazette-ref"/>
+              </conditions>
+              <!--  group><text value="[LegReg OK1]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <label variable="number" form="short" text-case="capitalize-first"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </if>
+            <else-if>
+              <conditions match="all">
+                <condition match="all" variable="genre volume container-title page"/>
+                <condition match="none" variable="gazette-ref authority"/>
+              </conditions>
+              <!-- group><text value="[LegReg OK2]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </else-if>
+            <else-if match="all" variable="gazette-flag">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="none" variable="container-title"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <choose>
+                      <if variable="collection-number">
+                        <number variable="collection-number"/>
+                      </if>
+                    </choose>
+                    <text variable="jurisdiction" form="short"/>
+                    <text value="Pub. L."/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title title"/>
+                    <condition match="none" variable="number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <text variable="title"/>
+                    <text macro="juris-locator" label-form="symbol" suffix=","/>
+                  </group>
+                </else-if>
+                <else-if match="all" variable="container-title title">
+                  <text variable="title"/>
+                </else-if>
+              </choose>
+              <choose>
+                <if match="any" variable="title container-title">
+                  <choose>
+                    <if match="all" variable="number" number="number" type="legislation">
+                      <group delimiter=" ">
+                        <group delimiter=" " suffix=",">
+                          <text value="Pub. L. No."/>
+                          <number variable="number"/>
+                        </group>
+                        <text macro="juris-locator" label-form="symbol" suffix=","/>
+                      </group>
+                    </if>
+                    <else-if variable="number" type="legislation">
+                      <group delimiter=" " suffix=",">
+                        <label variable="number" form="symbol"/>
+                        <number variable="number"/>
+                      </group>
+                    </else-if>
+                  </choose>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition variable="collection-number"/>
+                        <condition match="none" variable="number"/>
+                      </conditions>
+                      <group delimiter=", ">
+                        <group delimiter=" ">
+                          <number variable="collection-number"/>
+                          <text variable="container-title" form="short"/>
+                          <group delimiter=" ">
+                            <label variable="number" form="short" text-case="capitalize-first"/>
+                            <number variable="volume"/>
+                          </group>
+                        </group>
+                        <number variable="page"/>
+                      </group>
+                    </if>
+                  </choose>
+                </if>
+              </choose>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition match="none" variable="collection-number"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <!-- weird outside-parens elements for statutes at large -->
+                  <group delimiter=" ">
+                    <number variable="volume"/>
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=", ">
+                      <number variable="page"/>
+                      <text variable="locator-extra"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+            </else-if>
+            <else>
+              <group delimiter=" ">
+                <group delimiter=", ">
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="any">
+                          <condition is-numeric="volume"/>
+                          <condition match="none" variable="volume"/>
+                        </conditions>
+                        <group delimiter="-">
+                          <number variable="collection-number"/>
+                          <number variable="volume"/>
+                        </group>
+                      </if>
+                    </choose>
+                    <text variable="container-title" form="short"/>
+                    <choose>
+                      <if match="none" variable="title">
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short"/>
+                        </names>
+                      </if>
+                    </choose>
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="none" is-numeric="volume"/>
+                          <condition type="regulation"/>
+                        </conditions>
+                        <number variable="volume"/>
+                      </if>
+                    </choose>
+                  </group>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition match="none" is-numeric="volume"/>
+                        <condition type="legislation"/>
+                      </conditions>
+                      <number variable="volume"/>
+                    </if>
+                  </choose>
+                </group>
+                <number variable="page"/>
+              </group>
+            </else>
+          </choose>
+        </group>
+      </if>
+      <else-if match="any" type="legislation">
+        <group delimiter=" ">
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <text variable="title"/>
+            </substitute>
+          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition type="regulation"/>
+                <condition match="all" variable="authority genre volume container-title page"/>
+                <condition match="none" variable="gazette-ref"/>
+              </conditions>
+              <!--  group><text value="[LegReg OK1]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <label variable="number" form="short" text-case="capitalize-first"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </if>
+            <else-if>
+              <conditions match="all">
+                <condition type="regulation"/>
+                <condition match="all" variable="genre volume container-title page"/>
+                <condition match="none" variable="gazette-ref authority"/>
+              </conditions>
+              <!-- group><text value="[LegReg OK2]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </else-if>
+            <else-if match="all" variable="gazette-flag">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="none" variable="container-title"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <choose>
+                      <if variable="collection-number">
+                        <number variable="collection-number"/>
+                      </if>
+                    </choose>
+                    <text variable="jurisdiction" form="short"/>
+                    <text value="Pub. L."/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title title"/>
+                    <condition match="none" variable="number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <text variable="title"/>
+                    <text macro="juris-locator" label-form="symbol" suffix=","/>
+                  </group>
+                </else-if>
+                <else-if match="all" variable="container-title title">
+                  <text variable="title"/>
+                </else-if>
+              </choose>
+              <choose>
+                <if match="any" variable="title container-title">
+                  <choose>
+                    <if match="all" variable="number" number="number" type="legislation">
+                      <group delimiter=" ">
+                        <group delimiter=" " suffix=",">
+                          <text value="Pub. L. No."/>
+                          <number variable="number"/>
+                        </group>
+                        <text macro="juris-locator" label-form="symbol" suffix=","/>
+                      </group>
+                    </if>
+                    <else-if variable="number" type="legislation">
+                      <group delimiter=" " suffix=",">
+                        <label variable="number" form="symbol"/>
+                        <number variable="number"/>
+                      </group>
+                    </else-if>
+                  </choose>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition variable="collection-number"/>
+                        <condition match="none" variable="number"/>
+                      </conditions>
+                      <group delimiter=", ">
+                        <group delimiter=" ">
+                          <number variable="collection-number"/>
+                          <text variable="container-title" form="short"/>
+                          <group delimiter=" ">
+                            <label variable="number" form="short" text-case="capitalize-first"/>
+                            <number variable="volume"/>
+                          </group>
+                        </group>
+                        <number variable="page"/>
+                      </group>
+                    </if>
+                  </choose>
+                </if>
+              </choose>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition match="none" variable="collection-number"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <!-- weird outside-parens elements for statutes at large -->
+                  <group delimiter=" ">
+                    <number variable="volume"/>
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=", ">
+                      <number variable="page"/>
+                      <text variable="locator-extra"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+            </else-if>
+            <else>
+              <group delimiter=" ">
+                <group delimiter=", ">
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="any">
+                          <condition is-numeric="volume"/>
+                          <condition match="none" variable="volume"/>
+                        </conditions>
+                        <group delimiter="-">
+                          <number variable="collection-number"/>
+                          <number variable="volume"/>
+                        </group>
+                      </if>
+                    </choose>
+                    <text variable="container-title" form="short"/>
+                    <choose>
+                      <if match="none" variable="title">
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short"/>
+                        </names>
+                      </if>
+                    </choose>
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="none" is-numeric="volume"/>
+                          <condition type="regulation"/>
+                        </conditions>
+                        <number variable="volume"/>
+                      </if>
+                    </choose>
+                  </group>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition match="none" is-numeric="volume"/>
+                        <condition type="legislation"/>
+                      </conditions>
+                      <number variable="volume"/>
+                    </if>
+                  </choose>
+                </group>
+                <number variable="page"/>
+              </group>
+            </else>
+          </choose>
+        </group>
+      </else-if>
+      <else-if type="legal_case">
+        <!-- starting over with these -->
+        <choose>
+          <!-- legal_case portable 1 START -->
+          <if>
+            <conditions match="all">
+              <condition match="all" variable="authority collection-number"/>
+              <condition match="none" variable="container-title volume archive"/>
+            </conditions>
+            <group delimiter=" " parallel-last-to-first="true">
+              <number variable="collection-number"/>
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+              <number variable="page"/>
+            </group>
+          </if>
+          <!-- legal_case portable 1 END -->
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="authority page collection-number"/>
+              <condition match="none" variable="container-title archive admin-flag"/>
+            </conditions>
+            <!-- group><text value="[OK0]"/></group -->
+            <group delimiter=" ">
+              <number variable="collection-number"/>
+              <names variable="dummy">
+                <name/>
+                <institution form="short"/>
+                <substitute>
+                  <names variable="authority"/>
+                </substitute>
+              </names>
+              <number variable="page"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="number collection-number container-title archive_location"/>
+              <condition match="none" variable="admin-flag page archive genre references"/>
+            </conditions>
+            <!-- group><text value="[OK1]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <group delimiter=" ">
+                <number variable="collection-number"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short"/>
+                <text variable="archive_location"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag container-title collection-number archive_location"/>
+              <condition match="none" variable="archive page genre number references"/>
+            </conditions>
+            <!-- group><text value="[OK2]"/></group -->
+            <group delimiter=" ">
+              <number variable="collection-number"/>
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+              <text variable="archive_location"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="title admin-flag genre number collection-number container-title page"/>
+              <condition match="none" variable="archive archive_location references"/>
+            </conditions>
+            <!-- group><text value="[OK3]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <group delimiter=" ">
+                <group delimiter="-">
+                  <number variable="collection-number"/>
+                  <number variable="volume"/>
+                </group>
+                <text variable="container-title" form="short"/>
+                <number variable="page"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag genre number container-title page collection-number volume"/>
+              <condition match="none" variable="title archive archive_location references"/>
+            </conditions>
+            <!-- group><text value="[OK4]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <number variable="number"/>
+              </group>
+              <group delimiter=" ">
+                <group delimiter="-">
+                  <number variable="collection-number"/>
+                  <number variable="volume"/>
+                </group>
+                <text variable="container-title" form="short"/>
+                <number variable="page"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag number collection-number container-title archive_location"/>
+              <condition match="none" variable="genre references"/>
+            </conditions>
+            <!-- group><text value="[OK5]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <group delimiter=" ">
+                <group delimiter="-">
+                  <number variable="collection-number"/>
+                  <number variable="volume"/>
+                </group>
+                <text variable="container-title" form="short"/>
+                <number variable="archive_location"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag container-title number collection-number"/>
+              <condition match="none" variable="references"/>
+            </conditions>
+            <!-- group><text value="[OK6]"/></group -->
+            <group delimiter=", ">
+              <number variable="number"/>
+              <group delimiter=" ">
+                <number variable="collection-number"/>
+                <text variable="container-title"/>
+                <group delimiter=" ">
+                  <choose>
+                    <if match="none" page="page">
+                      <label variable="page"/>
+                    </if>
+                  </choose>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title genre authority"/>
+              <condition match="any" variable="volume collection-number"/>
+              <condition match="none" variable="publisher references"/>
+            </conditions>
+            <!-- group><text value="[OK7]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <names variable="dummy">
+                  <name/>
+                  <institution institution-parts="short"/>
+                  <substitute>
+                    <names variable="authority"/>
+                  </substitute>
+                </names>
+                <text variable="genre"/>
+              </group>
+              <group delimiter=" ">
+                <number variable="collection-number"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short"/>
+                <number variable="page-first"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title"/>
+              <condition match="any" variable="volume collection-number"/>
+              <condition match="none" variable="publisher references"/>
+            </conditions>
+            <!-- group><text value="[OK8]"/></group -->
+            <group delimiter=" ">
+              <number variable="collection-number"/>
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+              <number variable="page-first"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="archive"/>
+              <condition match="none" variable="container-title references"/>
+            </conditions>
+            <!-- group><text value="[OK9]"/></group -->
+            <group delimiter=", ">
+              <choose>
+                <if match="none" variable="publisher">
+                  <group delimiter=" ">
+                    <choose>
+                      <if variable="admin-flag">
+                        <names variable="dummy">
+                          <name/>
+                          <institution institution-parts="short"/>
+                          <substitute>
+                            <names variable="authority"/>
+                          </substitute>
+                        </names>
+                      </if>
+                    </choose>
+                    <group delimiter=" ">
+                      <label variable="number" form="short" text-case="capitalize-first"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+              <group delimiter=" ">
+                <number variable="collection-number"/>
+                <number variable="volume"/>
+                <text variable="publisher"/>
+                <text variable="archive" form="short"/>
+                <choose>
+                  <if variable="archive_location">
+                    <text variable="archive_location"/>
+                  </if>
+                  <else>
+                    <group delimiter=" ">
+                      <choose>
+                        <if page="page" match="none">
+                          <label variable="page" form="symbol"/>
+                        </if>
+                      </choose>
+                      <number variable="page"/>
+                    </group>
+                  </else>
+                </choose>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="number"/>
+              <condition match="none" variable="admin-flag genre container-title archive archive_location page references"/>
+            </conditions>
+            <!-- group><text value="[OK10]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="locator"/>
+                    <condition match="none" variable="document-name"/>
+                  </conditions>
+                  <text value="slip op."/>
+                </if>
+              </choose>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition variable="admin-flag collection-number number"/>
+              <condition match="none" variable="container-title archive volume page archive_location genre references"/>
+            </conditions>
+            <!-- group><text value="[OK11]"/></group -->
+            <group delimiter=" ">
+              <names variable="dummy">
+                <name/>
+                <institution institution-parts="short"/>
+                <substitute>
+                  <names variable="authority"/>
+                </substitute>
+              </names>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag number contributor"/>
+              <condition match="none" variable="container-title archive references"/>
+            </conditions>
+            <!-- group><text value="[OK12]"/></group -->
+            <group delimiter=", ">
+              <names variable="dummy">
+                <name/>
+                <institution institution-parts="short"/>
+                <substitute>
+                  <names variable="authority"/>
+                </substitute>
+              </names>
+              <group delimiter=" ">
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag number"/>
+              <condition match="none" variable="genre container-title archive archive_location page contributor references"/>
+            </conditions>
+            <!-- group><text value="[OK13]"/></group -->
+            <group delimiter=" ">
+              <text value="Docket"/>
+              <label variable="number" form="short" text-case="capitalize-first"/>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag number references"/>
+              <condition match="none" variable="genre container-title archive archive_location page contributor"/>
+            </conditions>
+            <!-- group><text value="[OK14]"/></group -->
+            <group delimiter=", ">
+              <number variable="number"/>
+              <text variable="references"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag genre references number"/>
+              <condition match="none" variable="container-title archive archive_location page"/>
+            </conditions>
+            <!-- group><text value="[OK15]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <text variable="references"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag container-title genre number page volume references"/>
+              <condition match="none" variable="archive"/>
+            </conditions>
+            <!-- group><text value="[OK16]"/></group -->
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+              <text variable="references"/>
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <text variable="container-title"/>
+                <number variable="page"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag container-title publisher number"/>
+              <condition match="none" variable="collection-number"/>
+            </conditions>
+            <!-- group><text value="[OK17]"/></group -->
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="publisher"/>
+              <text variable="container-title"/>
+              <group delimiter=" ">
+                <choose>
+                  <if match="none" page="page">
+                    <label variable="page"/>
+                  </if>
+                </choose>
+                <number variable="page"/>
+              </group>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="title admin-flag"/>
+              <condition match="none" variable="container-title volume number page genre"/>
+            </conditions>
+            <!-- group><text value="[OK18]"/></group -->
+          </else-if>
+          <else>
+            <group><text value="Oops. Novel citation pattern."/></group>
+          </else>
+        </choose>
+      </else-if>
+      <else-if type="bill">
+        <group delimiter=", ">
+          <text macro="juris-main-short"/>
+          <group delimiter=" ">
+            <number variable="collection-number" form="ordinal"/>
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+          </group>
+          <group delimiter=" ">
+            <number variable="chapter-number" form="ordinal"/>
+            <text value="Sess" suffix="."/>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="hearing">
+        <choose>
+          <if match="none" variable="section">
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="container-title" form="short"/>
+              <number variable="page"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <choose>
+                  <if variable="authority">
+                    <number variable="collection-number" form="ordinal"/>
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                  </if>
+                  <else>
+                    <number variable="collection-number"/>
+                    <group delimiter=" ">
+                      <text value="Sess."/>
+                      <number variable="chapter-number"/>
+                    </group>
+                  </else>
+                </choose>
+                
+              </group>
+              <choose>
+                <if variable="authority">
+                  <group delimiter=" ">
+                    <number variable="chapter-number" form="ordinal"/>
+                    <text value="Sess."/>
+                  </group>
+                </if>
+              </choose>
+            </group>
+          </else>
+        </choose>
+      </else-if>
+      <else-if type="report">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="any" variable="number call-number"/>
+              <condition match="any" variable="title committee"/>
+            </conditions>
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <group delimiter=" ">
+                  <names variable="authority">
+                    <name/>
+                    <institution stop-last="1" institution-parts="short"/>
+                  </names>
+                  <choose>
+                    <if variable="genre">
+                      <text variable="genre"/>
+                    </if>
+                    <else>
+                      <text value="Rep."/>
+                    </else>
+                  </choose>
+                </group>
+                <group delimiter=" ">
+                  <label variable="number" form="symbol" text-case="capitalize-first"/>
+                  <number variable="number"/>
+                </group>
+              </group>
+              <choose>
+                <if variable="call-number">
+                  <group delimiter=" ">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                    <text value="Pub."/>
+                    <number variable="call-number"/>
+                  </group>
+                </if>
+              </choose>
+            </group>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="volume container-title page"/>
+            </conditions>
+            <group delimiter=" ">
+              <number variable="volume"/>
+              <text variable="container-title"/>
+              <number variable="page"/>
+            </group>
+          </else-if>
+        </choose>
+      </else-if>
+      <else-if type="patent">
+        <!-- we're trying to use this for trademarks as well, not sure that will work out -->
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition variable="title number" match="all"/>
+              <condition variable="issued event-date locator-date original-date publication-date available-date submitted" match="none"/>
+            </conditions>
+            <group delimiter=" ">
+              <text value="Registration"/>
+              <label variable="number" form="short" text-case="capitalize-first"/>
+              <number variable="number"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=" ">
+              <text variable="country" form="short"/>
+              <choose>
+                <if variable="genre">
+                  <text variable="genre"/>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition match="all" variable="call-number submitted"/>
+                        <condition match="none" variable="issued event-date original-date publication-date available-date"/>
+                      </conditions>
+                      <text value="Application"/>
+                      <text value="Serial No."/>
+                      <number variable="call-number"/>
+                    </if>
+                  </choose>
+                </if>
+                <else>
+                  <text value="Patent"/>
+                </else>
+              </choose>
+              <group delimiter=" ">
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+            </group>
+          </else>
+        </choose>
+      </else-if>
+    </choose>
   </macro>
   <macro name="juris-tail">
-    <text value="BOGUS"/>
+    <group delimiter=" ">
+      <group delimiter=", " prefix="(" suffix=")">
+        <!-- comma-separated leading extras -->
+        <choose>
+          <if type="legal_case">
+            <text variable="locator-extra"/>
+          </if>
+        </choose>
+        <group delimiter=" ">
+          <!-- space-separated details, such as issuing authority and supplement numbers and dates for leg and reg -->
+          <choose>
+            <if type="legal_case">
+              <choose>
+                <!-- legal_case portable 2 START -->
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="authority collection-number page issued"/>
+                    <condition match="none" variable="container-title volume archive"/>
+                  </conditions>
+                </if>
+                <!-- legal_case portable 2 END -->
+                <else-if>
+                  <conditions match="all">
+                    <condition match="none" variable="title"/>
+                    <condition match="all" variable="admin-flag genre number collection-number"/>
+                  </conditions>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="collection-number number"/>
+                    <condition match="none" variable="container-title archive"/>
+                  </conditions>
+                </else-if>
+                
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title genre authority"/>
+                    <condition match="any" variable="volume collection-number"/>
+                    <condition match="none" variable="publisher references"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="admin-flag container-title publisher number"/>
+                    <condition match="none" variable="collection-number"/>
+                  </conditions>
+                  <group delimiter=", ">
+                    <group delimiter=" ">
+                      <label variable="number" form="short" text-case="capitalize-first"/>
+                      <number variable="number"/>
+                    </group>
+                    <date variable="issued" form="text" date-parts="year"/>
+                  </group>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <!-- condition match="none" variable="title"/ -->
+                    <condition match="all" variable="admin-flag volume container-title page"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                  </group>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="admin-flag genre"/>
+                    <condition match="none" variable="container-title archive"/>
+                  </conditions>
+                </else-if>
+                <else-if>
+                  <conditions match="any">
+                    <condition match="none" variable="container-title"/>
+                    <condition match="none" variable="genre"/>
+                  </conditions>
+                  <group parallel-last="authority">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                  </group>
+                </else-if>
+              </choose>
+            </if>
+            <else-if match="any" type="hearing bill report">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition variable="committee"/>
+                    <condition match="none" variable="number"/>
+                  </conditions>
+                  <text value="Comm. Print"/>
+                </if>
+                <else>
+                  <text variable="jurisdiction" form="short"/>
+                </else>
+              </choose>
+              <choose>
+                <if match="any" type="bill">
+                  <choose>
+                    <if match="all" variable="references">
+                      <group delimiter=", ">
+                        <text variable="references"/>
+                        <date variable="issued" form="text" date-parts="year-month-day"/>
+                      </group>
+                    </if>
+                    <else>
+                        <date variable="issued" form="text" date-parts="year"/>
+                    </else>
+                  </choose>
+                </if>
+                <else-if match="any" type="hearing">
+                  <date variable="issued" form="text" date-parts="year"/>
+                </else-if>
+              </choose>
+            </else-if>
+            <else-if match="any" type="regulation patent"/>
+            <else-if type="legislation">
+              <group delimiter=" &#38; ">
+                <group delimiter=" ">
+                  <group delimiter=" ">
+                    <text variable="genre"/>
+                    <choose>
+                      <if variable="collection-number">
+                        <text value="Sess."/>
+                      </if>
+                    </choose>
+                  </group>
+                  <text variable="publisher"/>
+                  <choose>
+                    <if variable="publication-date">
+                      <date variable="publication-date" form="text" date-parts="year"/>
+                    </if>
+                    <else>
+                      <choose>
+                        <if>
+                          <conditions match="all">
+                            <condition match="all" variable="gazette-flag collection-number"/>
+                          </conditions>
+                        </if>
+                        <else-if>
+                          <conditions match="all">
+                            <condition variable="gazette-flag"/>
+                            <condition match="none" variable="publisher"/>
+                          </conditions>
+                          <date variable="issued" form="text" date-parts="year-month-day"/>
+                        </else-if>
+                        <else>
+                          <date variable="issued" form="text" date-parts="year"/>
+                        </else>
+                      </choose>
+                    </else>
+                  </choose>
+                </group>
+                <group delimiter=" ">
+                  <text variable="locator-extra"/>
+                  <date variable="locator-date" form="text" date-parts="year-month-day"/>
+                </group>
+              </group>
+            </else-if>
+            <else>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+              <group delimiter=" ">
+                <text variable="country" form="short"/>
+                <text variable="jurisdiction" form="short"/>
+	          </group>
+            </else>
+          </choose>
+          <!-- herein the actual date, for most types -->
+          <choose>
+            <!-- same conditions here as in juris-main above -->
+            <if type="legal_case">
+              <choose>
+                <!-- legal_case portable 3 START -->
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="authority collection-number page issued"/>
+                    <condition match="none" variable="container-title volume archive"/>
+                  </conditions>
+                </if>
+                <!-- legal_case portable 3 END -->
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="authority page collection-number"/>
+                    <condition match="none" variable="container-title archive admin-flag"/>
+                  </conditions>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition variable="collection-number number"/>
+                    <condition match="none" variable="container-title archive"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="document-name number"/>
+                    <condition match="none" variable="title container-title archive"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="volume"/>
+                    <condition match="none" variable="title"/>
+                  </conditions>
+                  <!-- group><text value="XXX"/></group -->
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title"/>
+                    <condition match="none" variable="archive_location admin-flag"/>
+                  </conditions>
+                  <!-- is this a trial document, and if so has the case been decided? -->
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition variable="document-name"/>
+                        <condition match="none" variable="container-title page"/>
+                      </conditions>
+                      <date variable="issued" form="text" date-parts="year-month-day"/>
+                    </if>
+                    <else>
+                      <group parallel-last="issued">
+                        <date variable="issued" form="text" date-parts="year"/>
+                      </group>
+                    </else>
+                  </choose>
+                </else-if>
+                <else-if match="all" variable="container-title archive_location">
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="title admin-flag authority number"/>
+                    <condition match="none" variable="archive_location page container-title"/>
+                  </conditions>
+                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="archive"/>
+                    <condition match="none" variable="container-title"/>
+                  </conditions>
+                  <group delimiter=", ">
+                    <choose>
+                      <if variable="admin-flag publisher" match="all"> 
+                        <group delimiter=" ">
+                          <label variable="number" form="short" text-case="capitalize-first"/>
+                          <number variable="number"/>
+                        </group>
+                      </if>
+                    </choose>
+                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                  </group>
+                </else-if>
+                <else-if match="none" variable="admin-flag">
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="admin-flag"/>
+                    <condition match="none" variable="genre container-title"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title genre authority"/>
+                    <condition match="any" variable="volume collection-number"/>
+                    <condition match="none" variable="publisher references"/>
+                  </conditions>
+                  <!-- null -->
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="admin-flag container-title number page collection-number"/>
+                    <condition match="none" variable="title"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="title container-title authority issued number collection-number admin-flag"/>
+                  </conditions>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </else-if>
+              </choose>
+            </if>
+            <else-if type="legislation"/>
+            <else-if type="regulation">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title issued publisher"/>
+                    <condition match="none" variable="gazette-flag"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <text variable="publisher"/>
+                    <date form="text" date-parts="year-month-day" variable="issued"/>
+                  </group>
+                </if>
+                <else-if variable="gazette-flag">
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </else-if>
+                <else>
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="all" variable="authority title"/>
+                          <condition match="none" variable="genre"/>
+                        </conditions>
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short" use-last="1"/>
+                        </names>
+                        <text variable="genre" prefix="[" suffix="]" text-case="capitalize-all"/>
+                      </if>
+                    </choose>
+                  </group>
+                  <choose>
+                    <if variable="issued">
+                      <date form="text" date-parts="year-month-day" variable="issued"/>
+                    </if>
+                    <else>
+                      <date form="text" date-parts="year" variable="publication-date"/>
+                    </else>
+                  </choose>
+                </else>
+              </choose>
+            </else-if>
+            <else-if type="patent">
+              <group delimiter=") (">
+                <group delimiter=" ">
+                  <text value="filed"/>
+                  <date variable="submitted" form="text" date-parts="year-month-day"/>
+                </group>
+                <group delimiter=" ">
+                  <text value="issued"/>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </group>
+              </group>
+            </else-if>
+            <else-if type="report">
+              <date form="text" date-parts="year-month-day" variable="issued"/>
+            </else-if>
+            <else-if type="hearing">
+              <choose>
+                <if match="none" variable="committee"/>
+                <date form="text" date-parts="year-month-day" variable="issued"/>
+                <else>
+                  <date form="text" date-parts="year" variable="issued"/>
+                </else>
+              </choose>
+            </else-if>
+          </choose>
+        </group>
+      </group>
+      <group delimiter=" " prefix="(" suffix=")">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" type="legal_case" variable="document-name"/>
+              <condition match="any" variable="container-title page"/>
+            </conditions>
+            <group delimiter=" ">
+              <label variable="number" form="short" text-case="capitalize-first"/>
+              <number variable="number"/>
+            </group>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" type="legal_case"/>
+              <condition match="all" variable="page archive_location"/>
+            </conditions>
+            <group delimiter=" ">
+              <text term="number" form="short" text-case="capitalize-first"/>
+              <text variable="archive_location"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="admin-flag container-title publisher number genre"/>
+              <condition match="none" variable="collection-number"/>
+            </conditions>
+            <text variable="genre"/>
+          </else-if>
+          <else>
+            <text variable="status"/>
+          </else>
+        </choose>
+      </group>
+    </group>
   </macro>
   <macro name="juris-pretitle-short">
-    <text value="BOGUS"/>
+    <choose>
+      <!-- for ib-2 rev [start] -->
+      <if type="legal_case">
+        <choose>
+          <if variable="document-name">
+            <group delimiter=" ">
+              <text variable="document-name"/>
+              <text macro="juris-locator"/>
+            </group>
+          </if>
+        </choose>
+      </if>
+      <!-- for ib-2 rev [end] -->
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="any" variable="title committee"/>
+          <condition match="all" variable="author"/>
+        </conditions>
+        <names variable="author">
+          <name form="short"/>
+          <institution institution-parts="short">
+            <institution-part name="short"/>
+          </institution>
+        </names>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="any" type="legal_case"/>
+          <condition match="none" variable="title"/>
+        </conditions>
+        <group delimiter=", ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+           <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </else-if>
+     </choose>
   </macro>
   <macro name="juris-title-short">
-    <text value="BOGUS"/>
+    <choose>
+      <if match="all" type="legal_case" variable="title-short title">
+        <group parallel-first="title">
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <text variable="title-short" form="short"/>
+            </substitute>
+          </names>
+        </group>
+      </if>
+      <else-if type="legal_case">
+        <group parallel-first="title">
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <text variable="title" form="short"/>
+            </substitute>
+          </names>
+        </group>
+      </else-if>
+      <else-if type="bill"/>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="regulation"/>
+          <condition match="none" variable="gazette-flag"/>
+        </conditions>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" type="report"/>
+          <condition match="none" variable="title committee"/>
+        </conditions>
+      </else-if>
+      <else-if match="all" type="report">
+        <group delimiter=", ">
+          <choose>
+            <if variable="author"/>
+            <else-if variable="committee">
+              <names variable="committee">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+            </else-if>
+          </choose>
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition disambiguate="true"/>
+                <condition match="none" variable="author committee"/>
+              </conditions>
+              <text variable="title" form="short"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition type="hearing"/>
+          <condition match="none" variable="committee"/>
+        </conditions>
+      </else-if>
+      <else-if variable="title-short">
+        <text variable="title-short"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
   </macro>
   <macro name="juris-main-short">
-    <text value="BOGUS"/>
+    <group delimiter=" ">
+      <choose>
+        <if type="bill">
+          <group delimiter=" ">
+            <choose>
+              <if variable="event">
+                <text variable="event" form="short"/>
+              </if>
+            </choose>
+            <number variable="number"/>
+          </group>
+        </if>
+        <else-if type="hearing">
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="none" variable="committee"/>
+              </conditions>
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <text variable="container-title" form="short"/>
+              </group>
+            </if>
+          </choose>
+        </else-if>
+        <else-if type="report">
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition type="report" variable="title"/>
+              </conditions>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <names variable="authority">
+                  <name/>
+                  <institution stop-last="1" institution-parts="short"/>
+                </names>
+                <choose>
+                  <if variable="genre">
+                    <text variable="genre"/>
+                  </if>
+                  <else>
+                    <text value="Rep."/>
+                  </else>
+                </choose>
+                <group delimiter=" ">
+                  <label variable="number" form="symbol" text-case="capitalize-first"/>
+                  <number variable="number"/>
+                </group>
+              </group>
+            </else>
+          </choose>
+        </else-if>
+        <else-if type="regulation">
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition type="regulation"/>
+                <condition match="none" variable="container-title"/>
+              </conditions>
+              <choose>
+                <if variable="title-short">
+                  <text variable="title-short"/>
+                </if>
+                <else>
+                  <text variable="title"/>
+                </else>
+              </choose>
+              <!-- added for UNCITRAL arbitration rules (un.int) -->
+              <choose>
+                <if disambiguate="true">
+                  <text value="revised" font-style="italic"/>
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </if>
+              </choose>
+            </if>
+          </choose>
+        </else-if>
+        <else-if type="legal_case">
+          <choose>
+            <if variable="title">
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <text variable="container-title" form="short"/>
+              </group>
+            </if>
+          </choose>
+        </else-if>
+        <else-if type="patent">
+          <group delimiter=" ">
+            <number variable="number" substring="-3" prefix="’"/>
+            <text value="Patent"/>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <number variable="volume"/>
+            <text variable="container-title" form="short"/>
+          </group>
+        </else>
+      </choose>
+      <choose>
+        <!-- basically anything with no locator that uses pages or page-first in juris-main -->
+        <if>
+          <conditions match="all">
+            <condition match="none" variable="locator"/>
+            <condition match="all" variable="container-title"/>
+          </conditions>
+          <number variable="page"/>
+        </if>
+        <else-if>
+          <conditions match="any">
+            <condition match="all" variable="document-name container-title"/>
+          </conditions>
+          <number variable="page"/>
+        </else-if>
+      </choose>
+    </group>
   </macro>
   <macro name="juris-tail-short">
-    <text value="BOGUS"/>
+    <group delimiter=" " prefix="(" suffix=")">
+      <choose>
+        <if>
+          <conditions match="all">
+            <condition match="all" type="legal_case" variable="document-name"/>
+            <condition match="any" variable="container-title page"/>
+          </conditions>
+          <group delimiter=" ">
+            <label variable="number" form="short" text-case="capitalize-first"/>
+            <number variable="number"/>
+          </group>
+        </if>
+      </choose>
+    </group>
   </macro>
   <macro name="juris-locator">
     <group delimiter=" ">

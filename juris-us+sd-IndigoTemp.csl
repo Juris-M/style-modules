@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States</title>
-    <id>http://juris-m.github.io/modules/juris-us</id>
-    <link href="http://juris-m.github.io/modules/juris-us" rel="self"/>
+    <title>Maine</title>
+    <id>http://juris-m.github.io/modules/juris-us:me</id>
+    <link href="http://juris-m.github.io/modules/juris-us:me" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -11,6 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
+    <law-module types="legal_case"/>
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -707,7 +708,23 @@
       <else-if type="legal_case">
         <!-- starting over with these -->
         <choose>
+          <!-- legal_case portable 1 START -->
           <if>
+            <conditions match="all">
+              <condition match="all" variable="authority collection-number"/>
+              <condition match="none" variable="container-title volume archive"/>
+            </conditions>
+            <group delimiter=" " parallel-last-to-first="true">
+              <number variable="collection-number"/>
+              <names variable="authority">
+                <name/>
+                <institution form="short"/>
+              </names>
+              <number variable="page"/>
+            </group>
+          </if>
+          <!-- legal_case portable 1 END -->
+          <else-if>
             <conditions match="all">
               <condition match="all" variable="authority page collection-number"/>
               <condition match="none" variable="container-title archive admin-flag"/>
@@ -724,7 +741,7 @@
               </names>
               <number variable="page"/>
             </group>
-          </if>
+          </else-if>
           <else-if>
             <conditions match="all">
               <condition match="all" variable="number collection-number container-title archive_location"/>
@@ -1232,11 +1249,8 @@
                 </else>
               </choose>
               <group delimiter=" ">
-                <group delimiter=" ">
-                  <label variable="number" form="short" text-case="capitalize-first"/>
-                  <number variable="number"/>
-                </group>
-                <text variable="status"/>
+                <label variable="number" form="short" text-case="capitalize-first"/>
+                <number variable="number"/>
               </group>
             </group>
           </else>
@@ -1258,12 +1272,20 @@
           <choose>
             <if type="legal_case">
               <choose>
+                <!-- legal_case portable 2 START -->
                 <if>
+                  <conditions match="all">
+                    <condition match="all" variable="authority collection-number page issued"/>
+                    <condition match="none" variable="container-title volume archive"/>
+                  </conditions>
+                </if>
+                <!-- legal_case portable 2 END -->
+                <else-if>
                   <conditions match="all">
                     <condition match="none" variable="title"/>
                     <condition match="all" variable="admin-flag genre number collection-number"/>
                   </conditions>
-                </if>
+                </else-if>
                 <else-if>
                   <conditions match="all">
                     <condition match="all" variable="collection-number number"/>
@@ -1418,12 +1440,20 @@
             <!-- same conditions here as in juris-main above -->
             <if type="legal_case">
               <choose>
+                <!-- legal_case portable 3 START -->
                 <if>
+                  <conditions match="all">
+                    <condition match="all" variable="authority collection-number page issued"/>
+                    <condition match="none" variable="container-title volume archive"/>
+                  </conditions>
+                </if>
+                <!-- legal_case portable 3 END -->
+                <else-if>
                   <conditions match="all">
                     <condition match="all" variable="authority page collection-number"/>
                     <condition match="none" variable="container-title archive admin-flag"/>
                   </conditions>
-                </if>
+                </else-if>
                 <else-if>
                   <conditions match="all">
                     <condition variable="collection-number number"/>
@@ -1558,21 +1588,14 @@
                       </if>
                     </choose>
                   </group>
-                  <group delimiter=" ">
-                    <choose>
-                      <if variable="issued">
-                        <choose>
-                          <if match="none" variable="title">
-                            <text variable="genre"/>
-                          </if>
-                        </choose>
-                        <date form="text" date-parts="year-month-day" variable="issued"/>
-                      </if>
-                      <else>
-                        <date form="text" date-parts="year" variable="publication-date"/>
-                      </else>
-                    </choose>
-                  </group>
+                  <choose>
+                    <if variable="issued">
+                      <date form="text" date-parts="year-month-day" variable="issued"/>
+                    </if>
+                    <else>
+                      <date form="text" date-parts="year" variable="publication-date"/>
+                    </else>
+                  </choose>
                 </else>
               </choose>
             </else-if>
@@ -1632,9 +1655,9 @@
             </conditions>
             <text variable="genre"/>
           </else-if>
-          <else-if match="none" type="patent">
+          <else>
             <text variable="status"/>
-          </else-if>
+          </else>
         </choose>
       </group>
     </group>
@@ -1907,6 +1930,12 @@
           </conditions>
           <text value="at"/>
         </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition match="none" variable="container-title archive" position="ibid-with-locator"/>
+          </conditions>
+          <label variable="locator" form="short"/>
+        </else-if>
         <else-if locator="page" position="ibid-with-locator">
           <text value="at"/>
         </else-if>
@@ -1918,7 +1947,7 @@
           </conditions>
         </else-if>
         <else>
-          <label variable="locator"/>
+          <label variable="locator" form="short"/>
         </else>
       </choose>
       <number variable="locator"/>

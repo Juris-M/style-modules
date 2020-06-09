@@ -1491,11 +1491,13 @@
                     </if>
                     <else>
                       <choose>
-                        <if match="none" jurisdiction="us:nd">
-                          <names variable="authority">
-                            <name/>
-                            <institution institution-parts="short"/>
-                          </names>
+                        <if match="none" jurisdiction="us:oh">
+                          <group parallel-last="authority" parallel-last-override="authority">
+                            <names variable="authority">
+                              <name/>
+                              <institution institution-parts="short"/>
+                            </names>
+                          </group>
                         </if>
                       </choose>
                       <group parallel-last="issued">

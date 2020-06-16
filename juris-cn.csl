@@ -25,7 +25,7 @@
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
     <choose>
-      <if type="legal_case">
+      <if condition-id="z0171" type="legal_case">
         <text variable="title"/>
       </if>
     </choose>
@@ -33,7 +33,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if type="regulation legislation" match="any">
+      <if condition-id="z0172" type="regulation legislation" match="any">
         <group delimiter=" ">
           <text variable="title"/>
           <group delimiter=", " prefix="(" suffix=")">
@@ -58,7 +58,7 @@
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <choose>
-      <if type="legal_case">
+      <if condition-id="z0173" type="legal_case">
         <group delimiter=" " prefix="(" suffix=")">
           <names variable="authority">
             <name/>
@@ -92,10 +92,10 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page">
+        <if condition-id="z0174" locator="page">
           <text value="at"/>
         </if>
-        <else>
+        <else condition-id="z0175">
           <label variable="locator"/>
         </else>
       </choose>

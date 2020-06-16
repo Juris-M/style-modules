@@ -32,7 +32,7 @@
   </locale>
   <macro name="juris-pretitle">
     <choose>
-      <if type="hearing">
+      <if condition-id="z0545" type="hearing">
         <names variable="author">
           <name/>
           <institution/>
@@ -41,24 +41,24 @@
           </substitute>
         </names>
       </if>
-      <else-if type="legislation">
+      <else-if condition-id="z0546" type="legislation">
         <text variable="title-short"/>
       </else-if>
     </choose>
   </macro>
   <macro name="juris-title">
     <choose>
-      <if type="legislation">
+      <if condition-id="z0547" type="legislation">
         <text variable="title"/>
       </if>
-      <else-if type="report">
+      <else-if condition-id="z0548" type="report">
         <text variable="title"/>
       </else-if>
     </choose>
   </macro>
   <macro name="juris-main">
     <choose>
-      <if type="legislation">
+      <if condition-id="z0549" type="legislation">
         <group delimiter=", ">
           <text variable="jurisdiction" form="short"/>
           <group delimiter=" ">
@@ -68,7 +68,7 @@
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>
-      <else-if type="legal_case">
+      <else-if condition-id="z0550" type="legal_case">
         <group delimiter=", " font-variant="normal" font-style="normal">
           <group delimiter=" ">
             <names variable="authority">
@@ -79,12 +79,12 @@
           <text variable="genre" form="short"/>
           <date variable="issued" form="text" date-parts="year-month-day"/>
           <choose>
-            <if disambiguate="true">
+            <if condition-id="z0551" disambiguate="true">
               <number variable="number"/>
             </if>
           </choose>
           <choose>
-            <if variable="container-title">
+            <if condition-id="z0552" variable="container-title">
               <group delimiter=", ">
                 <group delimiter=" ">
                   <number variable="volume"/>
@@ -94,13 +94,13 @@
                 </group>
               </group>
             </if>
-            <else>
+            <else condition-id="z0553">
               <number variable="number"/>
             </else>
           </choose>
         </group>
       </else-if>
-      <else-if type="report">
+      <else-if condition-id="z0554" type="report">
         <group delimiter=", ">
           <text variable="genre"/>
           <group delimiter=" ">
@@ -124,7 +124,7 @@
           </group>
         </group>
       </else-if>
-      <else-if type="hearing">
+      <else-if condition-id="z0555" type="hearing">
         <group delimiter=" of the ">
           <group delimiter=", ">
             <group delimiter=" statement at ">
@@ -154,10 +154,10 @@
   </macro>
   <macro name="juris-tail">
       <choose>
-        <if type="legislation">
+        <if condition-id="z0556" type="legislation">
           <text variable="country" form="short" prefix="[" suffix="]"/>
         </if>
-        <else-if type="legal_case">
+        <else-if condition-id="z0557" type="legal_case">
           <group delimiter=" ">
             <group delimiter=" " prefix="(" suffix=")">
               <text value="access:"/>
@@ -172,7 +172,7 @@
   </macro>
   <macro name="juris-pretitle-short">
     <choose>
-      <if type="hearing">
+      <if condition-id="z0558" type="hearing">
         <group delimiter=" ">
           <names variable="author">
             <name/>
@@ -182,9 +182,9 @@
             </substitute>
           </names>
           <choose>
-            <if variable="author">
+            <if condition-id="z0559" variable="author">
               <choose>
-                <if disambiguate="true">
+                <if condition-id="z0560" disambiguate="true">
                   <number variable="archive_location" form="ordinal"/>
                 </if>
               </choose>
@@ -197,18 +197,18 @@
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if type="legislation">
+      <if condition-id="z0561" type="legislation">
         <text variable="title"/>
       </if>
-      <else-if type="legal_case">
+      <else-if condition-id="z0562" type="legal_case">
         <text macro="juris-title"/>
       </else-if>
-      <else-if type="report">
+      <else-if condition-id="z0563" type="report">
         <choose>
-          <if variable="title-short">
+          <if condition-id="z0564" variable="title-short">
             <text variable="title-short" form="short"/>
           </if>
-          <else>
+          <else condition-id="z0565">
             <text variable="title" form="short"/>
           </else>
         </choose>
@@ -217,9 +217,9 @@
   </macro>
   <macro name="juris-main-short">
     <choose>
-      <if type="legislation">
+      <if condition-id="z0566" type="legislation">
         <choose>
-          <if disambiguate="true">
+          <if condition-id="z0567" disambiguate="true">
             <group delimiter=" of ">
               <group delimiter=" ">
                 <text value="Law no."/>
@@ -230,7 +230,7 @@
           </if>
         </choose>
       </if>
-      <else-if type="legal_case">
+      <else-if condition-id="z0568" type="legal_case">
         <group delimiter=", " font-variant="normal" font-style="normal">
           <group delimiter=" ">
             <names variable="authority">
@@ -241,15 +241,15 @@
           <text variable="genre" form="short"/>
           <date variable="issued" form="text" date-parts="year-month-day"/>
           <choose>
-            <if disambiguate="true">
+            <if condition-id="z0569" disambiguate="true">
               <number variable="number"/>
             </if>
           </choose>
         </group>
       </else-if>
-      <else-if type="report">
+      <else-if condition-id="z0570" type="report">
         <choose>
-          <if disambiguate="true">
+          <if condition-id="z0571" disambiguate="true">
             <group delimiter=" ">
               <label variable="number" form="short"/>
               <number variable="number"/>
@@ -257,11 +257,11 @@
           </if>
         </choose>
       </else-if>
-      <else-if type="hearing">
+      <else-if condition-id="z0572" type="hearing">
         <group delimiter=" of the ">
           <group delimiter=", ">
             <choose>
-              <if disambiguate="true">
+              <if condition-id="z0573" disambiguate="true">
                 <group delimiter=" statement at ">
                   <number variable="archive_location" form="ordinal"/>
                   <group delimiter=" ">
@@ -285,13 +285,13 @@
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if type="legal_case">
+      <if condition-id="z0574" type="legal_case">
           <number variable="locator"/>
       </if>
-      <else>
+      <else condition-id="z0575">
         <group delimiter=" ">
           <choose>
-            <if locator="page" match="none">
+            <if condition-id="z0576" locator="page" match="none">
               <label variable="locator"/>
             </if>
           </choose>
@@ -304,7 +304,7 @@
   <citation>
     <layout>
       <choose>
-        <if position="ibid-with-locator">
+        <if condition-id="z0577" position="ibid-with-locator">
           <group delimiter=" ">
             <text term="ibid" font-style="italic"/>
             <group delimiter=" ">
@@ -318,10 +318,10 @@
             </group>
           </group>
         </if>
-        <else-if position="ibid">
+        <else-if condition-id="z0578" position="ibid">
           <text term="ibid" font-style="italic"/>
         </else-if>
-        <else-if>
+        <else-if condition-id="z0579">
           <!-- short form -->
           <conditions match="any">
             <condition match="all" position="near-note"/>
@@ -333,25 +333,25 @@
           <group delimiter=" ">
             <group delimiter=", ">
               <choose>
-                <if>
+                <if condition-id="z0580">
                   <conditions match="all">
                     <condition type="legal_case"/>
                     <condition match="none" variable="document-name"/>
                   </conditions>
                   <text macro="juris-title-short" font-style="italic"/>
                 </if>
-                <else-if type="hearing">
+                <else-if condition-id="z0581" type="hearing">
                   <text macro="juris-title-short" font-style="italic"/>
                 </else-if>
-                <else-if match="all" type="report">
+                <else-if condition-id="z0582" match="all" type="report">
                   <text macro="juris-title-short" font-variant="small-caps"/>
                 </else-if>
-                <else>
+                <else condition-id="z0583">
                   <text macro="juris-title-short"/>
                 </else>
               </choose>
               <choose>
-                <if>
+                <if condition-id="z0584">
                   <conditions match="any">
                     <condition match="all" type="hearing" variable="committee"/>
                     <condition match="all" type="report" variable="title"/>
@@ -375,25 +375,25 @@
                     </group>
                   </group>
                 </if>
-                <else>
+                <else condition-id="z0585">
                   <group delimiter=" ">
                     <group delimiter=", ">
                       <choose>
-                        <if>
+                        <if condition-id="z0586">
                           <conditions match="all">
                             <condition type="hearing"/>
                             <condition match="none" variable="committee"/>
                           </conditions>
                           <text macro="juris-main-short" font-variant="small-caps"/>
                         </if>
-                        <else-if>
+                        <else-if condition-id="z0587">
                           <conditions match="all">
                             <condition type="report"/>
                             <condition match="none" variable="committee title"/>
                           </conditions>
                           <text macro="juris-main-short" font-variant="small-caps"/>
                         </else-if>
-                        <else>
+                        <else condition-id="z0588">
                           <text macro="juris-main-short"/>
                         </else>
                       </choose>
@@ -415,45 +415,45 @@
             <text macro="juris-tail-short"/>
           </group>
         </else-if>
-        <else>
+        <else condition-id="z0589">
           <!-- full form -->
           <group delimiter=", ">
             <group delimiter=" ">
               <group delimiter=", ">
                 <choose>
-                  <if type="hearing">
+                  <if condition-id="z0590" type="hearing">
                     <text macro="juris-pretitle"/>
                   </if>
                 </choose>
                 <choose>
-                  <if type="hearing">
+                  <if condition-id="z0591" type="hearing">
                     <text macro="juris-title" font-style="italic"/>
                   </if>
-                  <else-if type="report">
+                  <else-if condition-id="z0592" type="report">
                     <text macro="juris-title" font-variant="small-caps"/>
                   </else-if>
-                  <else>
+                  <else condition-id="z0593">
                     <text macro="juris-title"/>
                   </else>
                 </choose>
                 <group delimiter=" ">
                   <group delimiter=", ">
                     <choose>
-                      <if>
+                      <if condition-id="z0594">
                         <conditions match="all">
                           <condition match="all" type="report"/>
                           <condition match="none" variable="title committee"/>
                         </conditions>
                         <text macro="juris-main" font-variant="small-caps"/>
                       </if>
-                      <else-if>
+                      <else-if condition-id="z0595">
                         <conditions match="all">
                           <condition match="all" type="hearing"/>
                           <condition match="none" variable="committee"/>
                         </conditions>
                         <text macro="juris-main" font-variant="small-caps"/>
                       </else-if>
-                      <else>
+                      <else condition-id="z0596">
                         <text macro="juris-main"/>
                       </else>
                     </choose>
@@ -471,14 +471,14 @@
                 <text macro="juris-locator" label-form="symbol"/>
               </group>
               <choose>
-                <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
-                <else>
+                <if condition-id="z0597" type="legislation" variable="container-title page volume gazette-flag" match="all"/>
+                <else condition-id="z0598">
                   <text macro="juris-tail" prefix="(" suffix=")"/>
                 </else>
               </choose>
             </group>
             <choose>
-              <if type="legislation" variable="container-title page volume gazette-flag" match="all">
+              <if condition-id="z0599" type="legislation" variable="container-title page volume gazette-flag" match="all">
                 <text macro="juris-tail" prefix="(" suffix=")"/>
               </if>
             </choose>
@@ -497,13 +497,13 @@
                 <text macro="juris-pretitle"/>
                 <date variable="issued" form="text" date-parts="year"/>
                 <choose>
-                  <if type="hearing">
+                  <if condition-id="z0600" type="hearing">
                     <text macro="juris-title" font-style="italic"/>
                   </if>
-                  <else-if type="report">
+                  <else-if condition-id="z0601" type="report">
                     <text macro="juris-title" font-variant="small-caps"/>
                   </else-if>
-                  <else>
+                  <else condition-id="z0602">
                     <text macro="juris-title"/>
                     <text variable="title"/>
                   </else>
@@ -511,21 +511,21 @@
                 <group delimiter=" ">
                   <group delimiter=", ">
                     <choose>
-                      <if>
+                      <if condition-id="z0603">
                         <conditions match="all">
                           <condition match="all" type="report"/>
                           <condition match="none" variable="title committee"/>
                         </conditions>
                         <text macro="juris-main" font-variant="small-caps"/>
                       </if>
-                      <else-if>
+                      <else-if condition-id="z0604">
                         <conditions match="all">
                           <condition match="all" type="hearing"/>
                           <condition match="none" variable="committee"/>
                         </conditions>
                         <text macro="juris-main" font-variant="small-caps"/>
                       </else-if>
-                      <else>
+                      <else condition-id="z0605">
                         <text macro="juris-main"/>
                       </else>
                     </choose>
@@ -543,15 +543,15 @@
                 <text macro="juris-locator" label-form="symbol"/>
               </group>
               <choose>
-                <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
-                <else>
+                <if condition-id="z0606" type="legislation" variable="container-title page volume gazette-flag" match="all"/>
+                <else condition-id="z0607">
                   <text macro="juris-tail"/>
                 </else>
               </choose>
             </group>
           </group>
             <choose>
-              <if type="legislation" variable="container-title page volume gazette-flag" match="all">
+              <if condition-id="z0608" type="legislation" variable="container-title page volume gazette-flag" match="all">
                 <text macro="juris-tail"/>
               </if>
             </choose>

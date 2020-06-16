@@ -27,7 +27,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if type="bill">
+      <if condition-id="z1037" type="bill">
         <group delimiter=" ">
           <names variable="authority">
             <name/>
@@ -37,7 +37,7 @@
           <number variable="number"/>
           <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
           <choose>
-            <if variable="container-title" match="all">
+            <if condition-id="z1038" variable="container-title" match="all">
               <text variable="container-title" form="short"/>
               <group delimiter=", ">
                 <group delimiter=" ">
@@ -53,7 +53,7 @@
                 <number variable="page"/>
               </group>
             </if>
-            <else>
+            <else condition-id="z1039">
               <group delimiter=" ">
                 <text value="U.N. Doc."/>
                 <text variable="archive_location"/>
@@ -79,7 +79,7 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if type="bill">
+      <if condition-id="z1040" type="bill">
         <group delimiter=" ">
           <names variable="authority">
             <name/>
@@ -98,8 +98,8 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page"/>
-        <else>
+        <if condition-id="z1041" locator="page"/>
+        <else condition-id="z1042">
           <label variable="locator"/>
         </else>
       </choose>

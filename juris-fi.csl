@@ -32,7 +32,7 @@
   </macro>
   <macro name="juris-main">
 	<choose>
-	  <if type="legal_case">
+	  <if condition-id="z0384" type="legal_case">
 		<group delimiter=", ">
 		  <group delimiter=" ">
 			<names variable="authority">
@@ -44,7 +44,7 @@
 			  <institution form="short"/>
 			</names>
 			<choose>
-			  <if court-class="admin1 admin2 ord2 ord3" match="any">
+			  <if condition-id="z0385" court-class="admin1 admin2 ord2 ord3" match="any">
 				<date variable="issued">
 				  <date-part name="day" form="numeric" suffix="."/>
 				  <date-part name="month" form="numeric" suffix="."/>
@@ -61,7 +61,7 @@
   </macro>
   <macro name="juris-tail">
 	<choose>
-	  <if type="legal_case">
+	  <if condition-id="z0386" type="legal_case">
 		<text variable="country" form="short" prefix="(" suffix=")"/>
 	  </if>
 	</choose>
@@ -74,14 +74,14 @@
   </macro>
   <macro name="juris-main-short">
 	<choose>
-	  <if type="legal_case">
+	  <if condition-id="z0387" type="legal_case">
 		<group delimiter=" ">
 		  <names variable="authority">
 			<name/>
 			<institution form="short"/>
 		  </names>
 		  <choose>
-			<if court-class="admin">
+			<if condition-id="z0388" court-class="admin">
 			  <date variable="issued">
 				<date-part name="day" form="numeric" suffix="."/>
 				<date-part name="month" form="numeric" suffix="."/>
@@ -96,27 +96,27 @@
   </macro>
   <macro name="juris-tail-short">
 	<choose>
-	  <if type="legal_case">
+	  <if condition-id="z0389" type="legal_case">
 		<text variable="country" form="short" prefix="(" suffix=")"/>
 	  </if>
 	</choose>
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if type="legal_case">
+      <if condition-id="z0390" type="legal_case">
         <group delimiter=" ">
           <choose>
-            <if locator="page" match="none">
+            <if condition-id="z0391" locator="page" match="none">
               <label variable="locator"/>
             </if>
           </choose>
           <number variable="locator"/>
         </group>
       </if>
-      <else>
+      <else condition-id="z0392">
         <group delimiter=" ">
           <choose>
-            <if locator="page" match="none">
+            <if condition-id="z0393" locator="page" match="none">
               <label variable="locator"/>
             </if>
           </choose>

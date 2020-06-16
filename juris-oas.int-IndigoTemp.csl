@@ -40,7 +40,7 @@
   
   <macro name="juris-title">
     <choose>
-      <if condition-id="z0838" match="any" type="legal_case">
+      <if match="any" type="legal_case">
         <text variable="title"/>
       </if>
     </choose>
@@ -48,7 +48,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if condition-id="z0839" type="legal_case">
+      <if type="legal_case">
         <group delimiter=" ">
           <text value="Inter-Am. Ct. H.R."/>
           <group delimiter=" " prefix="(" suffix=")">
@@ -66,7 +66,7 @@
 
   <macro name="juris-tail">
     <choose>
-      <if condition-id="z0840" type="legal_case">
+      <if type="legal_case">
         <group delimiter=" " prefix="(" suffix=")">
           <date variable="issued" form="text" date-parts="year"/>
         </group>
@@ -93,7 +93,7 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if condition-id="z0842">
+        <if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
             <condition locator="page" type="legal_case" variable="archive" match="all"/>
@@ -101,14 +101,14 @@
           </conditions>
           <text value="at"/>
         </if>
-        <else-if condition-id="z0843" locator="page" match="any"/>
-        <else-if condition-id="z0844">
+        <else-if locator="page" match="any"/>
+        <else-if>
           <conditions match="all">
             <condition type="regulation legislation" match="any"/>
             <condition locator="rule"/>
           </conditions>
         </else-if>
-        <else condition-id="z0845">
+        <else>
           <label variable="locator"/>
         </else>
       </choose>

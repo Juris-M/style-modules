@@ -23,11 +23,11 @@
 
   <macro name="juris-title">
     <choose>
-      <if condition-id="z0955" type="bill"/>
-      <else-if condition-id="z0956" type="legal_case">
+      <if type="bill"/>
+      <else-if type="legal_case">
         <text variable="title"/>
       </else-if>
-      <else-if condition-id="z0957" type="regulaton">
+      <else-if type="regulaton">
         <text variable="title"/>
       </else-if>
     </choose>
@@ -35,7 +35,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if condition-id="z0958" type="bill">
+      <if type="bill">
         <group delimiter=" ">
           <names variable="authority">
             <name/>
@@ -45,7 +45,7 @@
           <number variable="number"/>
           <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
           <choose>
-            <if condition-id="z0959" variable="container-title" match="all">
+            <if variable="container-title" match="all">
               <text variable="container-title" form="short"/>
               <group delimiter=", ">
                 <group delimiter=" ">
@@ -61,7 +61,7 @@
                 <number variable="page"/>
               </group>
             </if>
-            <else condition-id="z0960">
+            <else>
               <group delimiter=" ">
                 <text value="U.N. Doc."/>
                 <text variable="archive_location"/>
@@ -70,14 +70,14 @@
           </choose>
         </group>
       </if>
-      <else-if condition-id="z0961" type="legal_case">
+      <else-if type="legal_case">
         <group delimiter=" ">
           <number variable="collection-number"/>
           <text variable="container-title"/>
           <number variable="page"/>
         </group>
       </else-if>
-      <else-if condition-id="z0962" type="regulation">
+      <else-if type="regulation">
         <group delimiter=" ">
           <number variable="collection-number"/>
           <text variable="container-title"/>
@@ -101,7 +101,7 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if condition-id="z0963" type="bill">
+      <if type="bill">
         <group delimiter=" ">
           <names variable="authority">
             <name/>
@@ -120,8 +120,8 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if condition-id="z0964" locator="page"/>
-        <else condition-id="z0965">
+        <if locator="page"/>
+        <else>
           <label variable="locator"/>
         </else>
       </choose>

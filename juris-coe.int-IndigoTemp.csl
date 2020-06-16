@@ -40,7 +40,7 @@
   
   <macro name="juris-title">
     <choose>
-      <if condition-id="z0176" match="any" type="legal_case">
+      <if match="any" type="legal_case">
         <text variable="title"/>
       </if>
     </choose>
@@ -48,7 +48,7 @@
 
   <macro name="juris-main">
     <choose>
-      <if condition-id="z0177" type="legal_case">
+      <if type="legal_case">
         <group delimiter=" ">
           <number variable="volume"/>
           <text variable="container-title"/>
@@ -61,7 +61,7 @@
 
   <macro name="juris-tail">
     <choose>
-      <if condition-id="z0178" type="legal_case">
+      <if type="legal_case">
         <group delimiter=" " prefix="(" suffix=")">
           <date variable="issued" form="text" date-parts="year"/>
         </group>
@@ -74,7 +74,7 @@
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if condition-id="z0179" type="legal_case">
+      <if type="legal_case">
         <text variable="title"/>
       </if>
     </choose>
@@ -92,7 +92,7 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if condition-id="z0180">
+        <if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
             <condition locator="page" type="legal_case" variable="archive" match="all"/>
@@ -100,21 +100,21 @@
           </conditions>
           <text value="at"/>
         </if>
-        <else-if condition-id="z0181">
+        <else-if>
           <conditions match="all">
             <condition type="legal_case" match="any"/>
             <condition match="none" variable="document-name archive container-title"/>
           </conditions>
           <text value="at"/>
         </else-if>
-        <else-if condition-id="z0182" locator="page" match="any"/>
-        <else-if condition-id="z0183">
+        <else-if locator="page" match="any"/>
+        <else-if>
           <conditions match="all">
             <condition type="regulation legislation" match="any"/>
             <condition locator="rule"/>
           </conditions>
         </else-if>
-        <else condition-id="z0184">
+        <else>
           <label variable="locator"/>
         </else>
       </choose>

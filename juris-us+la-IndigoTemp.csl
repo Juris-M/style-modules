@@ -63,17 +63,8 @@
   <macro name="juris-title">
     <choose>
           <!-- legal_case portable 1 START -->
-          <if condition-id="z1402">
-            <conditions match="all">
-              <condition match="all" variable="authority number issued"/>
-              <condition match="none" variable="container-title volume archive"/>
-            </conditions>
-            <group delimiter=" " parallel-last-to-first="true" parallel-delimiter-override="; ">
-              <number variable="number"/>
-            </group>
-          </if>
           <!-- legal_case portable 1 END -->
-      <else-if condition-id="z4301" type="legal_case">
+      <if condition-id="z4301" type="legal_case">
         <group parallel-first="title">
           <names variable="dummy">
             <name/>
@@ -91,28 +82,22 @@
             </substitute>
           </names>
         </group>
-      </else-if>
+      </if>
     </choose>
   </macro>
   <macro name="juris-main">
     <choose>
-                <!-- legal_case portable 2 START -->
-                <if condition-id="z1452">
-                  <conditions match="all">
-                    <condition match="all" variable="authority number issued"/>
-                    <condition match="none" variable="container-title volume archive"/>
-                  </conditions>
-                  <names variable="authority">
-                    <name/>
-                    <institution form="short"/>
-                  </names>
-                  <date variable="issued">
-                    <date-part name="month" form="numeric" suffix="/"/>
-                    <date-part name="day" form="numeric" suffix="/"/>
-                    <date-part name="year" form="short"/>
-                  </date>
-                </if>
-                <!-- legal_case portable 2 END -->
+          <!-- legal_case portable 1 START -->
+          <if>
+            <conditions match="all">
+              <condition match="all" variable="authority number issued"/>
+              <condition match="none" variable="container-title volume archive"/>
+            </conditions>
+            <group delimiter=" " parallel-last-to-first="authority issued" parallel-delimiter-override="; ">
+              <number variable="number"/>
+            </group>
+          </if>
+          <!-- legal_case portable 1 END -->
       <else-if condition-id="z4353" type="legal_case">
         <!-- starting over with these -->
         <choose>
@@ -556,6 +541,7 @@
                     <date variable="issued" form="text" date-parts="year-month-day"/>
                   </group>
                 </else-if>
+                <else-if match="none" variable="container-title archive"/>
                 <else-if condition-id="z4408">
                   <conditions match="all">
                     <condition match="all" variable="admin-flag genre"/>
@@ -580,14 +566,21 @@
           <!-- herein the actual date, for most types -->
           <choose>
             <!-- same conditions here as in juris-main above -->
-                <!-- legal_case portable 3 START -->
-                <if condition-id="z1477">
+                <if>
                   <conditions match="all">
                     <condition match="all" variable="authority number issued"/>
                     <condition match="none" variable="container-title volume archive"/>
                   </conditions>
+                  <names variable="authority">
+                    <name/>
+                    <institution form="short"/>
+                  </names>
+                  <date variable="issued">
+                    <date-part name="month" form="numeric" suffix="/"/>
+                    <date-part name="day" form="numeric" suffix="/"/>
+                    <date-part name="year" form="short"/>
+                  </date>
                 </if>
-                <!-- legal_case portable 3 END -->
             <else-if condition-id="z4426" type="legal_case">
               <choose>
                 <if condition-id="z4427">
@@ -761,11 +754,11 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if condition-id="z1548" match="all" type="patent" locator="field">
+        <if match="all" type="patent" locator="field">
           <text value="at"/>
           <label variable="locator" form="static"/>
         </if>
-        <else-if condition-id="z1549">
+        <else-if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
             <condition locator="page" type="legal_case" variable="archive" match="all"/>
@@ -774,23 +767,23 @@
           </conditions>
           <text value="at"/>
         </else-if>
-        <else-if condition-id="z1550">
+        <else-if>
           <conditions match="all">
             <condition match="none" variable="container-title archive" position="ibid-with-locator"/>
           </conditions>
           <label variable="locator" form="short"/>
         </else-if>
-        <else-if condition-id="z1551" locator="page" position="ibid-with-locator">
+        <else-if locator="page" position="ibid-with-locator">
           <text value="at"/>
         </else-if>
-        <else-if condition-id="z1552" locator="page" match="any"/>
-        <else-if condition-id="z1553">
+        <else-if locator="page" match="any"/>
+        <else-if>
           <conditions match="all">
             <condition type="regulation legislation" match="any"/>
             <condition locator="rule"/>
           </conditions>
         </else-if>
-        <else condition-id="z1554">
+        <else>
           <label variable="locator" form="short"/>
         </else>
       </choose>

@@ -73,7 +73,7 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if condition-id="z1072">
+        <if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
             <condition locator="page" type="legal_case" variable="archive" match="all"/>
@@ -81,15 +81,15 @@
           </conditions>
           <text value="at"/>
         </if>
-        <else-if condition-id="z1073">
+        <else-if>
           <conditions match="all">
             <condition type="legal_case" match="any"/>
             <condition match="none" variable="document-name archive container-title"/>
           </conditions>
           <text value="at"/>
         </else-if>
-        <else-if condition-id="z1074" locator="page" match="any"/>
-        <else condition-id="z1075">
+        <else-if locator="page" match="any"/>
+        <else>
           <label variable="locator"/>
         </else>
       </choose>

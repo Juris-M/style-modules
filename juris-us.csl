@@ -742,6 +742,9 @@
           <text value="at"/>
         </if>
         <else-if locator="page"/>
+        <else-if match="all" locator="paragraph" type="patent">
+          <label variable="locator" form="static"/>
+        </else-if>
         <else>
           <label variable="locator"/>
         </else>

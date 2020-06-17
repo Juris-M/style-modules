@@ -87,13 +87,16 @@
   </macro>
   <macro name="juris-main">
     <choose>
+      <if type="legal_case">
+        <!-- starting over with these -->
+        <choose>
                 <!-- legal_case portable 2 START -->
                 <if>
                   <conditions match="all">
                     <condition match="all" variable="authority collection-number page issued"/>
                     <condition match="none" variable="container-title volume archive"/>
                   </conditions>
-            <group delimiter="-">
+            <group delimiter="-" parallel-last-to-first="issued">
               <number variable="collection-number"/>
               <names variable="authority">
                 <name/>
@@ -103,10 +106,7 @@
             </group>
                 </if>
                 <!-- legal_case portable 2 END -->
-      <else-if type="legal_case">
-        <!-- starting over with these -->
-        <choose>
-          <if>
+          <else-if>
             <conditions match="all">
               <condition match="all" variable="authority page collection-number"/>
               <condition match="none" variable="container-title archive admin-flag"/>
@@ -123,7 +123,7 @@
               </names>
               <number variable="page"/>
             </group>
-          </if>
+          </else-if>
           <else-if>
             <conditions match="all">
               <condition match="all" variable="number collection-number container-title archive_location"/>
@@ -481,7 +481,7 @@
             <group><text value="Oops. Novel citation pattern."/></group>
           </else>
         </choose>
-      </else-if>
+      </if>
     </choose>
   </macro>
   <macro name="juris-tail">

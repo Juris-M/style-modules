@@ -906,7 +906,15 @@
                   <number variable="volume"/>
                 </group>
                 <text variable="container-title" form="short"/>
-                <number variable="page"/>
+                <choose>
+                  <if>
+                    <conditions match="any">
+                      <condition match="none" position="near-note"/>
+                      <condition match="none" variable="locator"/>
+                    </conditions>
+                    <number variable="page"/>
+                  </if>
+                </choose>
               </group>
             </group>
           </else-if>
@@ -927,7 +935,15 @@
                   <number variable="volume"/>
                 </group>
                 <text variable="container-title" form="short"/>
-                <number variable="page"/>
+                <choose>
+                  <if>
+                    <conditions match="any">
+                      <condition match="none" position="near-note"/>
+                      <condition match="none" variable="locator"/>
+                    </conditions>
+                    <number variable="page"/>
+                  </if>
+                </choose>
               </group>
             </group>
           </else-if>
@@ -1011,7 +1027,16 @@
               <number variable="collection-number"/>
               <number variable="volume"/>
               <text variable="container-title" form="short"/>
-              <number variable="page-first"/>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition match="none" position="near-note"/>
+                    <condition match="none" variable="locator"/>
+                    <condition variable="document-name"/>
+                  </conditions>
+                  <number variable="page-first"/>
+                </if>
+              </choose>
             </group>
           </else-if>
           <else-if>
@@ -1178,7 +1203,15 @@
               <group delimiter=" ">
                 <number variable="volume"/>
                 <text variable="container-title"/>
-                <number variable="page"/>
+                <choose>
+                  <if>
+                    <conditions match="any">
+                      <condition match="none" position="near-note"/>
+                      <condition match="none" variable="locator"/>
+                    </conditions>
+                    <number variable="page"/>
+                  </if>
+                </choose>
               </group>
             </group>
           </else-if>
@@ -1810,9 +1843,16 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" locator="field">
-          <text value="at"/>
-          <label variable="locator" form="static"/>
+        <if match="all" type="patent" variable="locator">
+          <choose>
+            <if locator="field">
+              <text value="at"/>
+              <label variable="locator" form="static"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
         </if>
         <else-if>
           <conditions match="any">

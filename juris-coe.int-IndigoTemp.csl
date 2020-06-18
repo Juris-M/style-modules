@@ -11,6 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
+    <law-module types="legal_case"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
     <updated>2016-09-06T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -41,7 +42,14 @@
   <macro name="juris-title">
     <choose>
       <if match="any" type="legal_case">
-        <text variable="title"/>
+        <choose>
+          <if match="none" position="near-note">
+            <text variable="title" form="short"/>
+          </if>
+          <else>
+            <text variable="title"/>
+          </else>
+        </choose>
       </if>
     </choose>
   </macro>
@@ -73,16 +81,12 @@
     <text value=""/>
   </macro>
   <macro name="juris-title-short">
-    <choose>
-      <if type="legal_case">
-        <text variable="title"/>
-      </if>
-    </choose>
+    <text macro="juris-title"/>
   </macro>
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
+    <text macro="juris-main"/>
   </macro>
 
   <macro name="juris-tail-short">

@@ -52,7 +52,7 @@
           <if variable="document-name">
             <group delimiter=" ">
               <text variable="document-name"/>
-              <text macro="juris-locator"/>
+              <text macro="juris-locator" label-form="symbol"/>
             </group>
           </if>
         </choose>
@@ -305,17 +305,26 @@
               </if>
             </choose>
           </group>
-          <group delimiter=" ">
-            <text value="Hearing"/>
-            <group delimiter=" ">
-              <text value="on"/>
-              <number variable="number"/>
-            </group>
-            <group delimiter=" ">
-              <text value="Before the"/>
-              <text variable="section"/>
-            </group>
-          </group>
+          <choose>
+            <if>
+              <conditions match="any">
+                <condition match="none" position="near-note"/>
+                <condition disambiguate="true"/>
+                <condition match="none" variable="title"/>
+              </conditions>
+              <group delimiter=" ">
+                <text value="Hearing"/>
+                <group delimiter=" ">
+                  <text value="on"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <text value="Before the"/>
+                  <text variable="section"/>
+                </group>
+              </group>
+            </if>
+          </choose>
         </group>
       </else-if>
       <else-if type="report">
@@ -359,26 +368,6 @@
               </choose>
             </group>
           </if>
-          <else-if variable="number">
-            <group delimiter=" ">
-              <names variable="authority">
-                <name/>
-                <institution stop-last="1" institution-parts="short"/>
-              </names>
-              <choose>
-                <if match="any" variable="genre">
-                  <text variable="genre" form="short"/>
-                </if>
-                <else>
-                  <text value="Rep."/>
-                </else>
-              </choose>
-              <group delimiter=" ">
-                <label variable="number" form="symbol" text-case="capitalize-first"/>
-                <number variable="number"/>
-              </group>
-            </group>
-          </else-if>
           <else-if match="none" variable="number">
             <group delimiter=", ">
               <group delimiter=" ">
@@ -982,7 +971,7 @@
                 <group delimiter=" ">
                   <choose>
                     <if match="none" page="page">
-                      <label variable="page"/>
+                      <label variable="page" form="symbol"/>
                     </if>
                   </choose>
                   <number variable="page"/>
@@ -1228,7 +1217,7 @@
               <group delimiter=" ">
                 <choose>
                   <if match="none" page="page">
-                    <label variable="page"/>
+                    <label variable="page" form="symbol"/>
                   </if>
                 </choose>
                 <number variable="page"/>
@@ -1265,49 +1254,81 @@
       </else-if>
       <else-if type="hearing">
         <choose>
-          <if match="none" variable="section">
-            <group delimiter=" ">
-              <number variable="volume"/>
-              <text variable="container-title" form="short"/>
-              <number variable="page"/>
-            </group>
-          </if>
-          <else>
-            <group delimiter=", ">
-              <group delimiter=" ">
-                <choose>
-                  <if variable="authority">
-                    <number variable="collection-number" form="ordinal"/>
-                    <names variable="authority">
-                      <name/>
-                      <institution institution-parts="short"/>
-                    </names>
-                  </if>
-                  <else>
-                    <number variable="collection-number"/>
-                    <group delimiter=" ">
-                      <text value="Sess."/>
-                      <number variable="chapter-number"/>
-                    </group>
-                  </else>
-                </choose>
-                
-              </group>
-              <choose>
-                <if variable="authority">
+          <if>
+            <conditions match="any">
+              <condition match="none" position="near-note"/>
+              <condition match="none" variable="title number"/>
+            </conditions>
+            <choose>
+              <if match="none" variable="section">
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title" form="short"/>
+                  <number variable="page"/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=", ">
                   <group delimiter=" ">
-                    <number variable="chapter-number" form="ordinal"/>
-                    <text value="Sess."/>
+                    <choose>
+                      <if variable="authority">
+                        <number variable="collection-number" form="ordinal"/>
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short"/>
+                        </names>
+                      </if>
+                      <else>
+                        <number variable="collection-number"/>
+                        <group delimiter=" ">
+                          <text value="Sess."/>
+                          <number variable="chapter-number"/>
+                        </group>
+                      </else>
+                    </choose>
+                    
                   </group>
-                </if>
-              </choose>
-            </group>
-          </else>
+                  <choose>
+                    <if variable="authority">
+                      <group delimiter=" ">
+                        <number variable="chapter-number" form="ordinal"/>
+                        <text value="Sess."/>
+                      </group>
+                    </if>
+                  </choose>
+                </group>
+              </else>
+            </choose>
+          </if>
         </choose>
       </else-if>
       <else-if type="report">
         <choose>
           <if>
+            <conditions match="all">
+              <condition match="all" variable="number"/>
+              <condition match="none" variable="title"/>
+            </conditions>
+            <group delimiter=" ">
+              <names variable="authority">
+                <name/>
+                <institution stop-last="1" institution-parts="short"/>
+              </names>
+              <choose>
+                <if match="any" variable="genre">
+                  <text variable="genre" form="short"/>
+                </if>
+                <else>
+                  <text value="Rep."/>
+                </else>
+              </choose>
+              <group delimiter=" ">
+                <label variable="number" form="symbol" text-case="capitalize-first"/>
+                <number variable="number"/>
+              </group>
+            </group>
+          </if>
+          <else-if>
             <conditions match="all">
               <condition match="any" variable="number call-number"/>
               <condition match="any" variable="title committee"/>
@@ -1346,7 +1367,7 @@
                 </if>
               </choose>
             </group>
-          </if>
+          </else-if>
           <else-if>
             <conditions match="all">
               <condition match="all" variable="volume container-title page"/>
@@ -1812,7 +1833,11 @@
   <macro name="juris-main-short">
     <group delimiter=" ">
       <choose>
-        <if type="patent">
+        <if>
+          <conditions match="all">
+            <condition type="patent"/>
+            <condition match="none" variable="genre"/>
+          </conditions>
           <group delimiter=" ">
             <number variable="number" substring="-3" prefix="’"/>
             <text value="Patent"/>

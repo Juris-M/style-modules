@@ -11,6 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
+    <law-module types="legal_case"/>
     <summary>Juris-M style module for United Nations</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -43,30 +44,34 @@
           </names>
           <text variable="event" form="short"/>
           <number variable="number"/>
-          <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
           <choose>
-            <if variable="container-title" match="all">
-              <text variable="container-title" form="short"/>
-              <group delimiter=", ">
-                <group delimiter=" ">
-                  <group delimiter=" ">
-                    <number variable="chapter-number" form="ordinal"/>
-                    <text value="Session"/>
+            <if match="none" position="near-note">
+              <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
+              <choose>
+                <if variable="container-title" match="all">
+                  <text variable="container-title" form="short"/>
+                  <group delimiter=", ">
+                    <group delimiter=" ">
+                      <group delimiter=" ">
+                        <number variable="chapter-number" form="ordinal"/>
+                        <text value="Session"/>
+                      </group>
+                      <group delimiter=" ">
+                        <text value="Supp."/>
+                        <number variable="supplement"/>
+                      </group>
+                    </group>
+                    <number variable="page"/>
                   </group>
+                </if>
+                <else>
                   <group delimiter=" ">
-                    <text value="Supp."/>
-                    <number variable="supplement"/>
+                    <text value="U.N. Doc."/>
+                    <text variable="archive_location"/>
                   </group>
-                </group>
-                <number variable="page"/>
-              </group>
+                </else>
+              </choose>
             </if>
-            <else>
-              <group delimiter=" ">
-                <text value="U.N. Doc."/>
-                <text variable="archive_location"/>
-              </group>
-            </else>
           </choose>
         </group>
       </if>
@@ -92,26 +97,15 @@
   </macro>
   
   <macro name="juris-pretitle-short">
-    <text value=""/>
+    <text macro="juris-pretitle"/>
   </macro>
 
   <macro name="juris-title-short">
-    <text value=""/>
+    <text macro="juris-title"/>
   </macro>
 
   <macro name="juris-main-short">
-    <choose>
-      <if type="bill">
-        <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-          <text variable="event" form="short"/>
-          <number variable="number"/>
-        </group>
-      </if>
-    </choose>
+    <text macro="juris-main"/>
   </macro>
 
   <macro name="juris-tail-short">

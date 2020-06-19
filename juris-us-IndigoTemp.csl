@@ -244,23 +244,39 @@
       </else-if>
       
       <else-if type="legal_case">
-        <group parallel-first="title">
-          <names variable="dummy">
-            <name/>
-            <substitute>
-              <group>
-                <choose>
-                  <if position="near-note">
-                    <text variable="title" form="short"/>
-                  </if>
-                  <else>
-                    <text variable="title"/>
-                  </else>
-                </choose>
-              </group>
-            </substitute>
-          </names>
-        </group>
+        <choose>
+          <if variable="title">
+            <group delimiter=" " parallel-first="title">
+              <names variable="dummy">
+                <name/>
+                <substitute>
+                  <group>
+                    <choose>
+                      <if position="near-note">
+                        <text variable="title" form="short"/>
+                      </if>
+                      <else>
+                        <text variable="title"/>
+                      </else>
+                    </choose>
+                  </group>
+                </substitute>
+              </names>
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="admin-flag number volume container-title page"/>
+                    <condition match="none" variable="genre"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <label variable="number" form="short" text-case="capitalize-first"/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+              </choose>
+            </group>
+          </if>
+        </choose>
       </else-if>
       <else-if type="bill">
         <choose>
@@ -480,7 +496,7 @@
                     <condition match="all" variable="container-title title"/>
                     <condition match="none" variable="number"/>
                   </conditions>
-                  <group delimiter=" ">
+                  <group delimiter=" " suffix=",">
                     <choose>
                       <if position="near-note">
                         <text variable="title" form="short"/>
@@ -489,7 +505,7 @@
                         <text variable="title"/>
                       </else>
                     </choose>
-                    <text macro="juris-locator" label-form="symbol" suffix=","/>
+                    <text macro="juris-locator" label-form="symbol"/>
                   </group>
                 </else-if>
                 <else-if match="all" variable="container-title title">
@@ -614,62 +630,31 @@
       </if>
       <else-if match="any" type="legislation">
         <group delimiter=" ">
-          <names variable="dummy">
-            <name/>
-            <substitute>
-              <group>
-                <choose>
-                  <if position="near-note">
-                    <text variable="title" form="short"/>
-                  </if>
-                  <else>
-                    <text variable="title"/>
-                    </else>
-                </choose>
-              </group>
-            </substitute>
-          </names>
           <choose>
             <if>
-              <conditions match="all">
-                <condition type="regulation"/>
-                <condition match="all" variable="authority genre volume container-title page"/>
-                <condition match="none" variable="gazette-ref"/>
+              <conditions match="any">
+                <condition match="none" variable="container-title"/>
+                <condition match="all" variable="number"/>
               </conditions>
-              <!--  group><text value="[LegReg OK1]"/></group -->
-              <group delimiter=", ">
-                <group delimiter=" ">
-                  <text variable="genre"/>
-                  <label variable="number" form="short" text-case="capitalize-first"/>
-                  <number variable="number"/>
-                </group>
-                <group delimiter=" ">
-                  <number variable="volume"/>
-                  <text variable="container-title"/>
-                  <number variable="page"/>
-                </group>
-              </group>
+              <names variable="dummy">
+                <name/>
+                <substitute>
+                  <group>
+                    <choose>
+                      <if position="near-note">
+                        <text variable="title" form="short"/>
+                      </if>
+                      <else>
+                        <text variable="title"/>
+                      </else>
+                    </choose>
+                  </group>
+                </substitute>
+              </names>
             </if>
-            <else-if>
-              <conditions match="all">
-                <condition type="regulation"/>
-                <condition match="all" variable="genre volume container-title page"/>
-                <condition match="none" variable="gazette-ref authority"/>
-              </conditions>
-              <!-- group><text value="[LegReg OK2]"/></group -->
-              <group delimiter=", ">
-                <group delimiter=" ">
-                  <text variable="genre"/>
-                  <number variable="number"/>
-                </group>
-                <group delimiter=" ">
-                  <number variable="volume"/>
-                  <text variable="container-title"/>
-                  <number variable="page"/>
-                </group>
-              </group>
-            </else-if>
-            <else-if match="all" variable="gazette-flag">
+          </choose>
+          <choose>
+            <if match="all" variable="gazette-flag">
               <choose>
                 <if>
                   <conditions match="all">
@@ -692,7 +677,7 @@
                     <condition match="all" variable="container-title title"/>
                     <condition match="none" variable="number"/>
                   </conditions>
-                  <group delimiter=" ">
+                  <group delimiter=" " suffix=",">
                     <choose>
                       <if position="near-note">
                         <text variable="title" form="short"/>
@@ -701,7 +686,7 @@
                         <text variable="title"/>
                       </else>
                     </choose>
-                    <text macro="juris-locator" label-form="symbol" suffix=","/>
+                    <text macro="juris-locator" label-form="symbol"/>
                   </group>
                 </else-if>
                 <else-if match="all" variable="container-title title">
@@ -719,12 +704,12 @@
                 <if match="any" variable="title container-title">
                   <choose>
                     <if match="all" variable="number" number="number" type="legislation">
-                      <group delimiter=" ">
-                        <group delimiter=" " suffix=",">
+                      <group delimiter=", " suffix=",">
+                        <group delimiter=" ">
                           <text value="Pub. L. No."/>
                           <number variable="number"/>
                         </group>
-                        <text macro="juris-locator" label-form="symbol" suffix=","/>
+                        <text macro="juris-locator" label-form="symbol"/>
                       </group>
                     </if>
                     <else-if variable="number" type="legislation">
@@ -756,6 +741,7 @@
                 </if>
               </choose>
               <choose>
+                <!-- zzz -->
                 <if>
                   <conditions match="any">
                     <condition match="none" variable="collection-number"/>
@@ -772,7 +758,7 @@
                   </group>
                 </if>
               </choose>
-            </else-if>
+            </if>
             <else>
               <group delimiter=" ">
                 <group delimiter=", ">
@@ -1483,7 +1469,7 @@
                     <!-- condition match="none" variable="title"/ -->
                     <condition match="all" variable="admin-flag volume container-title page"/>
                   </conditions>
-                  <group delimiter=" ">
+                  <group delimiter=" " parallel-last="authority issued">
                     <names variable="authority">
                       <name/>
                       <institution institution-parts="short"/>
@@ -1628,7 +1614,6 @@
                     <condition match="all" variable="volume"/>
                     <condition match="none" variable="title"/>
                   </conditions>
-                  <!-- group><text value="XXX"/></group -->
                 </else-if>
                 <else-if>
                   <conditions match="all">

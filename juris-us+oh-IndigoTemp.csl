@@ -102,7 +102,7 @@
                 <name/>
                 <institution form="short"/>
               </names>
-              <number variable="page"/>
+              <number variable="page-first"/>
             </group>
                 </if>
                 <!-- legal_case portable 2 END -->
@@ -121,7 +121,7 @@
                   <names variable="authority"/>
                 </substitute>
               </names>
-              <number variable="page"/>
+              <number variable="page-first"/>
             </group>
           </else-if>
           <else-if>
@@ -174,7 +174,7 @@
                   <number variable="volume"/>
                 </group>
                 <text variable="container-title" form="short"/>
-                <number variable="page"/>
+                <number variable="page-first"/>
               </group>
             </group>
           </else-if>
@@ -195,7 +195,7 @@
                   <number variable="volume"/>
                 </group>
                 <text variable="container-title" form="short"/>
-                <number variable="page"/>
+                <number variable="page-first"/>
               </group>
             </group>
           </else-if>
@@ -237,7 +237,7 @@
                       <label variable="page"/>
                     </if>
                   </choose>
-                  <number variable="page"/>
+                  <number variable="page-first"/>
                 </group>
               </group>
             </group>
@@ -326,7 +326,7 @@
                           <label variable="page" form="symbol"/>
                         </if>
                       </choose>
-                      <number variable="page"/>
+                      <number variable="page-first"/>
                     </group>
                   </else>
                 </choose>
@@ -446,7 +446,7 @@
               <group delimiter=" ">
                 <number variable="volume"/>
                 <text variable="container-title"/>
-                <number variable="page"/>
+                <number variable="page-first"/>
               </group>
             </group>
           </else-if>
@@ -466,7 +466,7 @@
                     <label variable="page"/>
                   </if>
                 </choose>
-                <number variable="page"/>
+                <number variable="page-first"/>
               </group>
             </group>
           </else-if>

@@ -59,7 +59,7 @@
       <if type="legal_case">
         <group delimiter=" ">
           <number variable="volume"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <text variable="publisher" prefix="(" suffix=")"/>
           <number variable="page"/>
         </group>

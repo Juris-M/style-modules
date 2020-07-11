@@ -307,7 +307,7 @@
           </group>
           <group delimiter=" ">
             <number variable="volume"/>
-            <text variable="container-title"/>
+            <text variable="container-title" form="short"/>
             <choose>
               <if match="all" variable="gazette-flag">
                 <number variable="page"/>
@@ -323,7 +323,7 @@
         </conditions>
         <group delimiter=" ">
           <number variable="volume"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <number variable="page"/>
         </group>
       </else-if>
@@ -651,7 +651,7 @@
           </conditions>
           <group delimiter=" ">
             <number variable="volume"/>
-            <text variable="container-title"/>
+            <text variable="container-title" form="short"/>
           </group>
         </else-if>
         <else-if>

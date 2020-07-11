@@ -87,7 +87,7 @@
       <if type="legal_case">
         <group delimiter=" ">
           <number variable="collection-number"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <text variable="publisher" prefix="(" suffix=")"/>
           <number variable="page"/>
         </group>
@@ -102,7 +102,7 @@
       <else-if type="legislation">
         <group delimiter=" ">
           <number variable="collection-number"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <group delimiter=" " prefix="(" suffix=")">
             <text variable="genre"/>
             <number variable="number"/>
@@ -112,14 +112,14 @@
       </else-if>
       <else-if type="hearing">
         <group delimiter=" ">
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <number variable="number" prefix="(" suffix=")"/>
           <number variable="page"/>
         </group>
       </else-if>
       <else-if type="report">
         <group delimiter=" ">
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <group delimiter=" " prefix="(" suffix=")">
             <text variable="genre"/>
             <number variable="number"/>

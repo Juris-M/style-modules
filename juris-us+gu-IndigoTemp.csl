@@ -247,7 +247,7 @@
                 <number variable="number"/>
                 <group delimiter=" ">
                   <number variable="collection-number"/>
-                  <text variable="container-title"/>
+                  <text variable="container-title" form="short"/>
                   <group delimiter=" ">
                     <choose>
                       <if match="none" page="page">
@@ -462,7 +462,7 @@
                 <text variable="references"/>
                 <group delimiter=" ">
                   <number variable="volume"/>
-                  <text variable="container-title"/>
+                  <text variable="container-title" form="short"/>
                   <number variable="page"/>
                 </group>
               </group>
@@ -476,7 +476,7 @@
               <group delimiter=" ">
                 <number variable="volume"/>
                 <text variable="publisher"/>
-                <text variable="container-title"/>
+                <text variable="container-title" form="short"/>
                 <group delimiter=" ">
                   <choose>
                     <if match="none" page="page">

@@ -78,14 +78,14 @@
       <else-if type="legal_case">
         <group delimiter=" ">
           <number variable="collection-number"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <number variable="page"/>
         </group>
       </else-if>
       <else-if type="regulation">
         <group delimiter=" ">
           <number variable="collection-number"/>
-          <text variable="container-title"/>
+          <text variable="container-title" form="short"/>
           <number variable="page"/>
         </group>
       </else-if>

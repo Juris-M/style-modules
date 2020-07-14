@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 3.</summary>
-    <updated>2019-09-16T09:53:52+02:00</updated>
+    <updated>2020-07-14T11:37:36+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -149,12 +149,9 @@
     <choose>
       <if type="legal_case" variable="commenter locator" match="all">
         <group delimiter=", ">
-          <text value="here be the commenter’s name in italics"/>
-            <!--
               <names variable="commenter" font-style="italic">
               <name form="short"/>
               </names>
-            -->
               <choose>
                 <if variable="page">
                   <group delimiter=" ">

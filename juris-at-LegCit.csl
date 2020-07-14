@@ -20,6 +20,15 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
+  <locale xmlns="http://purl.org/net/xbiblio/csl" xml:lang="de">
+    <court-class name="v0" country="at" courts="vfgh"/>
+    <court-class name="v1" country="at" courts="vwgh"/>
+    <court-class name="v2" country="at" courts="bvwg bfg lvwg vgw asylgh"/>
+    <court-class name="o1" country="at" courts="ogh"/>
+    <court-class name="o2" country="at" courts="olg"/>
+    <court-class name="o3" country="at" courts="lg lgs lgzrs asg hg"/>
+    <court-class name="o4" country="at" courts="bg"/>
+  </locale>
 
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->

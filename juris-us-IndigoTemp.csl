@@ -124,6 +124,15 @@
           </else-if>
           <else-if>
             <conditions match="all">
+              <condition match="all" variable="container-title volume number issued page genre gazette-flag"/>
+            </conditions>
+            <group delimiter=" ">
+              <text variable="genre"/>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
               <condition match="all" variable="container-title gazette-flag"/>
               <condition match="none" variable="number"/>
             </conditions>
@@ -1830,6 +1839,13 @@
             <text value="Patent"/>
           </group>
         </if>
+        <else-if>
+          <conditions match="all">
+            <condition type="regulation"/>
+            <condition match="all" variable="container-title volume number issued page genre gazette-flag"/>
+          </conditions>
+          <text macro="juris-title"/>
+        </else-if>
         <else>
           <text macro="juris-main"/>
         </else>

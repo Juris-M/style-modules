@@ -1480,12 +1480,16 @@
                     <!-- condition match="none" variable="title"/ -->
                     <condition match="all" variable="admin-flag volume container-title page"/>
                   </conditions>
-                  <group delimiter=" " parallel-last="authority issued">
-                    <names variable="authority">
-                      <name/>
-                      <institution institution-parts="short"/>
-                    </names>
-                    <date variable="issued" form="text" date-parts="year-month-day"/>
+                  <group delimiter=" ">
+                    <group parallel-last="authority">
+                      <names variable="authority">
+                        <name/>
+                        <institution institution-parts="short"/>
+                      </names>
+                    </group>
+                    <group  parallel-last="issued">
+                      <date variable="issued" form="text" date-parts="year-month-day"/>
+                    </group>
                   </group>
                 </else-if>
                 <else-if>

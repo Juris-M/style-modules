@@ -1,67 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Federal Republic of Germany</title>
-    <id>http://citationstylist.org/modules/juris-de</id>
-    <link href="http://citationstylist/modules/juris-de" rel="self"/>
+    <title>Arbitration panels</title>
+    <id>http://citationstylist.org/modules/juris-arb.cls</id>
+    <link href="http://citationstylist/modules/juris-arb.cls" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <email>bennett@gmail.com</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Federal Republic of Germany</summary>
+    <summary>Juris-M style module for arbitration panels</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
   </info>
   
   <macro name="juris-pretitle">
-    <!-- Fragment to precede title (rare) -->
     <text value=""/>
   </macro>
 
   <macro name="juris-title">
-    <!-- The title form for full citations (of all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <!-- print court, date, and number if all three exist -->
+        <!-- otherwise print title -->
+        <choose>
+          <if variable="authority number issued" match="all">
+            <group delimiter=" ">
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short"/>
+              </names>
+              <group delimiter=" ">
+                <group delimiter=" ">
+                  <text value="Case No."/>
+                  <number variable="number"/>
+                </group>
+                <date variable="issued" form="text" date-parts="year" prefix="(" suffix=")"/>
+              </group>
+            </group>
+          </if>
+          <else>
+            <text variable="title"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=", ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short" use-first="1" delimiter=", "/>
-          </names>
-          <date variable="issued" date-parts="year-month-day" form="text"/>
-          <group delimiter=" ">
-            <group>
-              <names variable="authority">
-                <name/>
-                <institution form="short"/>
-              </names>
-              <group delimiter=" ">
-                <text variable="genre"/>
-                <number variable="number"/>
-              </group>
+    <group delimiter=" ">
+      <choose>
+        <if type="legal_case">
+          <!-- print the connector if there is anything below -->
+          <group delimiter=", ">
+            <names variable="editor">
+              <name/>
+              <label prefix=" (" suffix=")" form="short"/>
+            </names>
+            <group delimiter=" ">
+              <text variable="container-title" form="short"/>
+              <date variable="publication-date" date-parts="year" form="text"/>
+            </group>
+            <group delimiter=" ">
+              <choose>
+                <if is-numeric="volume">
+                  <label variable="volume" form="short"/>
+                </if>
+                <else>
+                  <label variable="volume" form="long" text-case="capitalize-first"/>
+                </else>
+              </choose>
+              <number variable="volume"/>
+            </group>
+            <group delimiter=" ">
+              <label variable="page" form="short"/>
+              <number variable="page"/>
             </group>
           </group>
-        </group>
-      </if>
-    </choose>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" " prefix="[" suffix="]">
-          <text variable="references"/>
-        </group>
-      </if>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-pretitle-short">
@@ -70,27 +95,30 @@
   </macro>
 
   <macro name="juris-title-short">
-    <!-- The title form for subsequent citations (of all types) -->
-    <text value=""/>
-  </macro>
-
-  <macro name="juris-main-short">
     <choose>
-      <if type="legal_case">
+      <if variable="authority number issued" match="all">
         <group delimiter=" ">
-          <group>
-            <names variable="authority">
-              <name/>
-              <institution form="short"/>
-            </names>
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short"/>
+          </names>
+          <group delimiter=" ">
             <group delimiter=" ">
-              <text variable="genre"/>
+              <text value="Case No."/>
               <number variable="number"/>
             </group>
           </group>
         </group>
       </if>
+      <else>
+        <text variable="title" form="short"/>
+      </else>
     </choose>
+  </macro>
+
+  <macro name="juris-main-short">
+    <!-- The body of subsequent citations (of all types) -->
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">
@@ -99,13 +127,9 @@
   </macro>
 
   <macro name="juris-locator">
+    <!-- The label and locator -->
     <group delimiter=" ">
-      <choose>
-        <if locator="page"/>
-        <else>
-          <label variable="locator" form="short"/>
-        </else>
-      </choose>
+      <label variable="locator" form="short"/>
       <number variable="locator"/>
     </group>
   </macro>

@@ -15,8 +15,8 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Austria - localized for leg cit 3.</summary>
-    <updated>2020-07-14T11:45:13+02:00</updated>
+    <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
+    <updated>2020-08-04T16:23:15+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -50,15 +50,15 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" " parallel-first="authority genre number issued" parallel-delimiter-override=" = ">
-          <group no-repeat="authority">
+        <group delimiter=" " parallel-first="authority genre number issued" parallel-delimiter-override-on-suppress=" = ">
+            <!--<group no-repeat="authority">-->
             <names variable="authority">
               <name/>
               <institution institution-parts="short">
                 <institution-part name="short"/>
               </institution>
             </names>
-          </group>
+                  <!--</group>-->
           <text variable="genre" prefix="(" suffix=")"/>
           <group delimiter=", ">
             <choose>
@@ -190,8 +190,8 @@
       </if>
       <else-if type="legal_case">
         <group delimiter=" = ">
-          <group delimiter=" " parallel-first="authority genre number issued" parallel-delimiter-override=" = ">
-            <group no-repeat="authority">
+          <group delimiter=" ">
+            <group parallel-first="authority" parallel-delimiter-override-on-suppress=" = ">
               <names variable="authority">
                 <name/>
                 <institution institution-parts="short">
@@ -199,15 +199,17 @@
                 </institution>
               </names>
             </group>
-            <text variable="genre" prefix="(" suffix=")"/>
-            <choose>
-              <if variable="number">
-                <number variable="number"/>
-              </if>
-              <else>
-                <date variable="issued" form="numeric"/>
-              </else>
-            </choose>
+            <group parallel-first="genre number issued">
+              <text variable="genre" prefix="(" suffix=")"/>
+              <choose>
+                <if variable="number">
+                  <number variable="number"/>
+                </if>
+                <else>
+                  <date variable="issued" form="numeric"/>
+                </else>
+              </choose>
+            </group>
           </group>
           <choose>
             <if variable="locator container-title" match="all">

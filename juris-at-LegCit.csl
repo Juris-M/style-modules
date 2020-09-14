@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
-    <updated>2020-08-04T16:23:15+02:00</updated>
+    <updated>2020-08-19T14:36:17+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -50,7 +50,7 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" " parallel-first="authority genre number issued" parallel-delimiter-override-on-suppress=" = ">
+        <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
             <!--<group no-repeat="authority">-->
             <names variable="authority">
               <name/>
@@ -58,7 +58,7 @@
                 <institution-part name="short"/>
               </institution>
             </names>
-                  <!--</group>-->
+            <!--</group>-->
           <text variable="genre" prefix="(" suffix=")"/>
           <group delimiter=", ">
             <choose>
@@ -101,21 +101,23 @@
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <text variable="container-title" prefix="= "/>
-          <group delimiter=", ">
-            <group delimiter="/">
-              <number variable="volume"/>
-              <date variable="publication-date" date-parts="year" form="numeric"/>
-              <number variable="collection-number"/>
-              <number variable="issue"/>
+        <group delimiter=" = ">
+          <group delimiter=" ">
+            <text variable="container-title"/>
+            <group delimiter=", ">
+              <group delimiter="/">
+                <number variable="volume"/>
+                <date variable="publication-date" date-parts="year" form="numeric"/>
+                <number variable="collection-number"/>
+                <number variable="issue"/>
+              </group>
+              <number variable="page"/>
             </group>
-            <number variable="page"/>
+            <names variable="commenter" font-style="italic" prefix="(" suffix=")">
+              <name/>
+            </names>
+            <text variable="references" prefix="= "/>
           </group>
-          <names variable="commenter" font-style="italic" prefix="(" suffix=")">
-            <name/>
-          </names>
-          <text variable="references" prefix="= "/>
         </group>
       </if>
       <else-if>
@@ -190,26 +192,22 @@
       </if>
       <else-if type="legal_case">
         <group delimiter=" = ">
-          <group delimiter=" ">
-            <group parallel-first="authority" parallel-delimiter-override-on-suppress=" = ">
-              <names variable="authority">
-                <name/>
-                <institution institution-parts="short">
-                  <institution-part name="short"/>
-                </institution>
-              </names>
-            </group>
-            <group parallel-first="genre number issued">
-              <text variable="genre" prefix="(" suffix=")"/>
-              <choose>
-                <if variable="number">
-                  <number variable="number"/>
-                </if>
-                <else>
-                  <date variable="issued" form="numeric"/>
-                </else>
-              </choose>
-            </group>
+          <group parallel-first="authority number" parallel-delimiter-override=" = " delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short">
+                <institution-part name="short"/>
+              </institution>
+            </names>
+            <text variable="genre" prefix="(" suffix=")"/>
+            <choose>
+              <if variable="number">
+                <number variable="number"/>
+              </if>
+              <else>
+                <date variable="issued" form="numeric"/>
+              </else>
+            </choose>
           </group>
           <choose>
             <if variable="locator container-title" match="all">

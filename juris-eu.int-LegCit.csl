@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2019-09-02T22:06:38+00:00</updated>
+    <updated>2020-09-15T22:34:49+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -43,41 +43,10 @@
   </locale>
 
   <macro name="juris-pretitle">
-    <choose>
-      <if type="regulation">
-        <group delimiter=" ">
-          <text variable="genre"/>
-          <names variable="authority" prefix="(" suffix=")">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-          <number variable="issue"/>
-          <date variable="issued" form="numeric"/>
-        </group>
-      </if>
-      <else-if type="legislation" variable="genre" match="all">
-        <group delimiter=" ">
-          <text variable="genre"/>
-          <number variable="number"/>
-          <text value="vom"/>
-          <date variable="issued" form="numeric"/>
-        </group>
-      </else-if>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-title">
-    <choose>
-      <if type="legal_case">
-        <text variable="title" prefix="(" suffix=")"/>
-      </if>
-      <else-if type="legislation">
-        <text variable="title"/>
-      </else-if>
-      <else-if type="regulation">
-        <text variable="title" prefix="(" suffix=")"/>
-      </else-if>
-    </choose>
   </macro>
 
   <macro name="juris-main">
@@ -100,48 +69,89 @@
               <date variable="issued" form="numeric"/>
             </if>
           </choose>
+          <!-- could also be verb Rs or the like
           <text value="Rs"/>
+          -->
           <number variable="number"/>
+          <group delimiter=" " prefix="(" suffix=")">
+            <text variable="title"/>
+            <group>
+              <text term="open-quote"/>
+              <text variable="title-short"/>
+              <text term="close-quote"/>
+            </group>
+          </group>
         </group>
       </if>
-      <else-if type="legislation">
-        <group delimiter=" ">
-          <text variable="container-title" form="short"/>
-          <choose>
-            <if variable="publication-date">
-              <date variable="publication-date" form="numeric" date-parts="year"/>
-            </if>
-            <else>
-              <date variable="issued" form="numeric" date-parts="year">
-                <date-part name="year"/>
-              </date>
-            </else>
-          </choose>
-          <number variable="volume"/>
-          <number variable="page"/>
-        </group>
-      </else-if>
-      <else-if type="regulation">
-        <group delimiter=" ">
-          <date variable="publication-date" form="text" date-parts="year" prefix="[" suffix="]"/>
-          <text variable="container-title" form="short"/>
-          <number variable="page-first"/>
-        </group>
-      </else-if>
     </choose>
   </macro>
 
   <macro name="juris-tail">
     <choose>
       <if type="regulation">
-        <choose>
-          <if match="none" variable="genre">
-            <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
-          </if>
-        </choose>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <text variable="genre"/>
+            <names variable="authority" prefix="(" suffix=")">
+              <name/>
+              <institution institution-parts="short"/>
+            </names>
+            <number variable="issue"/>
+            <date variable="issued" form="numeric"/>
+            <text variable="title" prefix="(" suffix=")"/>
+            <date variable="publication-date" form="text" date-parts="year" prefix="[" suffix="]"/>
+          </group>
+          <group delimiter=" ">
+            <text variable="container-title" form="short"/>
+            <number variable="page-first"/>
+            <choose>
+              <if match="none" variable="genre">
+                <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
+              </if>
+            </choose>
+          </group>
+        </group>
       </if>
       <else-if type="legislation">
-        <text variable="title-short" prefix="[" suffix="]"/>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <choose>
+              <if variable="genre">
+                <text variable="genre"/>
+                <number variable="number"/>
+                <text value="vom"/>
+                <date variable="issued" form="numeric"/>
+              </if>
+            </choose>
+            <text variable="title"/>
+          </group>
+          <group delimiter=" ">
+            <text variable="container-title" form="short"/>
+            <choose>
+              <if variable="publication-date">
+                <date variable="publication-date" form="numeric" date-parts="year"/>
+              </if>
+              <else>
+                <date variable="issued" form="numeric" date-parts="year">
+                  <date-part name="year"/>
+                </date>
+              </else>
+            </choose>
+            <number variable="volume"/>
+            <number variable="page"/>
+            <text variable="title-short" prefix="[" suffix="]"/>
+          </group>
+        </group>
+      </else-if>
+      <else-if type="legal_case">
+        <choose>
+          <if variable="DOI" match="none">
+            <!-- -->
+          </if>
+          <else>
+            <text variable="DOI"/>
+          </else>
+        </choose>
       </else-if>
     </choose>
   </macro>
@@ -151,38 +161,48 @@
   </macro>
 
   <macro name="juris-title-short">
+    <text value=""/>
+    <!--
     <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <text value="Rs"/>
-          <choose>
-            <if variable="title-short">
-              <text variable="title" form="short"/>
-            </if>
-            <else>
-              <number variable="number"/>
-            </else>
-          </choose>
-        </group>
-      </if>
-      <else-if type="regulation legislation">
+      <if type="regulation legislation">
         <text variable="title" form="short"/>
-      </else-if>
+      </if>
     </choose>
+    -->
   </macro>
 
   <macro name="juris-main-short">
     <!-- The body of subsequent citations (of all types) -->
-    <names variable="authority">
-      <name/>
-      <institution institution-parts="short">
-        <institution-part name="short"/>
-      </institution>
-    </names>
-    <text variable="genre" prefix="(" suffix=")"/>
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <text variable="genre" prefix="(" suffix=")"/>
+          <number variable="number"/>
+          <choose>
+            <if variable="title-short">
+              <text variable="title" form="short" prefix="(" suffix=")"/>
+            </if>
+            <else>
+              <text variable="title" prefix="(" suffix=")"/>
+            </else>
+          </choose>
+        </group>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-tail-short">
+    <choose>
+      <if type="regulation legislation">
+        <text variable="title" form="short"/>
+      </if>
+    </choose>
     <text value=""/>
   </macro>
 

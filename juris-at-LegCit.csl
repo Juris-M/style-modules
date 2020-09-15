@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
-    <updated>2020-08-19T14:36:17+02:00</updated>
+    <updated>2020-09-15T23:33:37+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -37,71 +37,36 @@
 
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
-    <choose>
-      <if type="legal_case">
-        <text variable="title" form="short" prefix="[" suffix="]"/>
-      </if>
-      <else-if type="legislation bill">
-        <text variable="title"/>
-      </else-if>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
+        <group delimiter=" = ">
+          <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
             <!--<group no-repeat="authority">-->
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short">
-                <institution-part name="short"/>
-              </institution>
-            </names>
-            <!--</group>-->
-          <text variable="genre" prefix="(" suffix=")"/>
-          <group delimiter=", ">
-            <choose>
-              <if>
-                <conditions match="any">
-                  <condition variable="container-title" match="none"/>
-                  <condition context="bibliography"/>
-                </conditions>
-                <date variable="issued" form="numeric"/>
-              </if>
-            </choose>
-            <number variable="number"/>
-          </group>
-        </group>
-      </if>
-      <else-if type="legislation">
-        <group delimiter=" ">
-          <text variable="container-title" form="short"/>
-          <group delimiter="/">
-            <group delimiter=" ">
-              <number variable="volume"/>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+              <!--</group>-->
+            <text variable="genre" prefix="(" suffix=")"/>
+            <group delimiter=", ">
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition variable="container-title" match="none"/>
+                    <condition context="bibliography"/>
+                  </conditions>
+                  <date variable="issued" form="numeric"/>
+                </if>
+              </choose>
               <number variable="number"/>
             </group>
-            <date variable="issued" date-parts="year" form="numeric"/>
           </group>
-          <text variable="references" prefix="idF "/>
-        </group>
-      </else-if>
-      <else-if type="bill">
-        <group delimiter=" ">
-          <number variable="number"/>
-          <number variable="chapter-number"/>
-          <text variable="genre"/>
-        </group>
-      </else-if>
-    </choose>
-  </macro>
-
-  <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" = ">
           <group delimiter=" ">
             <text variable="container-title"/>
             <group delimiter=", ">
@@ -120,12 +85,54 @@
           </group>
         </group>
       </if>
-      <else-if>
-        <conditions match="all">
-          <condition type="legislation" match="any"/>
-          <condition variable="title-short"/>
-        </conditions>
-        <text variable="title-short" prefix="[" suffix="]"/>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <choose>
+      <if type="legislation regulation">
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <text variable="title"/>
+            <choose>
+              <if type="regulation">
+                <names variable="authority">
+                  <name/>
+                </names>
+              </if>
+            </choose>
+          </group>
+          <group delimiter=" ">
+            <text variable="container-title" form="short"/>
+            <group delimiter="/">
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <number variable="number"/>
+              </group>
+              <date variable="issued" date-parts="year" form="numeric"/>
+            </group>
+            <text variable="references" prefix="idF "/>
+            <choose>
+              <if variable="title-short">
+                <text variable="title-short" prefix="[" suffix="]"/>
+              </if>
+            </choose>
+          </group>
+        </group>
+      </if>
+      <else-if type="bill">
+        <group delimiter=" ">
+          <text variable="title"/>
+          <number variable="number"/>
+          <number variable="chapter-number"/>
+          <text variable="genre"/>
+        </group>
+      </else-if>
+      <else-if type="legal_case">
+        <group parallel-last="title">
+          <text variable="title" form="short" prefix="[" suffix="]"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -137,14 +144,7 @@
 
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
-    <choose>
-      <if variable="hereinafter">
-        <text variable="hereinafter"/>
-      </if>
-      <else>
-        <text variable="title" form="short"/>
-      </else>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-main-short">
@@ -254,17 +254,18 @@
           </choose>
         </group>
       </else-if>
-      <else-if type="legislation">
-        <choose>
-          <if disambiguate="true">
-            <text variable="references" prefix="idF "/>
-          </if>
-        </choose>
-      </else-if>
       <else-if type="bill">
         <group delimiter=" ">
-          <number variable="number"/>
           <group delimiter=" ">
+            <choose>
+              <if variable="hereinafter">
+                <text variable="hereinafter"/>
+              </if>
+              <else>
+                <text variable="title" form="short"/>
+              </else>
+            </choose>
+            <number variable="number"/>
             <choose>
               <if is-numeric="chapter-number">
                 <number variable="chapter-number" form="roman" suffix="."/>
@@ -289,7 +290,25 @@
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <group delimiter=" ">
+      <choose>
+        <if type="legislation regulation">
+          <choose>
+            <if variable="hereinafter">
+              <text variable="hereinafter"/>
+            </if>
+            <else>
+              <text variable="title" form="short"/>
+            </else>
+          </choose>
+          <choose>
+            <if disambiguate="true">
+              <text variable="references" prefix="idF "/>
+            </if>
+          </choose>
+        </if>
+      </choose>
+    </group>
   </macro>
 
   <macro name="juris-locator">

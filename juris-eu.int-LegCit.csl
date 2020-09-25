@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2020-09-15T22:34:49+02:00</updated>
+    <updated>2020-09-24T00:35:57+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -81,6 +81,8 @@
               <text term="close-quote"/>
             </group>
           </group>
+          <!-- ECLI masked as DOI -->
+          <text variable="DOI"/>
         </group>
       </if>
     </choose>

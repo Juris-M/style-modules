@@ -113,43 +113,66 @@
         </group>
       </if>
       <else-if type="legislation">
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <choose>
-              <if variable="genre">
-                <text variable="genre"/>
-                <number variable="number"/>
-                <text value="vom"/>
-                <date variable="issued" form="numeric"/>
-              </if>
-            </choose>
-            <text variable="title"/>
-          </group>
-          <group delimiter=" ">
-            <text variable="container-title" form="short"/>
-            <choose>
-              <if variable="publication-date">
-                <date variable="publication-date" form="numeric" date-parts="year"/>
-              </if>
-              <else>
-                <date variable="issued" form="numeric" date-parts="year">
-                  <date-part name="year"/>
-                </date>
-              </else>
-            </choose>
-            <number variable="volume"/>
-            <number variable="page"/>
-            <text variable="title-short" prefix="[" suffix="]"/>
-          </group>
-        </group>
-      </else-if>
-      <else-if type="legal_case">
         <choose>
-          <if variable="DOI" match="none">
-            <!-- -->
+          <if context="bibliography">
+            <group delimiter=", ">
+              <group delimiter=" ">
+                <choose>
+                  <if variable="genre">
+                    <text variable="genre"/>
+                    <number variable="number"/>
+                    <text value="vom"/>
+                    <date variable="issued" form="numeric"/>
+                  </if>
+                </choose>
+                <text variable="title"/>
+              </group>
+              <group delimiter=" ">
+                <text variable="container-title" form="short"/>
+                <choose>
+                  <if variable="publication-date">
+                    <date variable="publication-date" form="numeric" date-parts="year"/>
+                  </if>
+                  <else>
+                    <date variable="issued" form="numeric" date-parts="year">
+                      <date-part name="year"/>
+                    </date>
+                  </else>
+                </choose>
+                <number variable="volume"/>
+                <number variable="page"/>
+                <text variable="title-short" prefix="[" suffix="]"/>
+              </group>
+            </group>
           </if>
           <else>
-            <text variable="DOI"/>
+            <group delimiter=" ">
+              <choose>
+                <if variable="number" match="none">
+                  <group delimiter=", ">
+                    <text variable="title" form="short"/>
+                    <text variable="container-title" form="short"/>
+                  </group>
+                </if>
+                <else>
+                  <text variable="title" form="short"/>
+                  <number variable="number"/>
+                  <text variable="container-title" form="short"/>
+                </else>
+              </choose>
+              <choose>
+                <if variable="publication-date">
+                  <date variable="publication-date" form="numeric" date-parts="year"/>
+                </if>
+                <else>
+                  <date variable="issued" form="numeric" date-parts="year">
+                    <date-part name="year"/>
+                  </date>
+                </else>
+              </choose>
+              <number variable="volume"/>
+              <number variable="page"/>
+            </group>
           </else>
         </choose>
       </else-if>

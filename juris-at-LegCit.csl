@@ -86,6 +86,14 @@
           </group>
         </group>
       </if>
+      <else-if type="bill">
+        <group delimiter=" ">
+          <text variable="title"/>
+          <number variable="number"/>
+          <number variable="chapter-number"/>
+          <text variable="genre"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -95,7 +103,14 @@
       <if type="legislation regulation">
         <group delimiter=", ">
           <group delimiter=" ">
-            <text variable="title"/>
+            <choose>
+              <if context="bibliography">
+                <text variable="title"/>
+              </if>
+              <else>
+                <text variable="title" form="short"/>
+              </else>
+            </choose>
             <choose>
               <if type="regulation">
                 <names variable="authority">
@@ -115,21 +130,13 @@
             </group>
             <text variable="references" prefix="idF "/>
             <choose>
-              <if variable="title-short">
+              <if context="bibliography" variable="title-short">
                 <text variable="title-short" prefix="[" suffix="]"/>
               </if>
             </choose>
           </group>
         </group>
       </if>
-      <else-if type="bill">
-        <group delimiter=" ">
-          <text variable="title"/>
-          <number variable="number"/>
-          <number variable="chapter-number"/>
-          <text variable="genre"/>
-        </group>
-      </else-if>
       <else-if type="legal_case">
         <group delimiter=" ">
           <text variable="references" prefix="= "/>

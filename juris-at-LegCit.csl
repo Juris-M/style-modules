@@ -160,50 +160,7 @@
 
   <macro name="juris-main-short">
     <choose>
-      <if type="legal_case" variable="commenter locator" position="subsequent" match="all">
-        <group delimiter=", ">
-          <names variable="commenter" font-style="italic">
-            <name form="short"/>
-          </names>
-          <choose>
-            <if variable="page">
-              <group delimiter=" ">
-                <text variable="container-title" form="short"/>
-                <group delimiter="/">
-                  <number variable="volume"/>
-                  <number variable="collection-number"/>
-                </group>
-                <date date-parts="year" form="numeric" variable="publication-date"/>
-              </group>
-              <group delimiter=" ">
-                <number variable="page"/>
-                <!--
-                <choose>
-                  <if locator="page">
-                    <text macro="juris-locator" prefix="(" suffix=")"/>
-                  </if>
-                  <else>
-                    <text macro="juris-locator"/>
-                  </else>
-                </choose>
-                -->
-              </group>
-            </if>
-            <else>
-              <group delimiter=" ">
-                <text variable="container-title" form="short"/>
-                <group delimiter="/">
-                  <number variable="volume"/>
-                  <number variable="collection-number"/>
-                  <number variable="issue"/>
-                </group>
-              </group>
-                  <!--<text macro="juris-locator"/>-->
-            </else>
-          </choose>
-        </group>
-      </if>
-      <else-if type="legal_case">
+      <if type="legal_case">
         <group delimiter=" = ">
           <group parallel-first="authority number" parallel-delimiter-override=" = " delimiter=" ">
             <group no-repeat="authority">
@@ -226,61 +183,37 @@
           </group>
           <choose>
             <if variable="locator container-title" match="all">
-                <choose>
-                  <if variable="page">
-                    <group delimiter=", ">
-                      <group delimiter=" ">
-                        <text variable="container-title" form="short"/>
-                        <group delimiter="/">
-                          <number variable="volume"/>
-                          <number variable="collection-number"/>
-                        </group>
-                        <date date-parts="year" form="numeric" variable="publication-date"/>
-                      </group>
-                      <number variable="page"/>
-                    </group>
-                    <!--
-                    <choose>
-                      <if locator="page">
-                        <text macro="juris-locator" prefix="(" suffix=")"/>
-                      </if>
-                      <else>
-                        <text macro="juris-locator"/>
-                      </else>
-                    </choose>
-                    -->
-                  </if>
-                  <else>
+              <choose>
+                <if variable="page">
+                  <group delimiter=", ">
                     <group delimiter=" ">
                       <text variable="container-title" form="short"/>
-                      <group delimiter=", ">
-                        <group delimiter="/">
-                          <number variable="volume"/>
-                          <number variable="collection-number"/>
-                          <number variable="issue"/>
-                        </group>
-                        <!--
-                          <choose>
-                          <if locator="page">
-                          <text macro="juris-locator"/>
-                          </if>
-                          </choose>
-                        -->
-                        </group>
-                        <!--
-                          <choose>
-                          <if locator="page" match="none">
-                          <text macro="juris-locator"/>
-                          </if>
-                          </choose>
-                        -->
-                        </group>
-                  </else>
-                </choose>
+                      <group delimiter="/">
+                        <number variable="volume"/>
+                        <number variable="collection-number"/>
+                      </group>
+                      <date date-parts="year" form="numeric" variable="publication-date"/>
+                    </group>
+                    <number variable="page"/>
+                  </group>
+                </if>
+                <else>
+                  <group delimiter=" ">
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=", ">
+                      <group delimiter="/">
+                        <number variable="volume"/>
+                        <number variable="collection-number"/>
+                        <number variable="issue"/>
+                      </group>
+                    </group>
+                  </group>
+                </else>
+              </choose>
             </if>
           </choose>
         </group>
-      </else-if>
+      </if>
       <else-if type="bill">
         <group delimiter=" ">
           <group delimiter=" ">
@@ -340,17 +273,14 @@
 
   <macro name="juris-locator">
     <choose>
-      <if type="legal_case" variable="commenter locator" context="citation" position="subsequent" match="all">
-        <number variable="locator" prefix="(" suffix=")"/>
-      </if>
-      <else-if type="legal_case" variable="page" match="all">
+      <if type="legal_case" variable="page" match="all">
         <group delimiter=" " prefix="(" suffix=")">
           <number variable="locator"/>
           <names variable="commenter" font-style="italic">
             <name/>
           </names>
         </group>
-      </else-if>
+      </if>
       <else>
         <group delimiter=" ">
           <choose>

@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
-    <updated>2020-09-25T08:52:43+02:00</updated>
+    <updated>2020-09-27T21:53:34+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -282,15 +282,15 @@
           </names>
         </group>
       </if>
+      <else-if variable="page" locator="page" match="all">
+        <number variable="locator" prefix="(" suffix=")"/>
+      </else-if>
       <else>
         <group delimiter=" ">
           <choose>
-            <if locator="page" type="bill legislation regulation">
+            <if locator="page">
               <number variable="locator"/>
             </if>
-            <else-if locator="page">
-              <number variable="locator" prefix="(" suffix=")"/>
-            </else-if>
             <else-if locator="section">
               <label variable="locator" form="symbol"/>
               <number variable="locator"/>

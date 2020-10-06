@@ -78,12 +78,6 @@
               </group>
               <number variable="page"/>
             </group>
-            <!--
-            <names variable="commenter" font-style="italic" prefix="(" suffix=")">
-              <name/>
-            </names>
-            <text variable="references" prefix="= "/>
-            -->
           </group>
         </group>
       </if>

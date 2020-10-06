@@ -329,7 +329,35 @@
   </macro>
   <macro name="juris-main-short">
     <choose>
-      <if match="none" variable="author title title-short">
+      <if type="legal_case">
+        <group delimiter=", ">
+          <date variable="issued" form="numeric"/>
+          <choose>
+            <if variable="collection-number">
+              <group delimiter=" ">
+                <choose>
+                  <if variable="container-title">
+                    <text variable="container-title" form="short"/>
+                  </if>
+                  <else>
+                    <text value="ICJ Reports"/>
+                  </else>
+                </choose>
+                <number variable="collection-number"/>
+              </group>
+              <number variable="page"/>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <text variable="container-title" form="short"/>
+                <number variable="page"/>
+              </group>
+            </else>
+          </choose>
+        </group>
+      </if>
+      <else-if match="none" variable="author title title-short">
         <group delimiter=" ">
           <text value="Report of the"/>
           <choose>
@@ -371,7 +399,7 @@
             </else-if>
           </choose>
         </group>
-      </if>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail-short">

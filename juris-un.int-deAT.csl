@@ -275,7 +275,7 @@
           </choose>
         </else-if>
         <else-if type="legal_case">
-          <text variable="titel-short" prefix="(" suffix=")"/>
+          <text variable="title-short" prefix="(" suffix=")"/>
         </else-if>
       </choose>
     </group>

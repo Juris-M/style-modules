@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2020-09-24T00:35:57+02:00</updated>
+    <updated>2020-10-07T01:15:23+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -52,41 +52,80 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
-          <text variable="genre" prefix="(" suffix=")"/>
-          <choose>
-            <if>
-              <conditions match="any">
-                <condition variable="container-title" match="none"/>
-                <condition context="bibliography"/>
-              </conditions>
-              <date variable="issued" form="numeric"/>
-            </if>
-          </choose>
-          <!-- could also be verb Rs or the like
-          <text value="Rs"/>
-          -->
-          <number variable="number"/>
-          <group delimiter=" " prefix="(" suffix=")">
-            <text variable="title"/>
-            <group>
-              <text term="open-quote"/>
-              <text variable="title-short"/>
-              <text term="close-quote"/>
+        <group delimiter=" = ">
+          <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
+            <choose>
+              <if variable="author authority genre" match="all">
+                <text variable="genre"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+                <names variable="author" font-style="italic"/>
+                <number variable="division"/>
+              </if>
+              <else-if>
+                <conditions>
+                  <condition variable="author"/>
+                  <condition variable="genre" match="none"/>
+                </conditions>
+                <!-- Schlussantraege -->
+                <text value="SA"/>
+                <names variable="author" font-style="italic"/>
+                <number variable="division"/>
+              </else-if>
+              <else>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+                <number variable="division" prefix="(" suffix=")"/>
+              </else>
+            </choose>
+            <choose>
+              <if>
+                <conditions match="any">
+                  <condition variable="container-title" match="none"/>
+                  <condition context="bibliography"/>
+                </conditions>
+                <date variable="issued" form="numeric"/>
+              </if>
+            </choose>
+              <!-- could also be verb Rs or the like
+                <text value="Rs"/>
+              -->
+              <number variable="number"/>
+              <group delimiter=" " prefix="(" suffix=")">
+                <text variable="title"/>
+                <group>
+                  <text term="open-quote"/>
+                  <text variable="title-short"/>
+                  <text term="close-quote"/>
+                </group>
+              </group>
+              <!-- ECLI masked as DOI -->
+              <text variable="DOI"/>
+            </group>
+            <group delimiter=" ">
+              <text variable="container-title"/>
+              <group delimiter=", ">
+                <group delimiter="/">
+                  <number variable="volume"/>
+                  <date variable="publication-date" date-parts="year" form="numeric"/>
+                  <number variable="collection-number"/>
+                  <number variable="issue"/>
+                </group>
+                <number variable="page"/>
+              </group>
             </group>
           </group>
-          <!-- ECLI masked as DOI -->
-          <text variable="DOI"/>
-        </group>
-      </if>
-    </choose>
-  </macro>
+        </if>
+      </choose>
+    </macro>
 
   <macro name="juris-tail">
     <choose>
@@ -201,13 +240,38 @@
     <choose>
       <if type="legal_case">
         <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
-          <text variable="genre" prefix="(" suffix=")"/>
+          <choose>
+            <if variable="author authority genre" match="all">
+              <text variable="genre"/>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+              <names variable="author" font-style="italic"/>
+              <number variable="division"/>
+            </if>
+            <else-if>
+              <conditions>
+                <condition variable="author"/>
+                <condition variable="genre" match="none"/>
+              </conditions>
+              <!-- Schlussantraege -->
+              <text value="SA"/>
+              <names variable="author" font-style="italic"/>
+              <number variable="division"/>
+            </else-if>
+            <else>
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short">
+                  <institution-part name="short"/>
+                </institution>
+              </names>
+              <number variable="division" prefix="(" suffix=")"/>
+            </else>
+          </choose>
           <number variable="number"/>
           <choose>
             <if variable="title-short">

@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2020-10-07T01:15:23+02:00</updated>
+    <updated>2020-10-07T22:48:18+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -345,15 +345,36 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page"/>
-        <else-if locator="section">
-          <label variable="locator" form="symbol"/>
+        <if locator="page" match="none">
+          <choose>
+            <if locator="section">
+              <label variable="locator" form="symbol"/>
+            </if>
+            <else>
+              <label variable="locator" form="short"/>
+            </else>
+          </choose>
+          <number variable="locator"/>
+          <names variable="commenter" font-style="italic" prefix="(" suffix=")">
+            <name/>
+          </names>
+        </if>
+        <else-if>
+          <conditions>
+            <condition type="legal_case"/>
+            <condition variable="page commenter" match="any"/>
+          </conditions>
+          <group delimiter=" " prefix="(" suffix=")">
+            <number variable="locator"/>
+            <names variable="commenter" font-style="italic">
+              <name/>
+            </names>
+          </group>
         </else-if>
         <else>
-          <label variable="locator" form="short"/>
+          <number variable="locator"/>
         </else>
       </choose>
-      <number variable="locator"/>
     </group>
   </macro>
 

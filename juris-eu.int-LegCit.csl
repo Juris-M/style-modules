@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2020-10-07T22:48:18+02:00</updated>
+    <updated>2020-10-08T23:46:08+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -38,10 +38,6 @@
       <term name="article" form="short">
         <single>Art</single>
         <multiple>Art</multiple>
-      </term>
-      <term name="page" form="short">
-        <single></single>
-        <multiple></multiple>
       </term>
     </terms>
   </locale>
@@ -350,9 +346,9 @@
             <if locator="section">
               <label variable="locator" form="symbol"/>
             </if>
-            <else>
+            <else-if variable="locator">
               <label variable="locator" form="short"/>
-            </else>
+            </else-if>
           </choose>
           <number variable="locator"/>
           <names variable="commenter" font-style="italic" prefix="(" suffix=")">

@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
-    <updated>2020-10-06T15:53:53+02:00</updated>
+    <updated>2020-10-08T23:44:44+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -268,37 +268,40 @@
     </group>
   </macro>
 
-  <macro name="juris-locator">
-    <choose>
-      <if type="legal_case" variable="page" match="all">
-        <group delimiter=" " prefix="(" suffix=")">
+<macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page" match="none">
+          <choose>
+            <if locator="section">
+              <label variable="locator" form="symbol"/>
+            </if>
+            <else-if variable="locator">
+              <label variable="locator" form="short"/>
+            </else-if>
+          </choose>
           <number variable="locator"/>
-          <names variable="commenter" font-style="italic">
+          <names variable="commenter" font-style="italic" prefix="(" suffix=")">
             <name/>
           </names>
-        </group>
-      </if>
-      <else-if variable="page" locator="page" match="all">
-        <number variable="locator" prefix="(" suffix=")"/>
-      </else-if>
-      <else>
-        <group delimiter=" ">
-          <choose>
-            <if locator="page">
-              <number variable="locator"/>
-            </if>
-            <else-if locator="section">
-              <label variable="locator" form="symbol"/>
-              <number variable="locator"/>
-            </else-if>
-            <else>
-              <label variable="locator" form="short"/>
-              <number variable="locator"/>
-            </else>
-          </choose>
-        </group>
-      </else>
-    </choose>
+        </if>
+        <else-if>
+          <conditions>
+            <condition type="legal_case"/>
+            <condition variable="page commenter" match="any"/>
+          </conditions>
+          <group delimiter=" " prefix="(" suffix=")">
+            <number variable="locator"/>
+            <names variable="commenter" font-style="italic">
+              <name/>
+            </names>
+          </group>
+        </else-if>
+        <else>
+          <number variable="locator"/>
+        </else>
+      </choose>
+    </group>
   </macro>
 
   <citation>

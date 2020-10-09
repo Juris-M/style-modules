@@ -39,10 +39,6 @@
         <single>Art</single>
         <multiple>Art</multiple>
       </term>
-      <term name="page" form="short">
-        <single></single>
-        <multiple></multiple>
-      </term>
     </terms>
   </locale>
 

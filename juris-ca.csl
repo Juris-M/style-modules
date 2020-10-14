@@ -37,12 +37,13 @@
             <else>
               <!--Neutral citation-->
               <date variable="issued" date-parts="year" form="text"/>
-                <names variable="authority">
-                  <name/>
-                  <institution institution-parts="short">
-                    <institution-part name="short"/>
-                  </institution>
-                </names>
+              <names variable="dummy">
+                <name/>
+                <institution form="short"/>
+                <substitute>
+                  <names variable="authority"/>
+                </substitute>
+              </names>
             </else>
           </choose>
           <number variable="page-first"/>
@@ -52,7 +53,7 @@
   </macro>
   <macro name="juris-tail">
     <text value=""/>
-  </macro-->
+  </macro>
   <macro name="juris-title-short">
     <choose>
       <if type="legal_case">

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Canada</title>
+    <id>http://citationstylist.org/modules/juris-ca</id>
+    <link href="http://citationstylist/modules/juris-ca" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Samuel Gagnon</name>
+      <email>gagnon-samuel@outlook.com</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Canada</summary>
+    <updated>2020-10-14T11:15:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
+  </info>
+  <macro name="juris-title">
+    <text variable="title" strip-periods="true"/>
+  </macro>
+  <macro name="juris-main">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if variable="container-title">
+              <choose>
+                <!-- Journal with [YYYY]-->
+                <if variable="collection-number">
+                  <number variable="collection-number" prefix="[" suffix="]"/>
+                </if>
+              </choose>
+              <number variable="volume"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+            </if>
+            <else>
+              <!--Neutral citation-->
+              <date variable="issued" date-parts="year" form="text"/>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+            </else>
+          </choose>
+          <number variable="page-first"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <macro name="juris-tail">
+    <text value=""/>
+  </macro-->
+  <macro name="juris-title-short">
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="title-short">
+            <text variable="title-short" form="short" strip-periods="true"/>
+          </if>
+          <else>
+            <text variable="title" form="short" strip-periods="true"/>
+          </else>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <macro name="juris-main-short">
+  <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <text value=""/>
+  </macro>
+  <-macro name="juris-tail-short">
+    <text value=""/>
+  </macro-->
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page">
+          <label variable="locator" form="short"/>
+        </if>
+        <else-if locator="paragraph">
+          <label variable="locator" form="short"/>
+        </else-if>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>    
+      <number variable="locator"/>
+    </group>
+  </macro>
+</style>

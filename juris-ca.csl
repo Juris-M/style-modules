@@ -16,6 +16,9 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
   </info>
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
   <macro name="juris-title">
     <text variable="title" strip-periods="true"/>
   </macro>
@@ -24,19 +27,34 @@
       <if type="legal_case">
         <group delimiter=" ">
           <choose>
-            <if variable="container-title">
-              <choose>
-                <!-- Journal with [YYYY]-->
-                <if variable="collection-number">
-                  <number variable="collection-number" prefix="[" suffix="]"/>
-                </if>
-              </choose>
+            <if>
+              <!-- Journal without year as volume-->
+              <conditions match="all">
+                <condition match="all" variable="container-title page"/>
+                <condition match="none" variable="collection-number admin-flag"/>
+              </conditions>
               <number variable="volume"/>
               <text variable="container-title" form="short" strip-periods="true"/>
+              <number variable="page-first"/>
             </if>
-            <else>
-              <!--Neutral citation-->
-              <date variable="issued" date-parts="year" form="text"/>
+            <else-if>
+              <!-- Journal with [year] -->
+              <conditions match="all">
+                <condition match="all" variable="collection-number container-title page"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <number variable="collection-number" prefix="[" suffix="]"/>
+              <number variable="volume"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+              <number variable="page-first"/>
+            </else-if>
+            <else-if>
+              <!-- Vendor neutral citation -->
+              <conditions match="all">
+                <condition match="all" variable="authority page collection-number"/>
+                <condition match="none" variable="container-title admin-flag"/>
+              </conditions>
+              <number variable="collection-number"/>
               <names variable="dummy">
                 <name/>
                 <institution form="short"/>
@@ -44,14 +62,17 @@
                   <names variable="authority"/>
                 </substitute>
               </names>
-            </else>
+              <number variable="page-first"/>
+            </else-if>
           </choose>
-          <number variable="page-first"/>
         </group>
       </if>
     </choose>
   </macro>
   <macro name="juris-tail">
+    <text value=""/>
+  </macro>
+  <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
   <macro name="juris-title-short">
@@ -69,12 +90,11 @@
     </choose>
   </macro>
   <macro name="juris-main-short">
-  <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
-  <-macro name="juris-tail-short">
+  <macro name="juris-tail-short">
     <text value=""/>
-  </macro-->
+  </macro>
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>

@@ -12,9 +12,9 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Canada</summary>
-    <updated>2020-10-14T11:15:00+00:00</updated>
+    <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   <macro name="juris-pretitle">
     <text value=""/>
@@ -67,6 +67,22 @@
           </choose>
         </group>
       </if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="issued container-title volume"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <text variable="container-title"/>
+              <date variable="issued" form="numeric" date-parts="year"/>
+              <text value="c"/>
+              <number variable="volume"/>
+            </if>
+          </choose>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -77,16 +93,12 @@
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if type="legal_case">
-        <choose>
-          <if variable="title-short">
-            <text variable="title-short" form="short" strip-periods="true"/>
-          </if>
-          <else>
-            <text variable="title" form="short" strip-periods="true"/>
-          </else>
-        </choose>
+      <if variable="title-short">
+        <text variable="title-short" form="short" strip-periods="true"/>
       </if>
+      <else>
+        <text variable="title" form="short" strip-periods="true"/>
+      </else>
     </choose>
   </macro>
   <macro name="juris-main-short">

@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <law-module types="legal_case"/>
+    <law-module types="legislation legal_case"/>
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
@@ -96,7 +96,7 @@
                     <condition match="all" variable="authority collection-number page issued"/>
                     <condition match="none" variable="container-title volume archive"/>
                   </conditions>
-            <group delimiter="-" parallel-last-to-first="issued">
+            <group delimiter="-" parallel-last-to-first="issued authority">
               <number variable="collection-number"/>
               <names variable="authority">
                 <name/>

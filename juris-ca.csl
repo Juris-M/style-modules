@@ -35,6 +35,11 @@
               </conditions>
               <number variable="volume"/>
               <text variable="container-title" form="short" strip-periods="true"/>
+              <choose>
+                <if variable="issue">
+                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                </if>
+              </choose>
               <number variable="page-first"/>
             </if>
             <else-if>
@@ -46,6 +51,11 @@
               <number variable="collection-number" prefix="[" suffix="]"/>
               <number variable="volume"/>
               <text variable="container-title" form="short" strip-periods="true"/>
+              <choose>
+                <if variable="isssue">
+                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                </if>
+              </choose>
               <number variable="page-first"/>
             </else-if>
             <else-if>

@@ -163,13 +163,6 @@
 
   <macro name="juris-title-short">
     <text value=""/>
-    <!--
-    <choose>
-      <if type="regulation legislation">
-        <text variable="title" form="short"/>
-      </if>
-    </choose>
-    -->
   </macro>
 
   <macro name="juris-main-short">

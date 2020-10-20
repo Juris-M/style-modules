@@ -12,7 +12,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Council of Europe</summary>
-    <updated>2020-10-06T15:00:28+02:00</updated>
+    <updated>2020-10-19T15:17:58+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -59,19 +59,10 @@
             <number variable="division"/>
             <text variable="genre"/>
           </group>
-          <choose>
-            <if>
-              <conditions match="any">
-                <condition variable="container-title" match="none"/>
-                <condition context="bibliography"/>
-              </conditions>
-              <date variable="issued" form="numeric"/>
-            </if>
-          </choose>
-          <!-- could also be verb Rs or the like
-          <text value="Rs"/>
-          -->
-          <number variable="number"/>
+          <group delimiter=", ">
+            <date variable="issued" form="numeric"/>
+            <number variable="number"/>
+          </group>
           <group delimiter=" " prefix="(" suffix=")">
             <text variable="title"/>
             <group>
@@ -163,13 +154,6 @@
 
   <macro name="juris-title-short">
     <text value=""/>
-    <!--
-    <choose>
-      <if type="regulation legislation">
-        <text variable="title" form="short"/>
-      </if>
-    </choose>
-    -->
   </macro>
 
   <macro name="juris-main-short">

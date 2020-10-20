@@ -56,7 +56,7 @@
             </institution>
           </names>
           <group delimiter=" " prefix="(" suffix=")">
-            <text variable="division"/>
+            <number variable="division"/>
             <text variable="genre"/>
           </group>
           <choose>
@@ -183,7 +183,7 @@
               <institution-part name="short"/>
             </institution>
           </names>
-          <text variable="division" prefix="(" suffix=")"/>
+          <number variable="division" prefix="(" suffix=")"/>
           <number variable="number"/>
           <choose>
             <if variable="title-short">

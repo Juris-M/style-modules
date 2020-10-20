@@ -41,10 +41,10 @@
                 <number variable="number"/>
               </if>
             </choose>
-            <date variable="issued" date-parts="year-month-day">
+            <date variable="issued">
               <date-part name="day" form="numeric" suffix=" "/>
-              <date-part name="month" suffix=" "/>
-              <date-part name="year"/>
+              <date-part name="month" form="short" suffix=" "/>
+              <date-part name="year" form="long"/>
             </date>
             <text variable="DOI"/>
           </group>
@@ -88,10 +88,10 @@
                 <number variable="number"/>
               </if>
             </choose>
-            <date variable="issued" date-parts="year-month-day">
+            <date variable="issued">
               <date-part name="day" form="numeric" suffix=" "/>
-              <date-part name="month" suffix=" "/>
-              <date-part name="year"/>
+              <date-part name="month" form="short" suffix=" "/>
+              <date-part name="year" form="long"/>
             </date>
           </group>
         </group>

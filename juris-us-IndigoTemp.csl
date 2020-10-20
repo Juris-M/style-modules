@@ -87,7 +87,7 @@
           <if>
             <conditions match="all">
               <condition match="all" variable="authority genre volume container-title page"/>
-              <condition match="none" variable="gazette-ref"/>
+              <condition match="none" variable="gazette-flag"/>
             </conditions>
             <names variable="dummy">
               <name/>
@@ -448,7 +448,7 @@
             <if>
               <conditions match="all">
                 <condition match="all" variable="authority genre volume container-title page"/>
-                <condition match="none" variable="gazette-ref"/>
+                <condition match="none" variable="gazette-flag"/>
               </conditions>
               <!-- group><text value="[LegReg OK1]"/></group -->
               <group delimiter=", ">
@@ -580,7 +580,7 @@
                     <text variable="container-title" form="short"/>
                     <group delimiter=", ">
                       <number variable="page"/>
-                      <text variable="locator-extra"/>
+                      <number variable="locator-extra"/>
                     </group>
                   </group>
                 </if>
@@ -762,7 +762,7 @@
                     <text variable="container-title" form="short"/>
                     <group delimiter=", ">
                       <number variable="page"/>
-                      <text variable="locator-extra"/>
+                      <number variable="locator-extra"/>
                     </group>
                   </group>
                 </if>
@@ -949,7 +949,7 @@
                     <number variable="volume"/>
                   </group>
                   <text variable="container-title" form="short"/>
-                  <number variable="archive_location"/>
+                  <text variable="archive_location"/>
                 </group>
               </group>
             </else-if>
@@ -1432,7 +1432,7 @@
         <!-- comma-separated leading extras -->
         <choose>
           <if type="legal_case">
-            <text variable="locator-extra"/>
+            <number variable="locator-extra"/>
           </if>
         </choose>
         <group delimiter=" ">
@@ -1583,7 +1583,7 @@
                   </choose>
                 </group>
                 <group delimiter=" ">
-                  <text variable="locator-extra"/>
+                  <number variable="locator-extra"/>
                   <date variable="locator-date" form="text" date-parts="year-month-day"/>
                 </group>
               </group>
@@ -1778,8 +1778,9 @@
             </else-if>
             <else-if type="hearing">
               <choose>
-                <if match="none" variable="committee"/>
-                <date form="text" date-parts="year-month-day" variable="issued"/>
+                <if match="none" variable="committee">
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </if>
                 <else>
                   <date form="text" date-parts="year" variable="issued"/>
                 </else>
@@ -1912,4 +1913,8 @@
       <number variable="locator"/>
     </group>
   </macro>
+  <citation>
+    <layout>
+    </layout>
+  </citation>
 </style>

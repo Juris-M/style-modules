@@ -31,11 +31,23 @@
     <choose>
       <if type="legal_case">
         <group delimiter=", ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short"/>
-          </names>
-          <date variable="issued" date-parts="year-month-day" form="text"/>
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution form="short"/>
+            </names>
+            <choose>
+              <if disambiguate="true">
+                <number variable="number"/>
+              </if>
+            </choose>
+            <date variable="issued" date-parts="year-month-day">
+              <date-part name="day" form="numeric" suffix=" "/>
+              <date-part name="month" suffix=" "/>
+              <date-part name="year"/>
+            </date>
+            <text variable="DOI"/>
+          </group>
         </group>
       </if>
     </choose>
@@ -65,16 +77,22 @@
   <macro name="juris-main-short">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <group>
+        <group delimiter=", ">
+          <group delimiter=" ">
             <names variable="authority">
               <name/>
               <institution form="short"/>
             </names>
-            <group delimiter=" ">
-              <text variable="genre"/>
-              <number variable="number"/>
-            </group>
+            <choose>
+              <if disambiguate="true">
+                <number variable="number"/>
+              </if>
+            </choose>
+            <date variable="issued" date-parts="year-month-day">
+              <date-part name="day" form="numeric" suffix=" "/>
+              <date-part name="month" suffix=" "/>
+              <date-part name="year"/>
+            </date>
           </group>
         </group>
       </if>

@@ -16,12 +16,17 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation"/>
   </info>
+
   <macro name="juris-pretitle">
+    <!-- Fragment to precede title (rare) -->
     <text value=""/>
   </macro>
+
   <macro name="juris-title">
+    <!-- The title form for full citations (of all types) -->
     <text variable="title" strip-periods="true"/>
   </macro>
+
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
@@ -52,7 +57,7 @@
               <number variable="volume"/>
               <text variable="container-title" form="short" strip-periods="true"/>
               <choose>
-                <if variable="isssue">
+                <if variable="issue">
                   <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
                 </if>
               </choose>
@@ -95,13 +100,19 @@
       </else-if>
     </choose>
   </macro>
+
   <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
+
   <macro name="juris-pretitle-short">
+    <!-- Fragment to precede short title (rare) -->
     <text value=""/>
   </macro>
+
   <macro name="juris-title-short">
+    <!-- The title form for subsequent citations (of all types) -->
     <choose>
       <if variable="title-short">
         <text variable="title-short" form="short" strip-periods="true"/>
@@ -111,12 +122,16 @@
       </else>
     </choose>
   </macro>
+
   <macro name="juris-main-short">
     <text value=""/>
   </macro>
+
   <macro name="juris-tail-short">
+    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
+
   <macro name="juris-locator">
     <group delimiter=" ">
       <label variable="locator" form="short"/>   

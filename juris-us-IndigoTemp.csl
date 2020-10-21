@@ -1539,9 +1539,9 @@
                     </else>
                   </choose>
                 </if>
-                <else-if match="any" type="hearing">
+                <!-- else-if match="any" type="hearing">
                   <date variable="issued" form="text" date-parts="year"/>
-                </else-if>
+                </else-if -->
               </choose>
             </else-if>
             <else-if match="any" type="regulation patent"/>

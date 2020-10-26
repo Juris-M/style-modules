@@ -114,9 +114,12 @@
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
-      <if variable="title-short">
-        <text variable="title-short" form="short" strip-periods="true"/>
+      <if variable="hereinafter">
+        <text variable="hereinafter" form="short" strip-periods="true"/>
       </if>
+      <else-if variable="title-short">
+        <text variable="title-short" strip-periods="true"/>
+      </else-if>
       <else>
         <text variable="title" form="short" strip-periods="true"/>
       </else>

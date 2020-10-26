@@ -91,7 +91,7 @@
                 <condition match="none" variable="admin-flag"/>
               </conditions>
               <text variable="container-title"/>
-              <date variable="issued" form="numeric" date-parts="year"/>
+              <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
               <number variable="volume"/>
             </if>

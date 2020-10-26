@@ -120,9 +120,9 @@
       <else-if variable="title-short">
         <text variable="title-short" strip-periods="true"/>
       </else-if>
-      <else>
+      <else-if position="subsequent">
         <text variable="title" form="short" strip-periods="true"/>
-      </else>
+      </else-if>
     </choose>
   </macro>
 

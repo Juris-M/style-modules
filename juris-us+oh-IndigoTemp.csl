@@ -757,10 +757,27 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" locator="field">
+        <if locator="page" position="ibid-with-locator" match="all">
           <text value="at"/>
-          <label variable="locator" form="static"/>
         </if>
+        <else-if match="all" type="patent" variable="locator">
+          <choose>
+            <if locator="field">
+              <text value="at"/>
+              <label variable="locator" form="static"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
+        </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legal_case" locator="page" match="all"/>
+            <condition match="none" variable="document-name archive container-title"/>
+          </conditions>
+          <text value="at"/>
+        </else-if>
         <else-if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
@@ -768,15 +785,6 @@
             <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
             <condition type="legal_case" variable="document-name" match="all"/>
           </conditions>
-          <text value="at"/>
-        </else-if>
-        <else-if>
-          <conditions match="all">
-            <condition match="none" variable="container-title archive" position="ibid-with-locator"/>
-          </conditions>
-          <label variable="locator" form="short"/>
-        </else-if>
-        <else-if locator="page" position="ibid-with-locator">
           <text value="at"/>
         </else-if>
         <else-if locator="page" match="any"/>
@@ -787,7 +795,7 @@
           </conditions>
         </else-if>
         <else>
-          <label variable="locator" form="short"/>
+          <label variable="locator"/>
         </else>
       </choose>
       <number variable="locator"/>

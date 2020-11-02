@@ -378,7 +378,7 @@
                     <number variable="collection-number" form="ordinal"/>
                     <names variable="authority">
                       <name/>
-                      <institution institution-parts="short" use-last="1"/>
+                      <institution institution-parts="short" use-first="1"/>
                     </names>
                   </group>
                 </if>
@@ -399,7 +399,7 @@
                 <number variable="collection-number" form="ordinal"/>
                 <names variable="authority">
                   <name/>
-                  <institution institution-parts="short" use-last="1"/>
+                  <institution institution-parts="short" use-first="1"/>
                 </names>
               </group>
               <choose>
@@ -1737,7 +1737,7 @@
                         </conditions>
                         <names variable="authority">
                           <name/>
-                          <institution institution-parts="short" use-last="1"/>
+                          <institution institution-parts="short" use-first="1"/>
                         </names>
                         <text variable="genre" prefix="[" suffix="]" text-case="capitalize-all"/>
                       </if>

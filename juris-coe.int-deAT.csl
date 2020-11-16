@@ -12,7 +12,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Council of Europe</summary>
-    <updated>2020-10-19T15:17:58+02:00</updated>
+    <updated>2020-11-02T11:48:09+01:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -48,31 +48,21 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
-          <group delimiter=" " prefix="(" suffix=")">
-            <number variable="division"/>
-            <text variable="genre"/>
-          </group>
-          <group delimiter=", ">
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short">
+                <institution-part name="short"/>
+              </institution>
+            </names>
             <date variable="issued" form="numeric"/>
-            <number variable="number"/>
-          </group>
-          <group delimiter=" " prefix="(" suffix=")">
-            <text variable="title"/>
-            <group>
-              <text term="open-quote"/>
-              <text variable="title-short"/>
-              <text term="close-quote"/>
+            <group delimiter=" " prefix="(" suffix=")">
+              <number variable="division"/>
             </group>
           </group>
-          <!-- ECLI masked as DOI -->
-          <text variable="DOI"/>
+          <number variable="number"/>
+          <text variable="title" font-style="italic"/>
         </group>
       </if>
     </choose>
@@ -136,14 +126,10 @@
         </group>
       </else-if>
       <else-if type="legal_case">
-        <choose>
-          <if variable="DOI" match="none">
-            <!-- -->
-          </if>
-          <else>
-            <text variable="DOI"/>
-          </else>
-        </choose>
+        <group delimiter=" ">
+          <text variable="container-title"/>
+          <number variable="volume"/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -160,23 +146,21 @@
     <!-- The body of subsequent citations (of all types) -->
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short">
-              <institution-part name="short"/>
-            </institution>
-          </names>
-          <number variable="division" prefix="(" suffix=")"/>
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <names variable="authority">
+              <name/>
+              <institution institution-parts="short">
+                <institution-part name="short"/>
+              </institution>
+            </names>
+            <date variable="issued" form="numeric"/>
+            <group delimiter=" " prefix="(" suffix=")">
+              <number variable="division"/>
+            </group>
+          </group>
           <number variable="number"/>
-          <choose>
-            <if variable="title-short">
-              <text variable="title" form="short" prefix="(" suffix=")"/>
-            </if>
-            <else>
-              <text variable="title" prefix="(" suffix=")"/>
-            </else>
-          </choose>
+          <text variable="title" font-style="italic"/>
         </group>
       </if>
     </choose>
@@ -187,6 +171,12 @@
       <if type="regulation legislation">
         <text variable="title" form="short"/>
       </if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <text variable="container-title"/>
+          <number variable="volume"/>
+        </group>
+      </else-if>
     </choose>
     <text value=""/>
   </macro>
@@ -194,15 +184,36 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page"/>
-        <else-if locator="section">
-          <label variable="locator" form="symbol"/>
+        <if locator="page" match="none">
+          <choose>
+            <if locator="section">
+              <label variable="locator" form="symbol"/>
+            </if>
+            <else-if variable="locator">
+              <label variable="locator" form="short"/>
+            </else-if>
+          </choose>
+          <number variable="locator"/>
+          <names variable="commenter" font-style="italic" prefix="(" suffix=")">
+            <name/>
+          </names>
+        </if>
+        <else-if>
+          <conditions>
+            <condition type="legal_case"/>
+            <condition variable="page commenter issue" match="any"/>
+          </conditions>
+          <group delimiter=" " prefix="(" suffix=")">
+            <number variable="locator"/>
+            <names variable="commenter" font-style="italic">
+              <name/>
+            </names>
+          </group>
         </else-if>
         <else>
-          <label variable="locator" form="short"/>
+          <number variable="locator"/>
         </else>
       </choose>
-      <number variable="locator"/>
     </group>
   </macro>
 

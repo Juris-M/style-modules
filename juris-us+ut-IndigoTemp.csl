@@ -752,18 +752,33 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if>
+        <if locator="page" position="ibid-with-locator" match="all">
+          <text value="at"/>
+        </if>
+        <else-if match="all" type="patent" variable="locator">
+          <choose>
+            <if locator="field">
+              <text value="at"/>
+              <label variable="locator" form="static"/>
+            </if>
+            <else>
+              <label variable="locator"/>
+            </else>
+          </choose>
+        </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legal_case" locator="page" match="all"/>
+            <condition match="none" variable="document-name archive container-title"/>
+          </conditions>
+          <text value="at"/>
+        </else-if>
+        <else-if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
             <condition locator="page" type="legal_case" variable="archive" match="all"/>
             <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
-          </conditions>
-          <text value="at"/>
-        </if>
-        <else-if>
-          <conditions match="all">
-            <condition type="legal_case" match="any"/>
-            <condition match="none" variable="document-name archive container-title"/>
+            <condition type="legal_case" variable="document-name" match="all"/>
           </conditions>
           <text value="at"/>
         </else-if>

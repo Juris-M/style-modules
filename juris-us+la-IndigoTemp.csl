@@ -760,9 +760,8 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" locator="field">
+        <if locator="page" position="ibid-with-locator" match="all">
           <text value="at"/>
-          <label variable="locator" form="static"/>
         </if>
         <else-if>
           <conditions match="any">

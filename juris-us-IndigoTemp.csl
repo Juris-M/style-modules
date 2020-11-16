@@ -378,7 +378,7 @@
                     <number variable="collection-number" form="ordinal"/>
                     <names variable="authority">
                       <name/>
-                      <institution institution-parts="short" use-last="1"/>
+                      <institution institution-parts="short" use-first="1"/>
                     </names>
                   </group>
                 </if>
@@ -399,7 +399,7 @@
                 <number variable="collection-number" form="ordinal"/>
                 <names variable="authority">
                   <name/>
-                  <institution institution-parts="short" use-last="1"/>
+                  <institution institution-parts="short" use-first="1"/>
                 </names>
               </group>
               <choose>
@@ -1539,9 +1539,9 @@
                     </else>
                   </choose>
                 </if>
-                <else-if match="any" type="hearing">
+                <!-- else-if match="any" type="hearing">
                   <date variable="issued" form="text" date-parts="year"/>
-                </else-if>
+                </else-if -->
               </choose>
             </else-if>
             <else-if match="any" type="regulation patent"/>
@@ -1737,7 +1737,7 @@
                         </conditions>
                         <names variable="authority">
                           <name/>
-                          <institution institution-parts="short" use-last="1"/>
+                          <institution institution-parts="short" use-first="1"/>
                         </names>
                         <text variable="genre" prefix="[" suffix="]" text-case="capitalize-all"/>
                       </if>
@@ -1876,7 +1876,10 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if match="all" type="patent" variable="locator">
+        <if locator="page" position="ibid-with-locator" match="all">
+          <text value="at"/>
+        </if>
+        <else-if match="all" type="patent" variable="locator">
           <choose>
             <if locator="field">
               <text value="at"/>
@@ -1886,7 +1889,14 @@
               <label variable="locator"/>
             </else>
           </choose>
-        </if>
+        </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legal_case" locator="page" match="all"/>
+            <condition match="none" variable="document-name archive container-title"/>
+          </conditions>
+          <text value="at"/>
+        </else-if>
         <else-if>
           <conditions match="any">
             <condition locator="page" type="report" variable="number" match="all"/>
@@ -1894,9 +1904,6 @@
             <condition locator="page" type="legal_case" variable="archive_location" match="all"/>
             <condition type="legal_case" variable="document-name" match="all"/>
           </conditions>
-          <text value="at"/>
-        </else-if>
-        <else-if locator="page" position="ibid-with-locator">
           <text value="at"/>
         </else-if>
         <else-if locator="page" match="any"/>

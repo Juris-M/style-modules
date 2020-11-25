@@ -2,8 +2,8 @@
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
     <title>Council of Europe</title>
-    <id>http://citationstylist.org/modules/juris-coe.int-deAT</id>
-    <link href="http://citationstylist.org/modules/juris-coe.int-deAT" rel="self"/>
+    <id>http://citationstylist.org/modules/juris-coe.int-LegCit</id>
+    <link href="http://citationstylist.org/modules/juris-coe.int-LegCit" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Georg Mayr-Duffner</name>
@@ -12,7 +12,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Council of Europe</summary>
-    <updated>2020-11-16T12:07:45+01:00</updated>
+    <updated>2020-11-02T10:25:25+01:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation regulation"/>
   </info>
@@ -48,21 +48,31 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short">
-                <institution-part name="short"/>
-              </institution>
-            </names>
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <group delimiter=" " prefix="(" suffix=")">
+            <number variable="division"/>
+            <text variable="genre"/>
+          </group>
+          <group delimiter=", ">
             <date variable="issued" form="numeric"/>
-            <group delimiter=" " prefix="(" suffix=")">
-              <number variable="division"/>
+            <number variable="number"/>
+          </group>
+          <group delimiter=" " prefix="(" suffix=")">
+            <text variable="title"/>
+            <group>
+              <text term="open-quote"/>
+              <text variable="title-short"/>
+              <text term="close-quote"/>
             </group>
           </group>
-          <number variable="number"/>
-          <text variable="title" font-style="italic"/>
+          <!-- ECLI masked as DOI -->
+          <text variable="DOI"/>
         </group>
       </if>
     </choose>
@@ -126,10 +136,14 @@
         </group>
       </else-if>
       <else-if type="legal_case">
-        <group delimiter=" ">
-          <text variable="container-title"/>
-          <number variable="volume"/>
-        </group>
+        <choose>
+          <if variable="DOI" match="none">
+            <!-- -->
+          </if>
+          <else>
+            <text variable="DOI"/>
+          </else>
+        </choose>
       </else-if>
     </choose>
   </macro>
@@ -146,21 +160,23 @@
     <!-- The body of subsequent citations (of all types) -->
     <choose>
       <if type="legal_case">
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <names variable="authority">
-              <name/>
-              <institution institution-parts="short">
-                <institution-part name="short"/>
-              </institution>
-            </names>
-            <date variable="issued" form="numeric"/>
-            <group delimiter=" " prefix="(" suffix=")">
-              <number variable="division"/>
-            </group>
-          </group>
+        <group delimiter=" ">
+          <names variable="authority">
+            <name/>
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <number variable="division" prefix="(" suffix=")"/>
           <number variable="number"/>
-          <text variable="title" font-style="italic"/>
+          <choose>
+            <if variable="title-short">
+              <text variable="title" form="short" prefix="(" suffix=")"/>
+            </if>
+            <else>
+              <text variable="title" prefix="(" suffix=")"/>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>
@@ -171,12 +187,6 @@
       <if type="regulation legislation">
         <text variable="title" form="short"/>
       </if>
-      <else-if type="legal_case">
-        <group delimiter=" ">
-          <text variable="container-title"/>
-          <number variable="volume"/>
-        </group>
-      </else-if>
     </choose>
     <text value=""/>
   </macro>
@@ -184,36 +194,15 @@
   <macro name="juris-locator">
     <group delimiter=" ">
       <choose>
-        <if locator="page" match="none">
-          <choose>
-            <if locator="section">
-              <label variable="locator" form="symbol"/>
-            </if>
-            <else-if variable="locator">
-              <label variable="locator" form="short"/>
-            </else-if>
-          </choose>
-          <number variable="locator"/>
-          <names variable="commenter" font-style="italic" prefix="(" suffix=")">
-            <name/>
-          </names>
-        </if>
-        <else-if>
-          <conditions>
-            <condition type="legal_case"/>
-            <condition variable="page commenter issue" match="any"/>
-          </conditions>
-          <group delimiter=" " prefix="(" suffix=")">
-            <number variable="locator"/>
-            <names variable="commenter" font-style="italic">
-              <name/>
-            </names>
-          </group>
+        <if locator="page"/>
+        <else-if locator="section">
+          <label variable="locator" form="symbol"/>
         </else-if>
         <else>
-          <number variable="locator"/>
+          <label variable="locator" form="short"/>
         </else>
       </choose>
+      <number variable="locator"/>
     </group>
   </macro>
 

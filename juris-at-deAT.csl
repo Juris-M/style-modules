@@ -2,8 +2,8 @@
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
     <title>Austria</title>
-    <id>http://citationstylist.org/modules/juris-at-LegCit</id>
-    <link href="http://citationstylist/modules/juris-at-LegCit" rel="self"/>
+    <id>http://citationstylist.org/modules/juris-at</id>
+    <link href="http://citationstylist/modules/juris-at" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -15,8 +15,8 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Austria - localized for leg cit 4.</summary>
-    <updated>2020-11-02T10:42:07+01:00</updated>
+    <summary>Juris-M style module for Austria.</summary>
+    <updated>2020-11-15T23:12:01+01:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -43,34 +43,46 @@
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
-        <group delimiter=" = ">
-          <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
-            <group no-repeat="authority">
-              <names variable="authority">
-                <name/>
-                <institution institution-parts="short">
-                  <institution-part name="short"/>
-                </institution>
-              </names>
+        <group delimiter=" ">
+          <group delimiter=", ">
+            <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
+              <group no-repeat="authority">
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+              </group>
+              <number variable="division"/>
+              <group delimiter=", ">
+                <choose>
+                  <if>
+                    <conditions match="any">
+                      <condition variable="container-title DOI" match="none"/>
+                      <condition context="bibliography"/>
+                    </conditions>
+                    <date variable="issued" form="text"/>
+                  </if>
+                </choose>
+                <number variable="number"/>
+                <text variable="title" font-style="italic"/>
+              </group>
+              <!-- ECLI masked as DOI -->
+              <text variable="DOI"/>
             </group>
-            <number variable="division" prefix="(" suffix=")"/>
-            <group delimiter=", ">
-              <choose>
-                <if>
-                  <conditions match="any">
-                    <condition variable="container-title" match="none"/>
-                    <condition context="bibliography"/>
-                  </conditions>
-                  <date variable="issued" form="numeric"/>
-                </if>
-              </choose>
-              <number variable="number"/>
-            </group>
-            <!-- ECLI masked as DOI -->
-            <text variable="DOI"/>
+            <choose>
+              <if variable="title">
+                <text variable="container-title"/>
+              </if>
+            </choose>
           </group>
           <group delimiter=" ">
-            <text variable="container-title"/>
+            <choose>
+              <if variable="title" match="none">
+                <text variable="container-title"/>
+              </if>
+            </choose>
             <group delimiter=", ">
               <group delimiter="/">
                 <number variable="volume"/>
@@ -92,7 +104,7 @@
         <group delimiter=" ">
           <text variable="title"/>
           <number variable="number"/>
-          <number variable="chapter-number" form="roman" text-case="uppercase" suffix="."/>
+          <number variable="chapter-number" form="ordinal"/>
           <text variable="genre"/>
         </group>
       </else-if>
@@ -103,48 +115,32 @@
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <choose>
       <if type="legislation regulation">
-        <group delimiter=", ">
-          <group delimiter=" ">
-            <choose>
-              <if context="bibliography">
-                <text variable="title"/>
-              </if>
-              <else>
-                <text variable="title" form="short"/>
-              </else>
-            </choose>
-            <choose>
-              <if type="regulation">
-                <names variable="authority">
-                  <name/>
-                </names>
-              </if>
-            </choose>
-          </group>
-          <group delimiter=" ">
-            <text variable="container-title" form="short"/>
+        <group delimiter=" ">
+          <text variable="title"/>
+          <choose>
+            <if type="regulation">
+              <names variable="authority">
+                <name/>
+              </names>
+            </if>
+          </choose>
+          <text variable="container-title" form="short"/>
+          <group delimiter=", ">
             <group delimiter="/">
+              <date variable="issued" date-parts="year" form="numeric"/>
               <group delimiter=" ">
                 <number variable="volume"/>
                 <number variable="number"/>
               </group>
-              <date variable="issued" date-parts="year" form="numeric"/>
             </group>
-            <text variable="references" prefix="idF "/>
-            <choose>
-              <if context="bibliography" variable="title-short">
-                <text variable="title-short" prefix="[" suffix="]"/>
-              </if>
-            </choose>
+            <number variable="page"/>
           </group>
+          <text variable="references" prefix="idF "/>
         </group>
       </if>
       <else-if type="legal_case">
         <group delimiter=" ">
           <text variable="references" prefix="= "/>
-          <group parallel-last="title">
-            <text variable="title" form="short" prefix="[" suffix="]"/>
-          </group>
         </group>
       </else-if>
     </choose>
@@ -163,7 +159,7 @@
   <macro name="juris-main-short">
     <choose>
       <if type="legal_case">
-        <group delimiter=" = ">
+        <group delimiter=" ">
           <group parallel-first="authority number" parallel-delimiter-override=" = " delimiter=" ">
             <group no-repeat="authority">
               <names variable="authority">
@@ -173,18 +169,18 @@
                 </institution>
               </names>
             </group>
-            <number variable="division" prefix="(" suffix=")"/>
+            <number variable="division"/>
             <choose>
               <if variable="number">
                 <number variable="number"/>
               </if>
               <else>
-                <date variable="issued" form="numeric"/>
+                <date variable="issued" form="text"/>
               </else>
             </choose>
           </group>
           <choose>
-            <if variable="locator container-title" match="all">
+            <if variable="container-title">
               <choose>
                 <if variable="page">
                   <group delimiter=", ">
@@ -233,7 +229,7 @@
             <number variable="number"/>
             <choose>
               <if is-numeric="chapter-number">
-                <number variable="chapter-number" form="roman" text-case="uppercase" suffix="."/>
+                <number variable="chapter-number" form="ordinal"/>
               </if>
               <else>
                 <number variable="chapter-number"/>
@@ -277,7 +273,7 @@
   </macro>
 
 <macro name="juris-locator">
-    <group delimiter=" ">
+    <group delimiter="&#x00A0;">
       <choose>
         <if locator="page" match="none">
           <choose>

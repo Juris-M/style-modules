@@ -30,7 +30,14 @@
   
   <macro name="juris-pretitle">
     <group delimiter=" ">
-      <text value="Case"/>
+      <choose>
+        <if is-multiple="number">
+          <text value="Joined Cases"/>
+        </if>
+        <else>
+          <text value="Case"/>
+        </else>
+      </choose>
       <number variable="number"/>
     </group>
   </macro>

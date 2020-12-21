@@ -83,12 +83,8 @@
       </if>
       <else-if type="legislation">
         <group delimiter=" ">
-          <text variable="title" strip-periods="true"/>
+          <text variable="title"/>
           <date form="text" variable="issued" date-parts="year"/>
-          <group delimiter=" ">
-          <text variable="country" form="short" prefix="(" suffix=")"/>
-            <text variable="jurisdiction" form="short"/>
-	  </group>
         </group>
       </else-if>
     </choose>
@@ -181,11 +177,11 @@
                   <group delimiter=" ">
                     <text value="atxx"/>
                     <group require="empty-label">
-                      <text macro="juris-locator" label-form="symbol"/>
+                      <text macro="juris-locator" label-form="short"/>
                     </group>
                   </group>
                   <group delimiter=" " reject="empty-label">
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                 </group>
               </if>
@@ -219,10 +215,10 @@
           <group delimiter=" ">
             <text value="at"/>
             <group require="empty-label">
-              <text macro="juris-locator" label-form="symbol"/>
+              <text macro="juris-locator" label-form="short"/>
             </group>
           </group>
-          <text macro="juris-locator" label-form="symbol"/>
+          <text macro="juris-locator" label-form="short"/>
           <text macro="juris-tail-short"/>
         </group>
       </macro>
@@ -235,7 +231,7 @@
           <group delimiter=" ">
             <text term="ibid"/>
             <group require="empty-label-no-decor">
-              <text macro="juris-locator" label-form="symbol"/>
+              <text macro="juris-locator" label-form="short"/>
             </group>
           </group>
           <group delimiter=" " reject="empty-label-no-decor">
@@ -293,16 +289,16 @@
                   </choose>
                   <group delimiter=" " require="empty-label">
                     <text value="at"/>
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                   <group require="comma-safe">
-                    <text macro="juris-locator" label-form="symbol"/>
+                    <text macro="juris-locator" label-form="short"/>
                   </group>
                 </group>
               </group>
             </group>
             <group reject="comma-safe">
-              <text macro="juris-locator" label-form="symbol"/>
+              <text macro="juris-locator" label-form="short"/>
             </group>
             <group prefix="&#60;" suffix="&#62;">
               <date variable="locator-date">

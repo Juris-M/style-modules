@@ -454,7 +454,7 @@
               <group delimiter=", ">
                 <group delimiter=" ">
                   <text variable="genre"/>
-                  <label variable="number" form="short" text-case="capitalize-first"/>
+                  <label variable="number" form="short" text-case="capitalize-first/>
                   <number variable="number"/>
                 </group>
                 <group delimiter=" ">
@@ -1086,6 +1086,10 @@
                   <label variable="number" form="short" text-case="capitalize-first"/>
                   <number variable="number"/>
                 </group>
+                <group delimiter=" ">
+                  <text value="Doc."/>
+                  <number variable="document-number"/>
+                </group>
                 <choose>
                   <if>
                     <conditions match="all">
@@ -1226,6 +1230,22 @@
                 <condition match="none" variable="container-title volume number page genre"/>
               </conditions>
               <!-- group><text value="[OK18]"/></group -->
+            </else-if>
+            <else-if>
+              <conditions match="all">
+                <condition match="all" variable="number jurisdiction authority title"/>
+                <condition match="none" variable="container-title collection-number publisher archive"/>
+              </conditions>
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text value="No."/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <text value="Doc."/>
+                  <number variable="document-number"/>
+                </group>
+              </group>
             </else-if>
             <else>
               <group><text value="Oops. Novel citation pattern."/></group>

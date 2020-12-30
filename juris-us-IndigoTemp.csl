@@ -73,7 +73,7 @@
           <else-if match="none" variable="call-number">
             <names variable="authority">
               <name/>
-              <institution institution-parts="short" delimiter=", "/>
+              <institution institution-parts="short" delimiter=", " reverse-order="true"/>
             </names>
           </else-if>
         </choose>
@@ -114,7 +114,7 @@
             <group delimiter=" ">
               <names variable="authority">
                 <name/>
-                <institution institution-parts="short" stop-last="1"/>
+                <institution institution-parts="short" use-last="1"/>
                 <substitute>
                   <text variable="genre"/>
                 </substitute>
@@ -454,7 +454,7 @@
               <group delimiter=", ">
                 <group delimiter=" ">
                   <text variable="genre"/>
-                  <label variable="number" form="short" text-case="capitalize-first/>
+                  <label variable="number" form="short" text-case="capitalize-first"/>
                   <number variable="number"/>
                 </group>
                 <group delimiter=" ">
@@ -1351,26 +1351,34 @@
               <condition match="any" variable="title committee"/>
             </conditions>
             <group delimiter=", ">
-              <group delimiter=" ">
-                <group delimiter=" ">
-                  <names variable="authority">
-                    <name/>
-                    <institution stop-last="1" institution-parts="short"/>
-                  </names>
-                  <choose>
-                    <if variable="genre">
-                      <text variable="genre"/>
-                    </if>
-                    <else>
-                      <text value="Rep."/>
-                    </else>
-                  </choose>
-                </group>
-                <group delimiter=" ">
-                  <label variable="number" form="symbol" text-case="capitalize-first"/>
-                  <number variable="number"/>
-                </group>
-              </group>
+              <choose>
+                <if variable="number">
+                  <group delimiter=" ">
+                    <group delimiter=" ">
+                      <choose>
+                        <if variable="call-number" match="none">
+                          <names variable="authority">
+                            <name/>
+                            <institution stop-last="1" institution-parts="short"/>
+                          </names>
+                        </if>
+                      </choose>
+                      <choose>
+                        <if variable="genre">
+                          <text variable="genre"/>
+                        </if>
+                        <else>
+                          <text value="Rep."/>
+                        </else>
+                      </choose>
+                    </group>
+                    <group delimiter=" ">
+                      <label variable="number" form="symbol" text-case="capitalize-first"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
               <choose>
                 <if variable="call-number">
                   <group delimiter=" ">

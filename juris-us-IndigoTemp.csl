@@ -1647,10 +1647,18 @@
                 </else-if>
                 <else-if>
                   <conditions match="all">
-                    <condition match="all" variable="document-name number"/>
-                    <condition match="none" variable="title container-title archive"/>
+                    <condition match="any" variable="document-name document-number"/>
+                    <condition match="all" variable="number"/>
+                    <condition match="none" variable="container-title archive"/>
                   </conditions>
-                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                  <choose>
+                    <if variable="issued">
+                      <date variable="issued" form="text" date-parts="year-month-day"/>
+                    </if>
+                    <else>
+                      <date variable="submitted" form="text" date-parts="year-month-day"/>
+                    </else>
+                  </choose>
                 </else-if>
                 <else-if>
                   <conditions match="all">

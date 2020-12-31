@@ -1653,7 +1653,7 @@
                   </conditions>
                   <choose>
                     <if variable="issued">
-                      <date variable="issued" form="text" date-parts="year-month-day"/>
+                      <date variable="issued" form="text" date-parts="year"/>
                     </if>
                     <else>
                       <date variable="submitted" form="text" date-parts="year-month-day"/>

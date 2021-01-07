@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria.</summary>
-    <updated>2020-11-15T23:12:01+01:00</updated>
+    <updated>2020-12-20T22:08:13+01:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
@@ -46,30 +46,49 @@
         <group delimiter=" ">
           <group delimiter=", ">
             <group delimiter=" " parallel-first="authority number" parallel-delimiter-override=" = ">
-              <group no-repeat="authority">
-                <names variable="authority">
-                  <name/>
-                  <institution institution-parts="short">
-                    <institution-part name="short"/>
-                  </institution>
-                </names>
-              </group>
-              <number variable="division"/>
-              <group delimiter=", ">
-                <choose>
-                  <if>
-                    <conditions match="any">
-                      <condition variable="container-title DOI" match="none"/>
-                      <condition context="bibliography"/>
-                    </conditions>
-                    <date variable="issued" form="text"/>
-                  </if>
-                </choose>
-                <number variable="number"/>
-                <text variable="title" font-style="italic"/>
-              </group>
-              <!-- ECLI masked as DOI -->
-              <text variable="DOI"/>
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition variable="container-title" match="none"/>
+                    <condition variable="volume" match="none"/>
+                    <condition variable="collection-number" match="any"/>
+                  </conditions>
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                  <group delimiter="/">
+                    <number variable="issue"/>
+                    <number variable="collection-number"/>
+                  </group>
+                </if>
+                <else>
+                  <group no-repeat="authority">
+                    <names variable="authority">
+                      <name/>
+                      <institution form="short"/>
+                    </names>
+                  </group>
+                  <number variable="division"/>
+                  <group delimiter=", ">
+                    <choose>
+                      <if>
+                        <conditions match="any">
+                          <condition variable="container-title DOI" match="none"/>
+                          <condition context="bibliography"/>
+                        </conditions>
+                        <date variable="issued" form="text"/>
+                      </if>
+                    </choose>
+                    <number variable="number"/>
+                    <text variable="title" font-style="italic"/>
+                  </group>
+                  <!-- ECLI masked as DOI -->
+                  <text variable="DOI"/>
+                </else>
+              </choose>
             </group>
             <choose>
               <if variable="title">
@@ -77,27 +96,31 @@
               </if>
             </choose>
           </group>
-          <group delimiter=" ">
-            <choose>
-              <if variable="title" match="none">
-                <text variable="container-title"/>
-              </if>
-            </choose>
-            <group delimiter=", ">
-              <group delimiter="/">
-                <number variable="volume"/>
-                <date variable="publication-date" date-parts="year" form="numeric"/>
-                <number variable="collection-number"/>
-                <number variable="issue"/>
+          <choose>
+            <if variable="container-title">
+              <group delimiter=" ">
+                <choose>
+                  <if variable="title" match="none">
+                    <text variable="container-title"/>
+                  </if>
+                </choose>
+                <group delimiter=", ">
+                  <group delimiter="/">
+                    <number variable="volume"/>
+                    <date variable="publication-date" date-parts="year" form="numeric"/>
+                    <number variable="issue"/>
+                    <number variable="collection-number"/>
+                  </group>
+                  <group require="comma-safe-numbers-only">
+                    <number variable="page"/>
+                  </group>
+                </group>
+                <group reject="comma-safe-numbers-only">
+                  <number variable="page"/>
+                </group>
               </group>
-              <group require="comma-safe-numbers-only">
-                <number variable="page"/>
-              </group>
-            </group>
-            <group reject="comma-safe-numbers-only">
-              <number variable="page"/>
-            </group>
-          </group>
+            </if>
+          </choose>
         </group>
       </if>
       <else-if type="bill">
@@ -161,21 +184,40 @@
       <if type="legal_case">
         <group delimiter=" ">
           <group parallel-first="authority number" parallel-delimiter-override=" = " delimiter=" ">
-            <group no-repeat="authority">
-              <names variable="authority">
-                <name/>
-                <institution institution-parts="short">
-                  <institution-part name="short"/>
-                </institution>
-              </names>
-            </group>
-            <number variable="division"/>
             <choose>
-              <if variable="number">
-                <number variable="number"/>
+              <if>
+                <conditions match="all">
+                  <condition variable="container-title" match="none"/>
+                  <condition variable="volume" match="none"/>
+                  <condition variable="collection-number" match="any"/>
+                </conditions>
+                <names variable="authority">
+                  <name/>
+                  <institution institution-parts="short">
+                    <institution-part name="short"/>
+                  </institution>
+                </names>
+                <group delimiter="/">
+                  <number variable="issue"/>
+                  <number variable="collection-number"/>
+                </group>
               </if>
               <else>
-                <date variable="issued" form="text"/>
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution form="short"/>
+                  </names>
+                </group>
+                <number variable="division"/>
+                <choose>
+                  <if variable="number">
+                    <number variable="number"/>
+                  </if>
+                  <else>
+                    <date variable="issued" form="text"/>
+                  </else>
+                </choose>
               </else>
             </choose>
           </group>
@@ -272,7 +314,7 @@
     </group>
   </macro>
 
-<macro name="juris-locator">
+  <macro name="juris-locator">
     <group delimiter="&#x00A0;">
       <choose>
         <if locator="page" match="none">

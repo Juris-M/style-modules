@@ -32,10 +32,15 @@
 	  <group delimiter=" ">
 		<group>
 		  <text variable="genre" text-case="capitalize-first"/>
-		  <names variable="authority">
-			<name/>
-			<institution institution-parts="short"/>
-		  </names>
+          <group delimiter=" ">
+		    <names variable="authority">
+			  <name/>
+			  <institution institution-parts="short"/>
+		    </names>
+            <group prefix="(" suffix=")">
+              <text variable="division"/>
+            </group>
+          </group>
 		</group>
 		<number variable="number"/>
 	  </group>

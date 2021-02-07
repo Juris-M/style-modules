@@ -14,19 +14,20 @@
     <summary>Juris-M style module for Canada</summary>
     <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation"/>
+    <law-module types="legal_case legislation bill"/>
   </info>
-
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
-    <text value=""/>
+    <choose>
+      <if type="bill">
+        <number variable="number" prefix="Bill "/>
+      </if>
+    </choose>
   </macro>
-
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
     <text variable="title" strip-periods="true"/>
   </macro>
-
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
@@ -66,7 +67,7 @@
             <else-if>
               <!-- Vendor neutral citation -->
               <conditions match="all">
-                <condition match="all" variable="authority page collection-number"/>
+                <condition match="all" variable="authority number collection-number"/>
                 <condition match="none" variable="container-title admin-flag"/>
               </conditions>
               <number variable="collection-number"/>
@@ -77,7 +78,7 @@
                   <names variable="authority"/>
                 </substitute>
               </names>
-              <number variable="page-first"/>
+              <number variable="number"/>
             </else-if>
           </choose>
         </group>
@@ -87,30 +88,52 @@
           <choose>
             <if>
               <conditions match="all">
-                <condition match="all" variable="issued container-title volume"/>
+                <condition match="all" variable="container-title volume"/>
                 <condition match="none" variable="admin-flag"/>
               </conditions>
               <text variable="container-title"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
               <number variable="volume"/>
+              <group delimiter=" " prefix="(" suffix=")">
+                <number variable="chapter-number" form="ordinal"/>
+                <label variable="supplement" form="short"/>
+              </group>
             </if>
           </choose>
         </group>
       </else-if>
+      <else-if type="bill">
+        <group delimiter=", ">
+          <number variable="chapter-number" form="ordinal" suffix=" Sess"/>
+          <number variable="collection-number" form="ordinal" suffix=" Parl"/>
+          <date variable="issued" form="numeric" date-parts="year"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
-
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="bill">
+        <group delimiter=" ">
+          <choose>
+            <if variable="references">
+              <text variable="references"/>
+            </if>
+            <else>
+              <names variable="authority" prefix="As passed by the House of Commons"/>
+            </else>
+          </choose>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </if>
+    </choose>              
   </macro>
-
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->
     <text value=""/>
   </macro>
-
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
@@ -125,28 +148,21 @@
       </else-if>
     </choose>
   </macro>
-
   <macro name="juris-main-short">
     <text value=""/>
   </macro>
-
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
-
   <macro name="juris-locator">
     <group delimiter=" ">
       <label variable="locator" form="short"/>   
       <number variable="locator"/>
     </group>
   </macro>
-
   <citation>
-
     <layout>
     </layout>
-
   </citation>
-  
 </style>

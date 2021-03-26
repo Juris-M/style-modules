@@ -54,15 +54,19 @@
                 <condition match="all" variable="collection-number container-title page"/>
                 <condition match="none" variable="admin-flag"/>
               </conditions>
-              <number variable="collection-number" prefix="[" suffix="]"/>
-              <number variable="volume"/>
-              <text variable="container-title" form="short" strip-periods="true"/>
-              <choose>
-                <if variable="issue">
-                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
-                </if>
-              </choose>
-              <number variable="page-first"/>
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <number variable="collection-number" prefix="[" suffix="]"/>
+                  <number variable="volume"/>
+                  <text variable="container-title" form="short" strip-periods="true"/>
+                  <choose>
+                    <if variable="issue">
+                      <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                    </if>
+                  </choose>
+                  <number variable="page-first"/>
+                </group>
+              </group>
             </else-if>
             <else-if>
               <!-- Vendor neutral citation -->
@@ -71,14 +75,11 @@
                 <condition match="none" variable="container-title admin-flag"/>
               </conditions>
               <number variable="collection-number"/>
-              <names variable="dummy">
+              <names variable="authority">
                 <name/>
                 <institution form="short"/>
-                <substitute>
-                  <names variable="authority"/>
-                </substitute>
               </names>
-              <number variable="number"/>
+              <number variable="page-first"/>
             </else-if>
           </choose>
         </group>
@@ -89,9 +90,9 @@
             <if>
               <conditions match="all">
                 <condition match="all" variable="container-title volume"/>
-                <condition match="none" variable="admin-flag"/>
+                <condition match="none" variable="gazette-flag"/>
               </conditions>
-              <text variable="container-title"/>
+              <text variable="container-title" strip-periods="true"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
               <number variable="volume"/>
@@ -138,13 +139,10 @@
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
       <if variable="hereinafter">
-        <text variable="hereinafter" form="short" strip-periods="true"/>
+        <text variable="hereinafter" strip-periods="true"/>
       </if>
       <else-if variable="title-short">
         <text variable="title-short" strip-periods="true"/>
-      </else-if>
-      <else-if position="subsequent">
-        <text variable="title" form="short" strip-periods="true"/>
       </else-if>
     </choose>
   </macro>

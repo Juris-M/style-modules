@@ -16,7 +16,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2020-12-10T14:31:02+01:00</updated>
+    <updated>2021-04-07T22:36:27+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
   </info>
@@ -73,8 +73,7 @@
               <condition variable="author"/>
               <condition variable="genre" match="none"/>
             </conditions>
-            <!-- Schlussantraege -->
-            <text value="SA"/>
+            <text value="GA"/>
             <names variable="author" font-style="italic"/>
             <number variable="division"/>
           </else-if>

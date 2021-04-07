@@ -12,11 +12,11 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Federal Republic of Germany</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <updated>2021-04-07T17:21:45+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
   </info>
-  
+
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <text value=""/>
@@ -31,23 +31,68 @@
     <choose>
       <if type="legal_case">
         <group delimiter=", ">
-          <names variable="authority">
-            <name/>
-            <institution institution-parts="short" use-last="1" delimiter=", "/>
-          </names>
-          <date variable="issued" date-parts="year-month-day" form="text"/>
-          <group delimiter=" ">
-            <group>
-              <names variable="authority">
-                <name/>
-                <institution form="short"/>
-              </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition variable="page volume"/>
+                <condition variable="container-title archive" match="none"/>
+              </conditions>
               <group delimiter=" ">
-                <text variable="genre"/>
-                <number variable="number"/>
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </group>
+                <number variable="volume"/>
               </group>
-            </group>
-          </group>
+            </if>
+            <else>
+              <group no-repeat="authority">
+                <names variable="authority">
+                  <name/>
+                  <institution form="short"/>
+                </names>
+              </group>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition variable="archive URL" match="any"/>
+                    <condition variable="container-title" match="none"/>
+                  </conditions>
+                  <group delimiter=" v. ">
+                    <text variable="genre"/>
+                    <group delimiter=" &#x2013; ">
+                      <date variable="issued" form="text"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+              <group delimiter=" ">
+                <choose>
+                  <if variable="archive">
+                    <text variable="archive"/>
+                  </if>
+                  <else-if variable="URL">
+                    <text variable="URL"/>
+                    <group delimiter=" " prefix="(" suffix=")">
+                      <text term="accessed"/>
+                      <date variable="accessed" form="text"/>
+                    </group>
+                  </else-if>
+                  <else>
+                    <text variable="container-title"/>
+                    <number variable="volume"/>
+                    <date variable="publication-date" date-parts="year" form="numeric" prefix="(" suffix=")"/>
+                  </else>
+                </choose>
+              </group>
+            </else>
+          </choose>
+          <number variable="page"/>
         </group>
       </if>
     </choose>
@@ -57,9 +102,11 @@
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <choose>
       <if type="legal_case">
-        <group delimiter=" " prefix="[" suffix="]">
-          <text variable="references"/>
-        </group>
+        <choose>
+          <if variable="container-title archive URL page volume" match="none">
+            <text value="n. v." prefix="(" suffix=")"/>
+          </if>
+        </choose>
       </if>
     </choose>
   </macro>
@@ -77,17 +124,72 @@
   <macro name="juris-main-short">
     <choose>
       <if type="legal_case">
-        <group delimiter=" ">
-          <group>
-            <names variable="authority">
-              <name/>
-              <institution form="short"/>
-            </names>
-            <group delimiter=" ">
-              <text variable="genre"/>
-              <number variable="number"/>
-            </group>
-          </group>
+        <group delimiter=", ">
+          <choose>
+            <if>
+              <!-- Official reporter omitted -->
+              <conditions match="all">
+                <condition variable="page volume"/>
+                <condition variable="container-title archive" match="none"/>
+              </conditions>
+              <group delimiter=" ">
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </group>
+                <number variable="volume"/>
+              </group>
+            </if>
+            <else>
+              <!-- Standard form -->
+              <group no-repeat="authority">
+                <names variable="authority">
+                  <name/>
+                  <institution form="short"/>
+                </names>
+              </group>
+              <choose>
+                <if>
+                  <!-- Special reporter, online reporter or unpublished -->
+                  <conditions match="any">
+                    <condition variable="archive URL" match="any"/>
+                    <condition variable="container-title" match="none"/>
+                  </conditions>
+                  <group delimiter=" v. ">
+                    <text variable="genre"/>
+                    <group delimiter=" &#x2013; ">
+                      <date variable="issued" form="text"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+              <group delimiter=" ">
+                <choose>
+                  <if variable="archive">
+                    <text variable="archive"/>
+                  </if>
+                  <else-if variable="URL">
+                    <text variable="URL"/>
+                    <group delimiter=" " prefix="(" suffix=")">
+                      <text term="accessed"/>
+                      <date variable="accessed" form="text"/>
+                    </group>
+                  </else-if>
+                  <else>
+                    <text variable="container-title"/>
+                    <number variable="volume"/>
+                    <date variable="publication-date" date-parts="year" form="numeric" prefix="(" suffix=")"/>
+                  </else>
+                </choose>
+              </group>
+            </else>
+          </choose>
+          <number variable="page"/>
         </group>
       </if>
     </choose>
@@ -95,7 +197,15 @@
 
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="container-title archive URL page volume" match="none">
+            <text value="n. v." prefix="(" suffix=")"/>
+          </if>
+        </choose>
+      </if>
+    </choose>
   </macro>
 
   <macro name="juris-locator">
@@ -112,183 +222,6 @@
 
   <citation>
     <layout>
-      <choose>
-        <if position="ibid-with-locator">
-          <group delimiter=" ">
-            <text term="ibid" font-style="italic"/>
-            <group delimiter=" ">
-              <text value="at"/>
-              <group require="empty-label">
-                <text macro="juris-locator" label-form="symbol"/>
-              </group>
-            </group>
-            <group delimiter=" " reject="empty-label">
-              <text macro="juris-locator" label-form="symbol"/>
-            </group>
-          </group>
-        </if>
-        <else-if position="ibid">
-          <text term="ibid" font-style="italic"/>
-        </else-if>
-        <else-if>
-          <!-- short form -->
-          <conditions match="any">
-            <condition match="all" position="near-note"/>
-            <condition match="all" type="report" variable="title" position="far-note"/>
-            <condition match="all" type="report" variable="committee" position="far-note"/>
-            <condition match="all" type="hearing" variable="committee" position="far-note"/>
-            <condition match="all" type="legal_case" variable="document-name" position="far-note"/>
-          </conditions>
-          <group delimiter=" ">
-            <group delimiter=", ">
-              <choose>
-                <if>
-                  <conditions match="all">
-                    <condition type="legal_case"/>
-                    <condition match="none" variable="document-name"/>
-                  </conditions>
-                  <text macro="juris-title-short" font-style="italic"/>
-                </if>
-                <else-if type="hearing">
-                  <text macro="juris-title-short" font-style="italic"/>
-                </else-if>
-                <else-if match="all" type="report">
-                  <text macro="juris-title-short" font-variant="small-caps"/>
-                </else-if>
-                <else>
-                  <text macro="juris-title-short"/>
-                </else>
-              </choose>
-              <choose>
-                <if>
-                  <conditions match="any">
-                    <condition match="all" type="hearing" variable="committee"/>
-                    <condition match="all" type="report" variable="title"/>
-                    <condition match="all" type="report" variable="committee"/>
-                    <condition match="all" type="legal_case" variable="document-name"/>
-                  </conditions>
-                  <group delimiter=", ">
-                    <group delimiter=" ">
-                      <text value="supra" font-style="italic"/>
-                      <text term="note"/>
-                      <text variable="first-reference-note-number"/>
-                    </group>
-                    <group delimiter=" ">
-                      <text value="at"/>
-                      <group require="empty-label">
-                        <text macro="juris-locator" label-form="symbol"/>
-                      </group>
-                    </group>
-                    <group delimiter=" " reject="empty-label">
-                      <text macro="juris-locator" label-form="symbol"/>
-                    </group>
-                  </group>
-                </if>
-                <else>
-                  <group delimiter=" ">
-                    <group delimiter=", ">
-                      <choose>
-                        <if>
-                          <conditions match="all">
-                            <condition type="hearing"/>
-                            <condition match="none" variable="committee"/>
-                          </conditions>
-                          <text macro="juris-main-short" font-variant="small-caps"/>
-                        </if>
-                        <else-if>
-                          <conditions match="all">
-                            <condition type="report"/>
-                            <condition match="none" variable="committee title"/>
-                          </conditions>
-                          <text macro="juris-main-short" font-variant="small-caps"/>
-                        </else-if>
-                        <else>
-                          <text macro="juris-main-short"/>
-                        </else>
-                      </choose>
-                      <group require="comma-safe">
-                        <text macro="juris-locator" label-form="symbol"/>
-                      </group>
-                    </group>
-                  </group>
-                </else>
-              </choose>
-            </group>
-            <group delimiter=" " require="empty-label">
-              <text value="at"/>
-              <text macro="juris-locator" label-form="symbol"/>
-            </group>
-            <group reject="comma-safe">
-              <text macro="juris-locator" label-form="symbol"/>
-            </group>
-            <text macro="juris-tail-short"/>
-          </group>
-        </else-if>
-        <else>
-          <!-- full form -->
-          <group delimiter=", ">
-            <group delimiter=" ">
-              <group delimiter=", ">
-                <choose>
-                  <if type="hearing">
-                    <text macro="juris-title" font-style="italic"/>
-                  </if>
-                  <else-if type="report">
-                    <text macro="juris-title" font-variant="small-caps"/>
-                  </else-if>
-                  <else>
-                    <text macro="juris-title"/>
-                  </else>
-                </choose>
-                <group delimiter=" ">
-                  <group delimiter=", ">
-                    <choose>
-                      <if>
-                        <conditions match="all">
-                          <condition match="all" type="report"/>
-                          <condition match="none" variable="title committee"/>
-                        </conditions>
-                        <text macro="juris-main" font-variant="small-caps"/>
-                      </if>
-                      <else-if>
-                        <conditions match="all">
-                          <condition match="all" type="hearing"/>
-                          <condition match="none" variable="committee"/>
-                        </conditions>
-                        <text macro="juris-main" font-variant="small-caps"/>
-                      </else-if>
-                      <else>
-                        <text macro="juris-main"/>
-                      </else>
-                    </choose>
-                    <group delimiter=" " require="empty-label">
-                      <text value="at"/>
-                      <text macro="juris-locator" label-form="symbol"/>
-                    </group>
-                    <group require="comma-safe">
-                      <text macro="juris-locator" label-form="symbol"/>
-                    </group>
-                  </group>
-                </group>
-              </group>
-              <group reject="comma-safe">
-                <text macro="juris-locator" label-form="symbol"/>
-              </group>
-              <choose>
-                <if type="legislation" variable="container-title page volume gazette-flag" match="all"/>
-                <else>
-                  <text macro="juris-tail"/>
-                </else>
-              </choose>
-            </group>
-            <choose>
-              <if type="legislation" variable="container-title page volume gazette-flag" match="all">
-                <text macro="juris-tail"/>
-              </if>
-            </choose>
-          </group>
-        </else>
-      </choose>
     </layout>
   </citation>
 </style>

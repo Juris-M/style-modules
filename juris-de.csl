@@ -12,10 +12,31 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Federal Republic of Germany</summary>
-    <updated>2021-04-07T17:21:45+02:00</updated>
+    <updated>2021-04-07T17:27:23+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
   </info>
+  <locale xmlns="http://purl.org/net/xbiblio/csl" xml:lang="de">
+    <court-class name="a1" country="de" courts="bag"/>
+    <court-class name="a2" country="de" courts="lag"/>
+    <court-class name="a3" country="de" courts="arbg"/>
+    <court-class name="d1" country="de" courts="bdig"/>
+    <court-class name="f1" country="de" courts="bfh"/>
+    <court-class name="f2" country="de" courts="fg"/>
+    <court-class name="o1" country="de" courts="bgh"/>
+    <court-class name="o2" country="de" courts="olg kg bpatg"/>
+    <court-class name="o3" country="de" courts="lg"/>
+    <court-class name="o4" country="de" courts="ag"/>
+    <court-class name="s1" country="de" courts="bsg"/>
+    <court-class name="s2" country="de" courts="lsg"/>
+    <court-class name="s3" country="de" courts="sg"/>
+    <court-class name="v1" country="de" courts="bverfg"/>
+    <court-class name="v2" country="de" courts="lverfg stgh verfg verfgh"/>
+    <court-class name="w1" country="de" courts="bverwg"/>
+    <court-class name="w2" country="de" courts="ovg vgh trdg.nord trdg.sud"/>
+    <court-class name="w3" country="de" courts="vg"/>
+    <court-class name="gs" country="de" courts="gms-ogb"/>
+  </locale>
 
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->

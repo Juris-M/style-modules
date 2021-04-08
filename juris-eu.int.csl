@@ -9,12 +9,16 @@
       <name>aAlexander Schuster</name>
       <email>alexander.schuster@unitn.it</email>
     </author>
+    <contributor>
+      <name>Georg Mayr-Duffner</name>
+      <email>georg.mayr-duffner@wu.ac.at</email>
+    </contributor>
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for European Union ECLI standard</summary>
-    <updated>2016-09-06T22:06:38+00:00</updated>
+    <updated>2021-04-09T00:40:29+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation"/>
+    <law-module types="legal_case legislation report regulation hearing"/>
   </info>
   
   <locale>
@@ -82,6 +86,9 @@
           <number variable="number"/>
         </group>
       </if>
+      <else-if type="regulation legislation hearing report">
+        <text variable="title"/>
+      </else-if>
     </choose>
   </macro>
 
@@ -102,6 +109,19 @@
           <number variable="page-first"/>
         </group>
       </else-if>
+      <else-if type="legislation hearing report">
+        <group delimiter=" " prefix="(" suffix=")">
+          <text variable="container-title" form="short"/>
+          <group delimiter=", ">
+            <number variable="volume"/>
+            <date variable="publication-date" form="text"/>
+            <group delmiter=" ">
+              <label variable="page"/>
+              <number variable="page"/>
+            </group>
+          </group>
+        </group>
+      </else-if>
     </choose>
   </macro>
 
@@ -113,7 +133,6 @@
             <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
           </if>
         </choose>
-        
       </if>
     </choose>
   </macro>
@@ -123,15 +142,20 @@
   </macro>
   <macro name="juris-title-short">
     <choose>
-      <if type="legal_case">
-        <text variable="title"/>
+      <if type="legislation" variable="genre number" match="all">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <number variable="number"/>
+        </group>
       </if>
+      <else>
+        <text variable="title" form="short"/>
+      </else>
     </choose>
   </macro>
 
   <macro name="juris-main-short">
-    <!-- The body of subsequent citations (of all types) -->
-    <text value="[MAIN-SHORT]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">

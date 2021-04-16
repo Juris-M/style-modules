@@ -115,7 +115,7 @@
           <group delimiter=", ">
             <number variable="volume"/>
             <date variable="publication-date" form="text"/>
-            <group delmiter=" ">
+            <group delimiter=" ">
               <label variable="page"/>
               <number variable="page"/>
             </group>

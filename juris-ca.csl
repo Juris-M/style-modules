@@ -36,7 +36,7 @@
             <if>
               <!-- Journal without year as volume-->
               <conditions match="all">
-                <condition match="all" variable="container-title page"/>
+                <condition match="all" variable="container-title page volume"/>
                 <condition match="none" variable="collection-number admin-flag"/>
               </conditions>
               <number variable="volume"/>
@@ -49,23 +49,45 @@
               <number variable="page-first"/>
             </if>
             <else-if>
-              <!-- Journal with [year] -->
+              <!-- online service-->
+                <conditions match="all">
+                <condition match="all" variable="submitted container-title page"/>
+                <condition match="none" variable="collection-number admin-flag"/>
+              </conditions>
+              <date variable="submitted" form="numeric" date-parts="year"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+              <number variable="page-first"/>
+            </if>
+            <else-if>
+              <!-- Journal with [year] and page -->
               <conditions match="all">
                 <condition match="all" variable="collection-number container-title page"/>
                 <condition match="none" variable="admin-flag"/>
               </conditions>
-              <group delimiter=", ">
-                <group delimiter=" ">
-                  <number variable="collection-number" prefix="[" suffix="]"/>
-                  <number variable="volume"/>
-                  <text variable="container-title" form="short" strip-periods="true"/>
-                  <choose>
-                    <if variable="issue">
-                      <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
-                    </if>
-                  </choose>
-                  <number variable="page-first"/>
-                </group>
+              <group delimiter=" ">
+                <number variable="collection-number" prefix="[" suffix="]"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short" strip-periods="true"/>
+                <choose>
+                  <if variable="issue">
+                    <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                  </if>
+                </choose>
+                <number variable="page-first"/>
+              </group>
+            </else-if>
+            <else-if>
+            <!-- Journal with [year] and page -->
+              <conditions match="all">
+                <condition match="all" variable="collection-number container-title issue"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <group delimiter=" ">
+                <number variable="collection-number" prefix="[" suffix="]"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short" strip-periods="true"/>
+                <text term="issue" form="long"/>
+                <number variable="issue"/>
               </group>
             </else-if>
             <else-if>
@@ -129,6 +151,13 @@
           <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <date variable="submitted" form="numeric" date-parts="year"/>
+          <text variable="archive"/>
+          <text variable="archive_location"/>
+        </group>
+      </else-if>
     </choose>              
   </macro>
   <macro name="juris-pretitle-short">

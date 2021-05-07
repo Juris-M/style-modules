@@ -1,66 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>EU.INT, Court of Justice of the European Union</title>
-    <id>http://citationstylist.org/modules/juris-eu.int:cjeu</id>
-    <link href="http://citationstylist/modules/juris-eu.int:cjeu" rel="self"/>
+    <title>European Union</title>
+    <id>http://citationstylist.org/modules/juris-eu.int</id>
+    <link href="http://citationstylist/modules/juris-eu.int" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
-      <name>Frank Bennett</name>
-      <email>bennett@nagoya-u.jp</email>
+      <name>Georg Mayr-Duffner</name>
+      <email>georg.mayr-duffner@wu.ac.at</email>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for EU.INT, Court of Justice of the European Union</summary>
-    <updated>2021-04-08T23:08:46+02:00</updated>
+    <summary>Juris-M style module for European Union ECLI standard</summary>
+    <updated>2021-04-09T01:26:29+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation report regulation hearing"/>
   </info>
 
   <locale>
     <terms>
-      <term name="paragraph" form="short">
-        <single>para.</single>
-        <multiple>paras.</multiple>
+      <term name="paragraph">
+        <single>paragraph</single>
+        <multiple>paragraphs</multiple>
       </term>
-      <term name="paragraph" form="static">[%s]</term>
+      <term name="article">
+        <single>article</single>
+        <multiple>articles</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art.</single>
+        <multiple>arts.</multiple>
+      </term>
     </terms>
   </locale>
 
   <macro name="juris-pretitle">
-    <group delimiter=" ">
-      <choose>
-        <if is-multiple="number">
-          <text value="Joined Cases"/>
-        </if>
-        <else>
-          <text value="Case"/>
-        </else>
-      </choose>
-      <number variable="number"/>
-    </group>
+    <text value=""/>
   </macro>
-
+  
   <macro name="juris-title">
-    <choose>
-      <if type="legal_case">
-        <group parallel-first="title">
-          <text variable="title"/>
-        </group>
-      </if>
-    </choose>
+    <text variable="title"/>
   </macro>
 
   <macro name="juris-main">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <date variable="issued" form="text" date-parts="year" prefix="[" suffix="]"/>
-          <text variable="container-title"/>
-          <number variable="page"/>
-        </group>
-      </if>
-    </choose>
+    <group delimiter=" ">
+      <choose>
+        <if type="legal_case">
+          <number variable="number" prefix="(Case " suffix=")"/>
+          <number variable="document-number" prefix="Commission Decision "/>
+        </if>
+      </choose>
+      <date variable="issued" form="text" date-parts="year" prefix="[" suffix="]"/>
+      <text variable="container-title" form="short"/>
+      <group delimiter="/">
+        <number variable="volume"/>
+        <number variable="page"/>
+      </group>
+    </group>
   </macro>
 
   <macro name="juris-tail">
@@ -70,33 +66,22 @@
   <macro name="juris-pretitle-short">
     <text value=""/>
   </macro>
-
   <macro name="juris-title-short">
     <choose>
-      <if type="legal_case">
-        <group parallel-first="title title-short">
-          <choose>
-            <if variable="title-short">
-              <text variable="title-short" form="short"/>
-            </if>
-            <else>
-              <text variable="title" form="short"/>
-            </else>
-          </choose>
+      <if type="legislation" variable="genre number" match="all">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <number variable="number"/>
         </group>
       </if>
+      <else>
+        <text variable="title" form="short"/>
+      </else>
     </choose>
   </macro>
 
   <macro name="juris-main-short">
-    <choose>
-      <if type="legal_case">
-        <group delimiter=" ">
-          <date variable="issued" form="text" date-parts="year" prefix="[" suffix="]"/>
-          <text variable="container-title"/>
-        </group>
-      </if>
-    </choose>
+    <text value=""/>
   </macro>
 
   <macro name="juris-tail-short">
@@ -108,10 +93,12 @@
       <choose>
         <if locator="page"/>
         <else-if locator="paragraph">
-          <label variable="locator" form="static"/>
+          <group>
+            <label variable="locator"/>
+          </group>
         </else-if>
         <else>
-          <label variable="locator" form="short"/>
+          <label variable="locator"/>
         </else>
       </choose>
       <number variable="locator"/>
@@ -172,10 +159,10 @@
                 <!-- join with comman in Indigo -->
                 <choose>
                   <if type="legislation regulation" match="any">
-                    <text macro="juris-title-short" strip-periods="true"/>
+                    <text macro="juris-title" strip-periods="true"/>
                   </if>
                   <else>
-                    <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
+                    <text macro="juris-title" font-style="italic" strip-periods="true"/>
                   </else>
                 </choose>
                 <group delimiter=" ">

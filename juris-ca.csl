@@ -57,7 +57,7 @@
               <date variable="submitted" form="numeric" date-parts="year"/>
               <text variable="container-title" form="short" strip-periods="true"/>
               <number variable="page-first"/>
-            </if>
+            </else-if>
             <else-if>
               <!-- Journal with [year] and page -->
               <conditions match="all">
@@ -111,15 +111,15 @@
           <choose>
             <if>
               <conditions match="all">
-                <condition match="all" variable="container-title volume"/>
+                <condition match="all" variable="container-title number"/>
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
-              <number variable="volume"/>
+              <number variable="number"/>
               <group delimiter=" " prefix="(" suffix=")">
-                <number variable="chapter-number" form="ordinal"/>
+                <number variable="volume" form="ordinal"/>
                 <label variable="supplement" form="short"/>
               </group>
             </if>

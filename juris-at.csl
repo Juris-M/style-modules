@@ -16,14 +16,16 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for Austria.</summary>
-    <updated>2020-12-20T22:08:13+01:00</updated>
+    <updated>2021-04-07T16:37:49+02:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case bill legislation regulation"/>
   </info>
   <locale xmlns="http://purl.org/net/xbiblio/csl" xml:lang="de">
     <court-class name="v0" country="at" courts="vfgh"/>
     <court-class name="v1" country="at" courts="vwgh"/>
-    <court-class name="v2" country="at" courts="bvwg bfg lvwg vgw asylgh"/>
+    <court-class name="v2f" country="at" courts="bfg ufs"/>
+    <court-class name="v2" country="at" courts="bvwg bfg lvwg vgw asylgh ufs uvs ubas"/>
+    <court-class name="v3" country="at" courts="dsk dsb bvga opms bwb"/>
     <court-class name="o1" country="at" courts="ogh"/>
     <court-class name="o2" country="at" courts="olg"/>
     <court-class name="o3" country="at" courts="lg lgs lgzrs asg hg"/>

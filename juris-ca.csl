@@ -212,11 +212,10 @@
       <if>
         <conditions match="all">
           <condition type="legislation"/>
-          <condition match="none" variable="volume container-title number"/>
-          <condition match="all" variable="locator title-short"/>
+          <condition variable="locator"/>
         </conditions>
         <group delimiter=" ">
-          <text term="article" form="short" text-case="capitalize-first"/>
+          <text term="article" form="short"/>
           <number variable="locator"/>
         </group>
       </if>

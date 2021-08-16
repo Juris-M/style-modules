@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Canada</summary>
     <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation bill hearing"/>
+    <law-module types="legal_case legislation bill hearing report regulation gazette"/>
   </info>
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
@@ -32,6 +32,27 @@
           <text variable="references"/>
           <names variable="authority"/>
           <names variable="committee"/>
+        </group>
+      </else-if>
+      <else-if type="report">
+        <names variable="authority"/>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" variable="authority"/>
+          <condition match="all" type="regulation"/>
+        </conditions>
+        <group delimiter=", ">
+          <names variable="authority"/>
+          <group delimiter=" ">
+            <text variable="genre"/>
+            <choose>
+              <if variable="issued">
+                <text term="issue"/>
+              </if>
+            </choose>
+            <number variable="volume"/>
+          </group>
         </group>
       </else-if>
     </choose>
@@ -155,6 +176,56 @@
           </group>
         </group>
       </else-if>
+      <else-if type="report">
+        <choose>
+          <if variable="collection-title">
+            <group delimiter=" ">
+              <group delimiter=", ">
+                <text variable="collection-title" font-style="italic"/>
+                <group delimiter=" ">
+                  <text term="volume"/>
+                  <text variable="collection-title"/>
+                </group>
+                <group delimiter=" ">
+                  <text term="issue"/>
+                  <number variable="number"/>
+                </group>
+              </group>
+              <date variable="issued" form="text" prefix="(" suffix=")"/>
+            </group>    
+          </if>
+          <else>
+            <group delimiter=" ">
+              <date variable="issued" form="text" date-parts="year-month-day" prefix="(" suffix=")"/>
+              <group delimiter=" ">
+                <text term="collection-editor" form="long" prefix="("/>
+                <names variable="author" suffix=")"/>
+              </group>
+            </group>
+          </else>
+        </choose>
+      </else-if>
+      <else-if>
+        <conditions match="all">
+          <condition match="all" variable="authority"/>
+          <condition match="all" type="regulation"/>
+        </conditions>
+        <date variable="issued" form="text" prefix="(" suffix=")"/>
+      </else-if>
+      <else-if type="gazette">
+        <group delimiter=", ">
+          <number variable="number"/>
+          <group delimiter=" ">
+            <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
+            <text value="Gaz"/>
+            <number variable="volume"/>
+          </group>
+          <group delimiter=" ">
+            <number variable="page"/>
+            <text variable="container-title" prefix="(" suffix=")" font-style="italic"/>
+          </group>
+        </group> 
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -221,7 +292,7 @@
       </if>
       <else>
         <group delimiter=" ">
-          <label variable="locator"/>   
+          <label variable="locator" form="short" plural="contextual"/>   
           <number variable="locator"/>
         </group>
       </else>

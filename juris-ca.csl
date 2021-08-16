@@ -25,9 +25,7 @@
       <else-if type="hearing">
         <group delimiter=", ">
           <group delimiter="">
-            <text term="open-quote"/>
-            <text variable="event"/>
-            <text term="close-quote"/>
+            <text variable="event" quotes="true"/>
           </group>
           <text variable="references"/>
           <names variable="authority"/>
@@ -37,11 +35,7 @@
       <else-if type="report">
         <names variable="authority"/>
       </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition match="all" variable="authority"/>
-          <condition match="all" type="regulation"/>
-        </conditions>
+      <else-if type="regulation" variable="authority genre volume" match="all">
         <group delimiter=", ">
           <names variable="authority"/>
           <group delimiter=" ">

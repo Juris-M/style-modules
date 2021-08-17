@@ -35,7 +35,7 @@
       <else-if type="report">
         <names variable="authority"/>
       </else-if>
-      <else-if type="regulation" variable="authority" match="all">
+      <else-if type="regulation" variable="authority genre volume" match="all">
         <group delimiter=", ">
           <names variable="authority"/>
           <group delimiter=" ">
@@ -46,8 +46,8 @@
                   <text term="issue"/>
                 </if>
               </choose>
+              <number variable="volume"/>
             </group>
-            <number variable="volume"/>
           </group>
         </group>
       </else-if>

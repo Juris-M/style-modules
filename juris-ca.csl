@@ -14,19 +14,20 @@
     <summary>Juris-M style module for Canada</summary>
     <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation"/>
+    <law-module types="legal_case legislation bill"/>
   </info>
-
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
-    <text value=""/>
+    <choose>
+      <if type="bill">
+        <number variable="number" prefix="Bill "/>
+      </if>
+    </choose>
   </macro>
-
   <macro name="juris-title">
     <!-- The title form for full citations (of all types) -->
     <text variable="title" strip-periods="true"/>
   </macro>
-
   <macro name="juris-main">
     <choose>
       <if type="legal_case">
@@ -35,7 +36,7 @@
             <if>
               <!-- Journal without year as volume-->
               <conditions match="all">
-                <condition match="all" variable="container-title page"/>
+                <condition match="all" variable="container-title page volume"/>
                 <condition match="none" variable="collection-number admin-flag"/>
               </conditions>
               <number variable="volume"/>
@@ -48,34 +49,57 @@
               <number variable="page-first"/>
             </if>
             <else-if>
-              <!-- Journal with [year] -->
+              <!-- online service-->
+                <conditions match="all">
+                <condition match="all" variable="submitted container-title page"/>
+                <condition match="none" variable="collection-number admin-flag"/>
+              </conditions>
+              <date variable="submitted" form="numeric" date-parts="year"/>
+              <text variable="container-title" form="short" strip-periods="true"/>
+              <number variable="page-first"/>
+            </else-if>
+            <else-if>
+              <!-- Journal with [year] and page -->
               <conditions match="all">
                 <condition match="all" variable="collection-number container-title page"/>
                 <condition match="none" variable="admin-flag"/>
               </conditions>
-              <number variable="collection-number" prefix="[" suffix="]"/>
-              <number variable="volume"/>
-              <text variable="container-title" form="short" strip-periods="true"/>
-              <choose>
-                <if variable="issue">
-                  <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
-                </if>
-              </choose>
-              <number variable="page-first"/>
+              <group delimiter=" ">
+                <number variable="collection-number" prefix="[" suffix="]"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short" strip-periods="true"/>
+                <choose>
+                  <if variable="issue">
+                    <number variable="issue" form="ordinal" prefix="(" suffix=")"/>
+                  </if>
+                </choose>
+                <number variable="page-first"/>
+              </group>
+            </else-if>
+            <else-if>
+            <!-- Journal with [year] and page -->
+              <conditions match="all">
+                <condition match="all" variable="collection-number container-title issue"/>
+                <condition match="none" variable="admin-flag"/>
+              </conditions>
+              <group delimiter=" ">
+                <number variable="collection-number" prefix="[" suffix="]"/>
+                <number variable="volume"/>
+                <text variable="container-title" form="short" strip-periods="true"/>
+                <text term="issue" form="long"/>
+                <number variable="issue"/>
+              </group>
             </else-if>
             <else-if>
               <!-- Vendor neutral citation -->
               <conditions match="all">
-                <condition match="all" variable="authority page collection-number"/>
+                <condition match="all" variable="authority number collection-number"/>
                 <condition match="none" variable="container-title admin-flag"/>
               </conditions>
               <number variable="collection-number"/>
-              <names variable="dummy">
+              <names variable="authority">
                 <name/>
                 <institution form="short"/>
-                <substitute>
-                  <names variable="authority"/>
-                </substitute>
               </names>
               <number variable="page-first"/>
             </else-if>
@@ -87,66 +111,100 @@
           <choose>
             <if>
               <conditions match="all">
-                <condition match="all" variable="issued container-title volume"/>
-                <condition match="none" variable="admin-flag"/>
+                <condition match="all" variable="container-title number"/>
+                <condition match="none" variable="gazette-flag"/>
               </conditions>
-              <text variable="container-title"/>
+              <text variable="container-title" strip-periods="true"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
-              <number variable="volume"/>
+              <number variable="number"/>
+              <group delimiter=" " prefix="(" suffix=")">
+                <number variable="volume" form="ordinal"/>
+                <label variable="supplement" form="short"/>
+              </group>
             </if>
           </choose>
         </group>
       </else-if>
+      <else-if type="bill">
+        <group delimiter=", ">
+          <number variable="chapter-number" form="ordinal" suffix=" Sess"/>
+          <number variable="collection-number" form="ordinal" suffix=" Parl"/>
+          <date variable="issued" form="numeric" date-parts="year"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
-
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="bill">
+        <group delimiter=" ">
+          <choose>
+            <if variable="references">
+              <text variable="references"/>
+            </if>
+            <else>
+              <names variable="authority" prefix="As passed by the House of Commons"/>
+            </else>
+          </choose>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
+        </group>
+      </if>
+      <else-if type="legal_case">
+        <group delimiter=" ">
+          <date variable="submitted" form="numeric" date-parts="year"/>
+          <text variable="archive"/>
+          <text variable="archive_location"/>
+        </group>
+      </else-if>
+    </choose>              
   </macro>
-
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->
     <text value=""/>
   </macro>
-
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
       <if variable="hereinafter">
-        <text variable="hereinafter" form="short" strip-periods="true"/>
+        <text variable="hereinafter" strip-periods="true"/>
       </if>
       <else-if variable="title-short">
         <text variable="title-short" strip-periods="true"/>
       </else-if>
-      <else-if position="subsequent">
-        <text variable="title" form="short" strip-periods="true"/>
-      </else-if>
     </choose>
   </macro>
-
   <macro name="juris-main-short">
     <text value=""/>
   </macro>
-
   <macro name="juris-tail-short">
     <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
     <text value=""/>
   </macro>
-
   <macro name="juris-locator">
-    <group delimiter=" ">
-      <label variable="locator" form="short"/>   
-      <number variable="locator"/>
-    </group>
+    <choose>
+      <if>
+        <conditions match="all">
+          <condition type="legislation"/>
+          <condition match="none" variable="volume container-title number"/>
+          <condition match="all" variable="locator title-short"/>
+        </conditions>
+        <group delimiter=" ">
+          <text term="article" form="short" text-case="capitalize-first"/>
+          <number variable="locator"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <label variable="locator"/>   
+          <number variable="locator"/>
+        </group>
+      </else>
+    </choose>
   </macro>
-
   <citation>
-
     <layout>
     </layout>
-
   </citation>
-  
 </style>

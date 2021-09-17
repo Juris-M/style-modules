@@ -12,7 +12,7 @@
     <category citation-format="note"/>
     <category field="law"/>
     <summary>Juris-M style module for France</summary>
-    <updated>2013-01-26T22:06:38+00:00</updated>
+    <updated>2013-02-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="regulation legal_case"/>
   </info>
@@ -69,7 +69,6 @@
                 <number variable="division"/>
               </group>
             </group>
-            <text variable="country" form="short" prefix="(" suffix=")"/>
           </group>
           <date variable="issued" form="text" date-parts="year-month-day"/>
           <group delimiter=" ">
@@ -77,16 +76,11 @@
             <number variable="number"/>
           </group>
           <group delimiter=" ">
-            <text variable="container-title" form="short"/>
-            <group delimiter=" ">
-              <choose>
-                <if variable="volume collection-number publication-date" match="none">
-                  <text value="Case No."/>
-                </if>
-              </choose>
-            </group>
+			<group delimiter=", ">
+              <text variable="container-title" form="short"/>
+              <date variable="publication-date" form="text" date-parts="year" prefix="(" suffix=")"/>
+			</group>
             <number variable="page"/>
-            <date variable="publication-date" form="text" date-parts="year" prefix="(" suffix=")"/>
           </group>
         </group>
       </else-if>

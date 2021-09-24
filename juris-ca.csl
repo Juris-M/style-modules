@@ -23,9 +23,13 @@
         <number variable="number" prefix="Bill "/>
       </if>
       <else-if type="hearing">
+        <!-- Should render "Bill being debated", legislative-body, committee(if present) -->
+        <!-- Cannot use quotes="true" here because it leads to the quotes rendering incorrectly before the comma -->
         <group delimiter=", ">
-          <group delimiter="">
-            <text variable="event" quotes="true"/>
+          <group>
+            <text term="open-quote"/>
+            <text variable="event"/>
+            <text term="close-quote"/>
           </group>
           <text variable="references"/>
           <names variable="authority"/>
@@ -138,20 +142,28 @@
       <else-if type="legislation">
         <group delimiter=" ">
           <choose>
-            <if>
+            <if variable="volume genre collection-number" match="all">
+              <number variable="collection-number"/>
+              <group delimiter=", ">
+                <text variable="genre"/>
+                <number variable="volume" prefix="c "/>
+              </group>
+              <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
+            </if>
+            <else-if>
               <conditions match="all">
-                <condition match="all" variable="container-title number"/>
+                <condition match="all" variable="container-title volume"/>
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
-              <number variable="number"/>
+              <number variable="volume"/>
               <group delimiter=" " prefix="(" suffix=")">
-                <number variable="volume" form="ordinal"/>
+                <number variable="number" form="ordinal"/>
                 <label variable="supplement" form="short"/>
               </group>
-            </if>
+            </else-if>
           </choose>
         </group>
       </else-if>
@@ -276,16 +288,18 @@
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if>
-        <conditions match="all">
-          <condition type="legislation"/>
-          <condition variable="locator"/>
-        </conditions>
+      <if variable="locator title-short" type="legislation" match="all">
         <group delimiter=" ">
           <text term="article" form="short"/>
           <number variable="locator"/>
         </group>
       </if>
+      <else-if variable="locator" type="legislation" match="all">
+      <group delimiter=" ">
+          <text term="section" form="short"/>
+          <number variable="locator"/>
+        </group>
+      </else-if>
       <else>
         <group delimiter=" ">
           <label variable="locator" form="short" plural="contextual"/>   

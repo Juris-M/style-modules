@@ -14,7 +14,7 @@
     <summary>Juris-M style module for Canada</summary>
     <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case legislation bill hearing report regulation gazette"/>
+    <law-module types="legal_case legislation bill hearing report regulation"/>
   </info>
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
@@ -23,10 +23,15 @@
         <number variable="number" prefix="Bill "/>
       </if>
       <else-if type="hearing">
+        <!-- Should render "Bill being debated", reading number, legislative-body, committee(if present) -->
+        <!-- Cannot use quotes="true" here because it leads to the quotes rendering incorrectly before the comma -->
         <group delimiter=", ">
-          <group delimiter="">
-            <text variable="event" quotes="true"/>
+          <group>
+            <text term="open-quote"/>
+            <text variable="event"/>
+            <text term="close-quote"/>
           </group>
+          <text variable="genre"/>
           <text variable="references"/>
           <names variable="authority"/>
           <names variable="committee"/>
@@ -77,8 +82,8 @@
               </choose>
               <number variable="page-first"/>
             </if>
+            <!-- online service-->
             <else-if>
-              <!-- online service-->
                 <conditions match="all">
                 <condition match="all" variable="submitted container-title"/>
                 <condition match="none" variable="collection-number admin-flag"/>
@@ -87,8 +92,8 @@
               <text variable="container-title" form="short" strip-periods="true"/>
               <number variable="page-first"/>
             </else-if>
+            <!-- Journal with [year] and page -->
             <else-if>
-              <!-- Journal with [year] and page -->
               <conditions match="all">
                 <condition match="all" variable="collection-number container-title page"/>
                 <condition match="none" variable="admin-flag"/>
@@ -119,8 +124,8 @@
                 <number variable="issue"/>
               </group>
             </else-if>
+            <!-- Vendor neutral citation -->
             <else-if>
-              <!-- Vendor neutral citation -->
               <conditions match="all">
                 <condition match="all" variable="authority number collection-number"/>
                 <condition match="none" variable="container-title admin-flag"/>
@@ -132,26 +137,51 @@
               </names>
               <number variable="page-first"/>
             </else-if>
+            <!-- Unreported case -->
+            <else>
+              <group delimiter=", ">
+                <date variable="issued" date-parts="year-month-day" form="text" prefix="(" suffix=")"/>
+                <group delimiter=" "> 
+                  <text variable="publisher-place"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" " prefix="(" suffix=")">
+                  <text variable="jurisdiction" form="short"/>
+                  <names variable="authority">
+                    <name/>
+                    <institution form="long"/>
+                  </names>
+                </group>
+              </group>
+            </else>
           </choose>
         </group>
       </if>
       <else-if type="legislation">
         <group delimiter=" ">
           <choose>
-            <if>
+            <if variable="volume genre collection-number" match="all">
+              <number variable="collection-number"/>
+              <group delimiter=", ">
+                <text variable="genre"/>
+                <number variable="volume" prefix="c "/>
+              </group>
+              <text variable="jurisdiction" form="short" prefix="(" suffix=")"/>
+            </if>
+            <else-if>
               <conditions match="all">
-                <condition match="all" variable="container-title number"/>
+                <condition match="all" variable="container-title volume"/>
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
               <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
-              <number variable="number"/>
+              <number variable="volume"/>
               <group delimiter=" " prefix="(" suffix=")">
-                <number variable="volume" form="ordinal"/>
+                <number variable="number" form="ordinal"/>
                 <label variable="supplement" form="short"/>
               </group>
-            </if>
+            </else-if>
           </choose>
         </group>
       </else-if>
@@ -164,10 +194,18 @@
       </else-if>
       <else-if type="hearing">
         <group delimiter=", ">
-          <number variable="collection-number"/>
+          <number variable="chapter-number"/>
           <group delimiter=" ">
-            <label variable="number"/>
-            <number variable="document-number"/>
+            <choose> 
+              <if variable="document-number">
+                <label variable="number"/>
+                <number variable="document-number"/>
+              </if>
+              <else-if variable="volume">
+                <label variable="number"/>
+                <number variable="volume"/>   
+              </else-if>
+            </choose>
             <date variable="issued" prefix="(" suffix=")" form="text"/>
           </group>
         </group>
@@ -201,26 +239,8 @@
           </else>
         </choose>
       </else-if>
-      <else-if>
-        <conditions match="all">
-          <condition match="all" variable="authority"/>
-          <condition match="all" type="regulation"/>
-        </conditions>
+      <else-if type="regulation" variable="authority">
         <date variable="issued" form="text" prefix="(" suffix=")"/>
-      </else-if>
-      <else-if type="gazette">
-        <group delimiter=", ">
-          <number variable="number"/>
-          <group delimiter=" ">
-            <date variable="issued" form="numeric" date-parts="year" prefix="(" suffix=")"/>
-            <text value="Gaz"/>
-            <number variable="volume"/>
-          </group>
-          <group delimiter=" ">
-            <number variable="page"/>
-            <text variable="container-title" prefix="(" suffix=")" font-style="italic"/>
-          </group>
-        </group> 
       </else-if>
     </choose>
   </macro>
@@ -276,16 +296,18 @@
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if>
-        <conditions match="all">
-          <condition type="legislation"/>
-          <condition variable="locator"/>
-        </conditions>
+      <if variable="locator title-short" type="legislation" match="all">
         <group delimiter=" ">
           <text term="article" form="short"/>
           <number variable="locator"/>
         </group>
       </if>
+      <else-if variable="locator" type="legislation" match="all">
+      <group delimiter=" ">
+          <text term="section" form="short"/>
+          <number variable="locator"/>
+        </group>
+      </else-if>
       <else>
         <group delimiter=" ">
           <label variable="locator" form="short" plural="contextual"/>   

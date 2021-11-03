@@ -174,7 +174,6 @@
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
-              <date variable="issued" form="numeric" date-parts="year" suffix=","/>
               <text value="c"/>
               <number variable="volume"/>
               <group delimiter=" " prefix="(" suffix=")">
@@ -239,8 +238,26 @@
           </else>
         </choose>
       </else-if>
+      <!--Municipal Bylaw-->
       <else-if type="regulation" variable="authority">
         <date variable="issued" form="text" prefix="(" suffix=")"/>
+      </else-if>
+      <!-- Unrevised regulations-->
+      <else-if type="regulation" variable="number">
+        <group delimiter="/">
+          <text variable="container-title"/>
+          <group delimiter="-">
+            <number variable="volume"/>
+            <number variable="number"/>
+          </group>
+        </group>
+      </else-if>
+      <!-- Revised regulations-->
+      <else-if type="regulation">
+        <group delimiter=", ">
+          <text variable="container-title"/>
+          <number variable="volume" prefix="c "/>
+        </group>
       </else-if>
     </choose>
   </macro>

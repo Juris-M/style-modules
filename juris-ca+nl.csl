@@ -16,17 +16,6 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="regulation"/>
   </info>
-  <locale xml:lang="fr">
-    <style-options jurisdiction-preference="fr"/>
-     <terms>
-      <term name="rule" form="short">Règl du N-B</term>
-    </terms>
-  </locale>
-  <locale xml:lang="en">
-    <terms>
-      <term name="rule" form="short">NB Reg</term>
-    </terms>
-  </locale>
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <choose>

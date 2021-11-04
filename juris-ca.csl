@@ -174,8 +174,10 @@
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
-              <text value="c"/>
-              <number variable="volume"/>
+              <group delimiter=", ">
+                <date variable="issued" form="numeric" date-part="year"/>
+                <number variable="volume" prefix="c "/>
+              </group>
               <group delimiter=" " prefix="(" suffix=")">
                 <number variable="number" form="ordinal"/>
                 <label variable="supplement" form="short"/>
@@ -215,10 +217,6 @@
             <group delimiter=" ">
               <group delimiter=", ">
                 <text variable="collection-title" font-style="italic"/>
-                <group delimiter=" ">
-                  <text term="volume"/>
-                  <text variable="collection-title"/>
-                </group>
                 <group delimiter=" ">
                   <text term="issue"/>
                   <number variable="number"/>
@@ -313,18 +311,11 @@
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if variable="locator title-short" type="legislation" match="all">
+      <if variable="locator" page="article">
         <group delimiter=" ">
-          <text term="article" form="short"/>
-          <number variable="locator"/>
+          <label form="short" plural="contextual" variable="page"/>
         </group>
       </if>
-      <else-if variable="locator" type="legislation" match="all">
-      <group delimiter=" ">
-          <text term="section" form="short"/>
-          <number variable="locator"/>
-        </group>
-      </else-if>
       <else>
         <group delimiter=" ">
           <label variable="locator" form="short" plural="contextual"/>   

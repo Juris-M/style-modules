@@ -16,6 +16,64 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case legislation bill hearing report regulation"/>
   </info>
+  <locale xml:lang="fr">
+    <terms>
+      <term name="page" form="short">
+        <single>à la p</single>
+        <multiple>aux pp</multiple>
+      </term>
+      <term name="paragraph" form="short">
+        <single>au para</single>
+        <multiple>aux paras</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art</single>
+        <multiple>arts</multiple>
+      </term>
+      <term name="section" form="short">
+        <single>art</single>
+        <multiple>arts</multiple>
+      </term>
+      <term name="note" form="short">
+        <single>n</single>
+        <multiple>nn</multiple>
+      </term>
+      <term name="issue" form="short">
+        <single>nᵒ</single>
+        <multiple>nᵒ</multiple>
+      </term>
+    </terms>
+  </locale>
+  <locale xml:lang="en">
+    <date form="text">
+      <date-part name="day" suffix=" "/>
+      <date-part name="month" suffix=" "/>
+      <date-part name="year"/>
+    </date>
+     <terms>
+      <term name="page" form="short">at</term>
+      <term name="paragraph" form="long">
+        <single>at para</single>
+        <multiple>at paras</multiple>
+      </term>
+      <term name="section" form="short">
+        <single>s</single>
+        <multiple>ss</multiple>
+      </term>
+      <term name="article" form="short">
+        <single>art</single>
+        <multiple>arts</multiple>
+      </term>
+      <term name="note" form="short">
+        <single>n</single>
+        <multiple>nn</multiple>
+      </term>
+      <term name="issue" form="short">
+        <single>at no</single>
+        <multiple>at nos</multiple>
+      </term>
+    </terms>
+  </locale>
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
     <choose>
@@ -174,9 +232,10 @@
                 <condition match="none" variable="gazette-flag"/>
               </conditions>
               <text variable="container-title" strip-periods="true"/>
-              <date variable="issued" form="numeric" date-parts="year" suffix=","/>
-              <text value="c"/>
-              <number variable="volume"/>
+              <group delimiter=", ">
+                <date variable="issued" form="numeric" date-parts="year"/>
+                <number variable="volume" prefix="c "/>
+              </group>
               <group delimiter=" " prefix="(" suffix=")">
                 <number variable="number" form="ordinal"/>
                 <label variable="supplement" form="short"/>
@@ -217,10 +276,6 @@
               <group delimiter=", ">
                 <text variable="collection-title" font-style="italic"/>
                 <group delimiter=" ">
-                  <text term="volume"/>
-                  <text variable="collection-title"/>
-                </group>
-                <group delimiter=" ">
                   <text term="issue"/>
                   <number variable="number"/>
                 </group>
@@ -239,8 +294,26 @@
           </else>
         </choose>
       </else-if>
+      <!--Municipal Bylaw-->
       <else-if type="regulation" variable="authority">
         <date variable="issued" form="text" prefix="(" suffix=")"/>
+      </else-if>
+      <!-- Unrevised regulations-->
+      <else-if type="regulation" variable="number">
+        <group delimiter="/">
+          <text variable="container-title"/>
+          <group delimiter="-">
+            <number variable="volume"/>
+            <number variable="number"/>
+          </group>
+        </group>
+      </else-if>
+      <!-- Revised regulations-->
+      <else-if type="regulation">
+        <group delimiter=", ">
+          <text variable="container-title"/>
+          <number variable="volume" prefix="c "/>
+        </group>
       </else-if>
     </choose>
   </macro>
@@ -296,18 +369,11 @@
   </macro>
   <macro name="juris-locator">
     <choose>
-      <if variable="locator title-short" type="legislation" match="all">
+      <if page="page" match="none">
         <group delimiter=" ">
-          <text term="article" form="short"/>
-          <number variable="locator"/>
+          <label form="short" plural="contextual" variable="page"/>
         </group>
       </if>
-      <else-if variable="locator" type="legislation" match="all">
-      <group delimiter=" ">
-          <text term="section" form="short"/>
-          <number variable="locator"/>
-        </group>
-      </else-if>
       <else>
         <group delimiter=" ">
           <label variable="locator" form="short" plural="contextual"/>   

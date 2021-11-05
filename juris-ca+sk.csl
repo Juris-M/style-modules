@@ -93,10 +93,19 @@
     <text value=""/>
   </macro>
   <macro name="juris-locator">
-    <group delimiter=" ">
-      <label variable="locator" form="short" plural="contextual"/>   
-      <number variable="locator"/>
-    </group>
+    <choose>
+      <if page="page" match="none">
+        <group delimiter=" ">
+          <label form="short" plural="contextual" variable="page"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <label variable="locator" form="short" plural="contextual"/>   
+          <number variable="locator"/>
+        </group>
+      </else>
+    </choose>
   </macro>
   <citation>
     <layout>

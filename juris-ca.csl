@@ -125,8 +125,8 @@
       <if type="legal_case">
         <group delimiter=" ">
           <choose>
+            <!-- Journal without year as volume-->
             <if>
-              <!-- Journal without year as volume-->
               <conditions match="all">
                 <condition match="all" variable="container-title volume"/>
                 <condition match="none" variable="collection-number admin-flag"/>

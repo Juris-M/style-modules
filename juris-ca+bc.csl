@@ -14,7 +14,7 @@
     <summary>Juris-M style module for British Columbia</summary>
     <updated>2020-10-19T15:45:45.469Z</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="regulation"/>
+    <law-module types="regulation hearing"/>
   </info>
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
@@ -35,6 +35,28 @@
           </group>
         </group>
       </if>
+      <else-if type="hearing">
+        <!-- Should render "Bill being debated", reading number, legislative-body, committee(if present) -->
+        <!-- Cannot use quotes="true" here because it leads to the quotes rendering incorrectly before the comma -->
+        <group delimiter=", ">
+          <group>
+            <text term="open-quote"/>
+            <text variable="event"/>
+            <text term="close-quote"/>
+          </group>
+          <choose>
+            <if variable="genre references" match="any">
+              <text variable="genre"/>
+              <text variable="references"/>
+            </if>
+            <else>
+              <text variable="publisher-place"/>
+            </else>
+          </choose>
+          <names variable="authority"/>
+          <names variable="committee"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-title">
@@ -55,11 +77,36 @@
           </group>
         </group>
       </else-if>
+      <else-if type="hearing">
+        <group delimiter=", ">
+          <group delimiter="-">
+            <number variable="collection-number"/>
+            <number variable="chapter-number"/>
+          </group>
+          <group delimiter=" ">
+            <choose> 
+              <if variable="document-number">
+                <label variable="number"/>
+                <number variable="document-number"/>
+              </if>
+              <else-if variable="volume">
+                <label variable="number"/>
+                <number variable="volume"/>   
+              </else-if>
+            </choose>
+            <date variable="issued" prefix="(" suffix=")" form="text"/>
+          </group>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
     <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose> 
+      <if type="hearing">
+        <names variable="author" prefix="(" suffix=")"/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-pretitle-short">
     <!-- Fragment to precede short title (rare) -->

@@ -125,8 +125,8 @@
       <if type="legal_case">
         <group delimiter=" ">
           <choose>
+            <!-- Journal without year as volume-->
             <if>
-              <!-- Journal without year as volume-->
               <conditions match="all">
                 <condition match="all" variable="container-title volume"/>
                 <condition match="none" variable="collection-number admin-flag"/>
@@ -253,7 +253,10 @@
       </else-if>
       <else-if type="hearing">
         <group delimiter=", ">
-          <number variable="chapter-number"/>
+          <group delimiter="-">
+            <number variable="collection-number"/>
+            <number variable="chapter-number"/>
+          </group>
           <group delimiter=" ">
             <choose> 
               <if variable="document-number">
@@ -352,12 +355,29 @@
   <macro name="juris-title-short">
     <!-- The title form for subsequent citations (of all types) -->
     <choose>
-      <if variable="hereinafter">
-        <text variable="hereinafter" strip-periods="true"/>
+      <if position="first">
+        <choose>
+          <if variable="hereinafter">
+            <text variable="hereinafter"/>
+          </if>
+          <else-if variable="title-short">
+            <text variable="title-short"/>
+          </else-if>
+        </choose>
       </if>
-      <else-if variable="title-short">
-        <text variable="title-short" strip-periods="true"/>
-      </else-if>
+      <else>
+        <choose>
+          <if variable="hereinafter">
+            <text variable="hereinafter"/>
+          </if>
+          <else-if variable="title-short">
+            <text variable="title-short"/>
+          </else-if>
+          <else>
+            <text variable="title"/>
+          </else>
+        </choose>
+      </else>
     </choose>
   </macro>
   <macro name="juris-main-short">

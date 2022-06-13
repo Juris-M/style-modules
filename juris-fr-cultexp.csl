@@ -65,12 +65,19 @@
         <group delimiter=", ">
           <group delimiter=" ">
             <group delimiter=", ">
-              <names variable="authority">
-                <name/>
-                <institution institution-parts="short">
-                  <institution-part name="short"/>
-                </institution>
-              </names>
+              <choose>
+                <if variable="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </if>
+                <else>
+                  <text value="France"/>
+                </else>
+              </choose>
               <group delimiter=" ">
                 <number variable="division" form="ordinal"/>
                 <choose>

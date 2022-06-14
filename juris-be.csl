@@ -49,13 +49,23 @@
             <names variable="authority">
               <name/>
               <institution form="short"/>
+              <substitute>
+                <text value="Belgium"/>
+              </substitute>
             </names>
             <number variable="number"/>
-            <date variable="issued">
-              <date-part name="day" form="numeric" suffix=" "/>
-              <date-part name="month" form="short" suffix=" "/>
-              <date-part name="year" form="long"/>
-            </date>
+            <choose>
+              <if variable="issued">
+                <date variable="issued">
+                  <date-part name="day" form="numeric" suffix=" "/>
+                  <date-part name="month" form="short" suffix=" "/>
+                  <date-part name="year" form="long"/>
+                </date>
+              </if>
+              <else>
+                <text value="no date"/>
+              </else>
+            </choose>
             <text variable="DOI"/>
           </group>
         </group>

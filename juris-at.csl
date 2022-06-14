@@ -74,10 +74,10 @@
                     <names variable="authority">
                       <name/>
                       <institution form="short"/>
+                      <substitute>
+                        <text value="Austria"/>
+                      </substitute>
                     </names>
-                    <substitute>
-                      <text value="Austria"/>
-                    </substitute>
                   </group>
                   <number variable="division"/>
                   <group delimiter=", ">
@@ -87,14 +87,14 @@
                           <condition variable="container-title DOI" match="none"/>
                           <condition context="bibliography"/>
                         </conditions>
-                        <condition>
+                        <choose>
                           <if variable="issued">
                             <date variable="issued" form="text"/>
                           </if>
                           <else>
                             <text value="no date"/>
                           </else>
-                        </condition>
+                        </choose>
                       </if>
                     </choose>
                     <number variable="number"/>

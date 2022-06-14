@@ -60,6 +60,9 @@
                     <institution institution-parts="short">
                       <institution-part name="short"/>
                     </institution>
+                    <substitute>
+                      <text value="Austria"/>
+                    </substitute>
                   </names>
                   <group delimiter="/">
                     <number variable="issue"/>
@@ -72,6 +75,9 @@
                       <name/>
                       <institution form="short"/>
                     </names>
+                    <substitute>
+                      <text value="Austria"/>
+                    </substitute>
                   </group>
                   <number variable="division"/>
                   <group delimiter=", ">
@@ -81,7 +87,14 @@
                           <condition variable="container-title DOI" match="none"/>
                           <condition context="bibliography"/>
                         </conditions>
-                        <date variable="issued" form="text"/>
+                        <condition>
+                          <if variable="issued">
+                            <date variable="issued" form="text"/>
+                          </if>
+                          <else>
+                            <text value="no date"/>
+                          </else>
+                        </condition>
                       </if>
                     </choose>
                     <number variable="number"/>

@@ -200,23 +200,17 @@
               <group delimiter=", ">
                 <date variable="issued" date-parts="year-month-day" form="text" prefix="(" suffix=")"/>
                 <group delimiter=" "> 
-                  <text variable="publisher-place"/>
+                  <text variable="division"/>
                   <number variable="number"/>
+                  <group delimiter=" " prefix="(" suffix=")">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                    <text variable="jurisdiction" form="short"/>
+                  </group>
                 </group>
-                <group prefix="(" suffix=")">
-                  <choose>
-                    <if variable="authority">
-                      <names variable="authority">
-                        <name/>
-                        <institution institution-parts="short"/>
-                      </names>
-                    </if>
-                    <else>
-                      <text variable="jurisdiction" form="short"/>
-                    </else>
-                  </choose>
-                </group>
-              </group>
+               </group>
             </else>
           </choose>
         </group>

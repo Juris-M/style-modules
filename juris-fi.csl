@@ -35,6 +35,8 @@
 	  <if type="legal_case">
 		<group delimiter=", ">
 		  <group delimiter=" ">
+            <choose>
+              <if variable="authority">
 			<names variable="authority">
 			  <name/>
 			  <institution institution-parts="short"/>
@@ -43,16 +45,35 @@
 			  <name/>
 			  <institution form="short"/>
 			</names>
+              </if>
+              <else>
+                <text value="no court"/>
+              </else>
+            </choose>
 			<choose>
 			  <if court-class="admin1 admin2 ord2 ord3" match="any">
-				<date variable="issued">
-				  <date-part name="day" form="numeric" suffix="."/>
-				  <date-part name="month" form="numeric" suffix="."/>
-				  <date-part name="year" form="numeric"/>
-				</date>
+                <choose>
+                  <if variable="issued">
+				    <date variable="issued">
+				      <date-part name="day" form="numeric" suffix="."/>
+				      <date-part name="month" form="numeric" suffix="."/>
+				      <date-part name="year" form="numeric"/>
+				    </date>
+                  </if>
+                  <else>
+                    <text value="no date"/>
+                  </else>
+                </choose>
 			  </if>
 			</choose>
-			<number variable="number"/>
+            <choose>
+              <if variable="number">
+			    <number variable="number"/>
+              </if>
+              <else>
+                <text value="no case number"/>
+              </else>
+            </choose>
 		  </group>
 		  <text variable="document-name"/>
 		</group>

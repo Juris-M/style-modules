@@ -41,10 +41,27 @@
               <institution institution-parts="short">
                 <institution-part name="short"/>
               </institution>
+              <substitute>
+                <text value="Poland"/>
+              </substitute>
             </names>
           </group>
-          <date variable="issued" form="text" date-parts="year-month-day"/>
-          <number variable="number"/>
+          <choose>
+            <if variable="date">
+              <date variable="issued" form="text" date-parts="year-month-day"/>
+            </if>
+            <else>
+              <text value="no date"/>
+            </else>
+          </choose>
+          <choose>
+            <if variable="number">
+              <number variable="number"/>
+            </if>
+            <else>
+              <text value="no case number"/>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>

@@ -33,7 +33,14 @@
         </group>
       </if>
       <else-if type="legal_case">
-        <text variable="title"/>
+        <choose>
+          <if variable="title">
+            <text variable="title"/>
+          </if>
+          <else>
+            <text value="no case name"/>
+          </else>
+        </choose>
       </else-if>
     </choose>
   </macro>
@@ -51,12 +58,33 @@
             <else>
               <!-- unreported cases -->
               <group delimiter=", " prefix="(" suffix=")">
-                <names variable="authority">
-                  <name/>
-                  <institution institution-parts="short" use-first="1"/>
-                </names>
-                <number variable="number"/>
-                <date variable="issued" date-parts="year-month-day" form="text"/>
+                <choose>
+                  <if variable="authority">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short" use-first="1"/>
+                    </names>
+                  </if>
+                  <else>
+                    <text value="no court name"/>
+                  </else>
+                </choose>
+                <choose>
+                  <if variable="number">
+                    <number variable="number"/>
+                  </if>
+                  <else>
+                    <text value="no case number"/>
+                  </else>
+                </choose>
+                <choose>
+                  <if variable="issued">
+                    <date variable="issued" date-parts="year-month-day" form="text"/>
+                  </if>
+                  <else>
+                    <text value="no date"/>
+                  </else>
+                </choose>
               </group>
             </else>
           </choose>

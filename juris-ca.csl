@@ -185,7 +185,7 @@
             <!-- Vendor neutral citation -->
             <else-if>
               <conditions match="all">
-                <condition match="all" variable="authority number collection-number"/>
+                <condition match="all" variable="authority page-first collection-number"/>
                 <condition match="none" variable="container-title admin-flag"/>
               </conditions>
               <number variable="collection-number"/>
@@ -200,17 +200,17 @@
               <group delimiter=", ">
                 <date variable="issued" date-parts="year-month-day" form="text" prefix="(" suffix=")"/>
                 <group delimiter=" "> 
-                  <text variable="publisher-place"/>
+                  <text variable="division"/>
                   <number variable="number"/>
+                  <group delimiter=" " prefix="(" suffix=")">
+                    <names variable="authority">
+                      <name/>
+                      <institution institution-parts="short"/>
+                    </names>
+                    <text variable="jurisdiction" form="short"/>
+                  </group>
                 </group>
-                <group delimiter=" " prefix="(" suffix=")">
-                  <text variable="jurisdiction" form="short"/>
-                  <names variable="authority">
-                    <name/>
-                    <institution form="long"/>
-                  </names>
-                </group>
-              </group>
+               </group>
             </else>
           </choose>
         </group>

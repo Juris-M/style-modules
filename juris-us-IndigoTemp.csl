@@ -1949,6 +1949,14 @@
             <condition locator="rule"/>
           </conditions>
         </else-if>
+        <else-if>
+          <conditions match="all">
+            <condition type="legislation" match="all"/>
+            <condition locator="title" match="all"/>
+          </conditions>
+          <text value="Title"/>
+          <!-- label variable="locator" form="long" text-case="capitalize-first"/ -->
+        </else-if>
         <else>
           <label variable="locator"/>
         </else>

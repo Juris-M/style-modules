@@ -14,7 +14,7 @@
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   <locale>
     <terms>
@@ -482,6 +482,20 @@
           </else>
         </choose>
       </else-if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <choose>
+            <if variable="collection-number">
+              <number variable="collection-number"/>
+            </if>
+            <else>
+              <number variable="volume"/>
+            </else>
+          </choose>
+          <text variable="container-title"/>
+          <number variable="page"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -720,6 +734,21 @@
               <condition match="none" variable="collection-number"/>
             </conditions>
             <text variable="genre"/>
+          </else-if>
+          <else-if type="legislation">
+            <choose>
+              <if variable="gazette-flag">
+                <group delimiter=" ">
+                  <date variable="issued" form="text" date-parts="year-month-day"/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=" ">
+                  <text variable="publisher"/>
+                  <date variable="issued" form="text" date-parts="year"/>
+                </group>
+              </else>
+            </choose>
           </else-if>
         </choose>
       </group>

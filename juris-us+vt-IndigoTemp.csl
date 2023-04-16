@@ -11,10 +11,10 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for the United States</summary>
+    <summary>Juris-M style module for the United States, Vermont</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case"/>
+    <law-module types="legal_case legislation"/>
   </info>
   <locale>
     <terms>
@@ -482,6 +482,16 @@
           </else>
         </choose>
       </else-if>
+      <else-if type="legislation">
+        <group delimiter=" ">
+          <group delimiter="-">
+            <number variable="collection-number"/>
+            <number variable="volume"/>
+          </group>
+          <text variable="container-title"/>
+          <number variable="page"/>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -722,6 +732,10 @@
             </conditions>
             <text variable="genre"/>
           </else-if>
+          <else-if type="legislation">
+            <text variable="publisher"/>
+            <date variable="issued" form="text" date-parts="year"/>
+          </else-if>
         </choose>
       </group>
     </group>
@@ -733,19 +747,7 @@
     <text macro="juris-title"/>
   </macro>
   <macro name="juris-main-short">
-    <group delimiter=" ">
-      <choose>
-        <if type="patent">
-          <group delimiter=" ">
-            <number variable="number" substring="-3" prefix="’"/>
-            <text value="Patent"/>
-          </group>
-        </if>
-        <else>
-          <text macro="juris-main"/>
-        </else>
-      </choose>
-    </group>
+    <text macro="juris-main"/>
   </macro>
   <macro name="juris-tail-short">
     <text value=""/>

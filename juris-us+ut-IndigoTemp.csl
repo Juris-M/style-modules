@@ -14,7 +14,7 @@
     <summary>Juris-M style module for the United States</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
-    <law-module types="legal_case locator"/>
+    <law-module types="legal_case regulation"/>
   </info>
   <locale>
     <terms>
@@ -83,6 +83,97 @@
           </names>
         </group>
       </if>
+      <else-if type="regulation">
+        <choose>
+          <if>
+            <conditions match="all">
+              <condition match="all" variable="authority genre volume container-title page"/>
+              <condition match="none" variable="gazette-flag"/>
+            </conditions>
+            <names variable="dummy">
+              <name/>
+              <institution institution-parts="short"/>
+              <substitute>
+                <group>
+                  <choose>
+                    <if position="near-note">
+                      <text variable="title" form="short"/>
+                    </if>
+                    <else>
+                      <text variable="title"/>
+                    </else>
+                  </choose>
+                </group>
+              </substitute>
+            </names>
+          </if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="authority" has-subunit="authority"/>
+              <condition match="none" variable="genre"/>
+            </conditions>
+            <group delimiter=" ">
+              <names variable="authority">
+                <name/>
+                <institution institution-parts="short" use-last="1"/>
+                <substitute>
+                  <text variable="genre"/>
+                </substitute>
+              </names>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title volume number issued page genre gazette-flag"/>
+            </conditions>
+            <group delimiter=" ">
+              <text variable="genre"/>
+              <number variable="number"/>
+            </group>
+          </else-if>
+          <else-if>
+            <conditions match="all">
+              <condition match="all" variable="container-title gazette-flag"/>
+              <condition match="none" variable="number"/>
+            </conditions>
+          </else-if>
+          <else>
+            <group delimiter=" ">
+              <group delimiter=" of ">
+                <names variable="dummy">
+                  <name/>
+                  <substitute>
+                    <group>
+                      <choose>
+                        <if position="near-note">
+                          <text variable="title" form="short"/>
+                        </if>
+                        <else>
+                          <text variable="title"/>
+                        </else>
+                      </choose>
+                    </group>
+                  </substitute>
+                </names>
+                <choose>
+                  <if variable="title">
+                    <number variable="collection-number"/>
+                  </if>
+                </choose>
+              </group>
+              <choose>
+                <if variable="title">
+                  <group delimiter=" ">
+                    <label variable="number" form="short" text-case="capitalize-first"/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+              </choose>
+            </group>
+          </else>
+        </choose>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-main">
@@ -482,6 +573,217 @@
           </else>
         </choose>
       </else-if>
+      <else-if match="any" type="regulation">
+        <group delimiter=" ">
+          <!-- renders only if title not blocked by cs:substitute in juris-title -->
+          <names variable="dummy">
+            <name/>
+            <substitute>
+              <group>
+                <choose>
+                  <if position="near-note">
+                    <text variable="title" form="short"/>
+                  </if>
+                  <else>
+                    <text variable="title"/>
+                  </else>
+                </choose>
+              </group>
+            </substitute>
+          </names>
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition match="all" variable="authority genre volume container-title page"/>
+                <condition match="none" variable="gazette-flag"/>
+              </conditions>
+              <!-- group><text value="[LegReg OK1]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <label variable="number" form="short" text-case="capitalize-first"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title" form="short"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </if>
+            <else-if>
+              <conditions match="all">
+                <condition match="all" variable="genre volume container-title page"/>
+                <condition match="none" variable="gazette-flag authority"/>
+              </conditions>
+              <!-- group><text value="[LegReg OK2]"/></group -->
+              <group delimiter=", ">
+                <group delimiter=" ">
+                  <text variable="genre"/>
+                  <number variable="number"/>
+                </group>
+                <group delimiter=" ">
+                  <number variable="volume"/>
+                  <text variable="container-title" form="short"/>
+                  <number variable="page"/>
+                </group>
+              </group>
+            </else-if>
+            <else-if match="all" variable="gazette-flag">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="none" variable="container-title"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <choose>
+                      <if variable="collection-number">
+                        <number variable="collection-number"/>
+                      </if>
+                    </choose>
+                    <text variable="jurisdiction" form="short"/>
+                    <text value="Pub. L."/>
+                    <number variable="number"/>
+                  </group>
+                </if>
+                <else-if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title title"/>
+                    <condition match="none" variable="number"/>
+                  </conditions>
+                  <group delimiter=" " suffix=",">
+                    <choose>
+                      <if position="near-note">
+                        <text variable="title" form="short"/>
+                      </if>
+                      <else>
+                        <text variable="title"/>
+                      </else>
+                    </choose>
+                    <text macro="juris-locator" label-form="symbol"/>
+                  </group>
+                </else-if>
+                <else-if match="all" variable="container-title title">
+                  <choose>
+                    <if position="near-note">
+                      <text variable="title" form="short"/>
+                    </if>
+                    <else>
+                      <text variable="title"/>
+                    </else>
+                  </choose>
+                </else-if>
+              </choose>
+              <choose>
+                <if match="any" variable="title container-title">
+                  <choose>
+                    <if match="all" variable="number" number="number" type="legislation">
+                      <group delimiter=" ">
+                        <group delimiter=" " suffix=",">
+                          <text value="Pub. L. No."/>
+                          <number variable="number"/>
+                        </group>
+                        <text macro="juris-locator" label-form="symbol" suffix=","/>
+                      </group>
+                    </if>
+                    <else-if variable="number" type="legislation">
+                      <group delimiter=" " suffix=",">
+                        <label variable="number" form="symbol"/>
+                        <number variable="number"/>
+                      </group>
+                    </else-if>
+                  </choose>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition variable="collection-number"/>
+                        <condition match="none" variable="number"/>
+                      </conditions>
+                      <group delimiter=", ">
+                        <group delimiter=" ">
+                          <number variable="collection-number"/>
+                          <text variable="container-title" form="short"/>
+                          <group delimiter=" ">
+                            <label variable="number" form="short" text-case="capitalize-first"/>
+                            <number variable="volume"/>
+                          </group>
+                        </group>
+                        <number variable="page"/>
+                      </group>
+                    </if>
+                  </choose>
+                </if>
+              </choose>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition match="none" variable="collection-number"/>
+                    <condition match="all" variable="number"/>
+                  </conditions>
+                  <!-- weird outside-parens elements for statutes at large -->
+                  <group delimiter=" ">
+                    <number variable="volume"/>
+                    <text variable="container-title" form="short"/>
+                    <group delimiter=", ">
+                      <number variable="page"/>
+                      <number variable="locator-extra"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+            </else-if>
+            <else>
+              <group delimiter=" ">
+                <group delimiter=", ">
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="any">
+                          <condition is-numeric="volume"/>
+                          <condition match="none" variable="volume"/>
+                        </conditions>
+                        <group delimiter="-">
+                          <number variable="collection-number"/>
+                          <number variable="volume"/>
+                        </group>
+                      </if>
+                    </choose>
+                    <text variable="container-title" form="short"/>
+                    <choose>
+                      <if match="none" variable="title">
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short"/>
+                        </names>
+                      </if>
+                    </choose>
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="none" is-numeric="volume"/>
+                          <condition type="regulation"/>
+                        </conditions>
+                        <number variable="volume"/>
+                      </if>
+                    </choose>
+                  </group>
+                  <choose>
+                    <if>
+                      <conditions match="all">
+                        <condition match="none" is-numeric="volume"/>
+                        <condition type="legislation"/>
+                      </conditions>
+                      <number variable="volume"/>
+                    </if>
+                  </choose>
+                </group>
+                <number variable="page"/>
+              </group>
+            </else>
+          </choose>
+        </group>
+      </else-if>
     </choose>
   </macro>
   <macro name="juris-tail">
@@ -721,6 +1023,55 @@
             </conditions>
             <text variable="genre"/>
           </else-if>
+            <else-if type="regulation">
+              <choose>
+                <if>
+                  <conditions match="all">
+                    <condition match="all" variable="container-title issued publisher"/>
+                    <condition match="none" variable="gazette-flag"/>
+                  </conditions>
+                  <group delimiter=" ">
+                    <text variable="publisher"/>
+                    <date form="text" date-parts="year-month-day" variable="issued"/>
+                  </group>
+                </if>
+                <else-if variable="gazette-flag">
+                  <date form="text" date-parts="year-month-day" variable="issued"/>
+                </else-if>
+                <else>
+                  <group delimiter=" ">
+                    <choose>
+                      <if>
+                        <conditions match="all">
+                          <condition match="all" variable="authority title"/>
+                          <condition match="none" variable="genre"/>
+                        </conditions>
+                        <names variable="authority">
+                          <name/>
+                          <institution institution-parts="short" use-first="1"/>
+                        </names>
+                        <text variable="genre" prefix="[" suffix="]" text-case="capitalize-all"/>
+                      </if>
+                    </choose>
+                  </group>
+                  <group delimiter=" ">
+                    <choose>
+                      <if variable="issued">
+                        <choose>
+                          <if match="none" variable="title">
+                            <text variable="genre"/>
+                          </if>
+                        </choose>
+                        <date form="text" date-parts="year-month-day" variable="issued"/>
+                      </if>
+                      <else>
+                        <date form="text" date-parts="year" variable="publication-date"/>
+                      </else>
+                    </choose>
+                  </group>
+                </else>
+              </choose>
+            </else-if>
         </choose>
       </group>
     </group>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>United States: Illinois</title>
-    <id>http://juris-m.github.io/modules/juris-us:il</id>
-    <link href="http://juris-m.github.io/modules/juris-us:il" rel="self"/>
+    <title>United States: Panama Canal Zone</title>
+    <id>http://juris-m.github.io/modules/juris-us:cz</id>
+    <link href="http://juris-m.github.io/modules/juris-us:cz" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for the United States</summary>
+    <summary>Juris-M style module for the United States, Panama Canal Zone</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legislation"/>
@@ -50,16 +50,17 @@
     <text value=""/>
   </macro>
   <macro name="juris-title">
-    <text value=""/>
+    <choose>
+      <if type="legislation">
+        <text variable="title"/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-main">
     <choose>
       <if type="legislation">
         <group delimiter=" ">
-          <group delimiter="-">
-            <number variable="collection-number"/>
-            <number variable="volume"/>
-          </group>
+          <number variable="collection-number"/>
           <text variable="container-title"/>
           <number variable="page"/>
         </group>
@@ -69,9 +70,15 @@
   <macro name="juris-tail">
     <choose>
       <if type="legislation">
-        <group delimiter=" " prefix="(" suffix=")">
-          <text variable="publisher"/>
-          <date variable="issued" form="text" date-parts="year"/>
+        <group prefix="(" suffix=")">
+          <choose>
+            <if variable="publication-date">
+              <date variable="publication-date" form="text" date-parts="year"/>
+            </if>
+            <else>
+              <date variable="issued" form="text" date-parts="year"/>
+            </else>
+          </choose>
         </group>
       </if>
     </choose>
@@ -80,13 +87,25 @@
     <text value=""/>
   </macro>
   <macro name="juris-title-short">
-    <text value=""/>
+    <choose>
+      <if type="legislation">
+        <text macro="juris-title"/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-main-short">
-    <text macro="juris-main"/>
+    <choose>
+      <if type="legislation">
+        <text macro="juris-main"/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-tail-short">
-    <text value=""/>
+    <choose>
+      <if type="legislation">
+        <text value=""/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-locator">
     <group delimiter=" ">

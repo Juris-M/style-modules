@@ -54,18 +54,11 @@
               </substitute>
             </names>
             <number variable="number"/>
-            <choose>
-              <if variable="issued">
-                <date variable="issued">
-                  <date-part name="day" form="numeric" suffix=" "/>
-                  <date-part name="month" form="short" suffix=" "/>
-                  <date-part name="year" form="long"/>
-                </date>
-              </if>
-              <else>
-                <text value="no date"/>
-              </else>
-            </choose>
+            <date variable="issued">
+              <date-part name="day" form="numeric" suffix=" "/>
+              <date-part name="month" form="short" suffix=" "/>
+              <date-part name="year" form="long"/>
+            </date>
             <text variable="DOI"/>
           </group>
         </group>

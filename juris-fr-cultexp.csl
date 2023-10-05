@@ -48,14 +48,7 @@
               </if>
               <else>
                 <text value="of"/>
-                <choose>
-                  <if variable="issued">
-                    <date variable="issued" form="text" date-parts="year-month-day"/>
-                  </if>
-                  <else>
-                    <text variable="no date"/>
-                  </else>
-                </choose>
+                <date variable="issued" form="text" date-parts="year-month-day"/>
               </else>
             </choose>
           </group>
@@ -91,24 +84,10 @@
               </group>
             </group>
           </group>
-          <choose>
-            <if variable="issued">
-              <date variable="issued" form="text" date-parts="year-month-day"/>
-            </if>
-            <else>
-              <text value="no date"/>
-            </else>
-          </choose>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
           <group delimiter=" ">
-            <choose>
-              <if variable="number">
-                <label variable="number" form="short"/>
-                <number variable="number"/>
-              </if>
-              <else>
-                <text value="no case number"/>
-              </else>
-            </choose>
+            <label variable="number" form="short"/>
+            <number variable="number"/>
           </group>
           <group delimiter=" ">
 			<group delimiter=", ">
@@ -137,14 +116,7 @@
           </group>
           <choose>
             <if variable="number">
-              <choose>
-                <if variable="issued">
-                  <date variable="issued" form="text" date-parts="year-month-day"/>
-                </if>
-                <else>
-                  <text value="no date"/>
-                </else>
-              </choose>
+              <date variable="issued" form="text" date-parts="year-month-day"/>
             </if>
           </choose>
         </group>

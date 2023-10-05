@@ -37,14 +37,7 @@
               <text value="Italy"/>
             </else>
           </choose>
-          <choose>
-            <if variable="issued">
-              <date variable="issued" form="text" date-parts="year-month-day"/>
-            </if>
-            <else>
-              <text value="no date"/>
-            </else>
-          </choose>
+          <date variable="issued" form="text" date-parts="year-month-day"/>
         </group>
       </if>
     </choose>

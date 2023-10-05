@@ -87,14 +87,7 @@
                           <condition variable="container-title DOI" match="none"/>
                           <condition context="bibliography"/>
                         </conditions>
-                        <choose>
-                          <if variable="issued">
-                            <date variable="issued" form="text"/>
-                          </if>
-                          <else>
-                            <text value="no date"/>
-                          </else>
-                        </choose>
+                        <date variable="issued" form="text"/>
                       </if>
                     </choose>
                     <number variable="number"/>

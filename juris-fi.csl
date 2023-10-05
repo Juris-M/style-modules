@@ -37,43 +37,26 @@
 		  <group delimiter=" ">
             <choose>
               <if variable="authority">
-			<names variable="authority">
-			  <name/>
-			  <institution institution-parts="short"/>
-			</names>
-			<names variable="authority" prefix="[" suffix="]">
-			  <name/>
-			  <institution form="short"/>
-			</names>
+			    <names variable="authority">
+			      <name/>
+			      <institution institution-parts="short"/>
+			    </names>
+			    <names variable="authority" prefix="[" suffix="]">
+			      <name/>
+			      <institution form="short"/>
+			    </names>
               </if>
-              <else>
-                <text value="no court"/>
-              </else>
             </choose>
 			<choose>
 			  <if court-class="admin1 admin2 ord2 ord3" match="any">
-                <choose>
-                  <if variable="issued">
-				    <date variable="issued">
-				      <date-part name="day" form="numeric" suffix="."/>
-				      <date-part name="month" form="numeric" suffix="."/>
-				      <date-part name="year" form="numeric"/>
-				    </date>
-                  </if>
-                  <else>
-                    <text value="no date"/>
-                  </else>
-                </choose>
+				<date variable="issued">
+				  <date-part name="day" form="numeric" suffix="."/>
+				  <date-part name="month" form="numeric" suffix="."/>
+				  <date-part name="year" form="numeric"/>
+				</date>
 			  </if>
 			</choose>
-            <choose>
-              <if variable="number">
-			    <number variable="number"/>
-              </if>
-              <else>
-                <text value="no case number"/>
-              </else>
-            </choose>
+			<number variable="number"/>
 		  </group>
 		  <text variable="document-name"/>
 		</group>

@@ -79,20 +79,20 @@
             <else>
               <number variable="number"/>
             </else>
-            <choose>
-              <if variable="container-title">
-                <names variable="authority" prefix="(" suffix=")">
-                  <name/>
-                  <institution institution-parts="short" use-first="1"/>
-                </names>
-              </if>
-              <else>
-                <names variable="authority" prefix="(" suffix=")">
-                  <name/>
-                  <institution institution-parts="short" stop-first="1" use-last="1"/>
-                </names>
-              </else>
-            </choose>
+          </choose>
+          <choose>
+            <if variable="container-title">
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" use-first="1"/>
+              </names>
+            </if>
+            <else>
+              <names variable="authority" prefix="(" suffix=")">
+                <name/>
+                <institution institution-parts="short" stop-first="1" use-last="1"/>
+              </names>
+            </else>
           </choose>
         </group>
       </if>

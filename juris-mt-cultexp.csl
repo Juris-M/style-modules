@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
-    <title>Spain</title>
-    <id>http://juris-m.github.io/modules/juris-es-cultexp</id>
-    <link href="http://citationstylist/modules/juris-es-cultexp" rel="self"/>
+    <title>Malta</title>
+    <id>http://juris-m.github.io/modules/juris-mt-cultexp</id>
+    <link href="http://citationstylist/modules/juris-mt-cultexp" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Frank Bennett</name>
@@ -11,7 +11,7 @@
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Spain</summary>
+    <summary>Juris-M style module for Malta (CultExp)</summary>
     <updated>2013-01-26T22:06:38+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
@@ -31,18 +31,16 @@
     <group delimiter=", ">
 	  <group delimiter=" ">
 		<group>
-		  <text variable="genre" text-case="capitalize-first"/>
-          <group delimiter=" ">
-		    <names variable="authority">
-			  <name/>
-			  <institution institution-parts="short"/>
-		    </names>
-            <group prefix="(" suffix=")">
-              <text variable="division"/>
-            </group>
-          </group>
+		  <names variable="authority">
+			<name/>
+			<institution form="short"/>
+		  </names>
 		</group>
 		<number variable="number"/>
+		<group prefix="(" suffix=")" delimiter=", ">
+		  <text variable="division"/>
+		  <text variable="genre"/>
+		</group>
 	  </group>
 	  <date variable="issued" form="text" date-parts="year-month-day"/>
     </group>

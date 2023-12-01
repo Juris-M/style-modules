@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Federal Republic of Germany</title>
+    <id>http://juris-m.github.io/modules/juris-de-cultexp</id>
+    <link href="http://citationstylist/modules/juris-de-cultexp" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@nagoya-u.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Federal Republic of Germany (CultExp)</summary>
+    <updated>2021-04-07T17:27:23+02:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
+  </info>
+  <locale xmlns="http://purl.org/net/xbiblio/csl" xml:lang="de">
+    <court-class name="a1" country="de" courts="bag"/>
+    <court-class name="a2" country="de" courts="lag"/>
+    <court-class name="a3" country="de" courts="arbg"/>
+    <court-class name="d1" country="de" courts="bdig"/>
+    <court-class name="f1" country="de" courts="bfh"/>
+    <court-class name="f2" country="de" courts="fg"/>
+    <court-class name="o1" country="de" courts="bgh"/>
+    <court-class name="o2" country="de" courts="olg kg bpatg"/>
+    <court-class name="o3" country="de" courts="lg"/>
+    <court-class name="o4" country="de" courts="ag"/>
+    <court-class name="s1" country="de" courts="bsg"/>
+    <court-class name="s2" country="de" courts="lsg"/>
+    <court-class name="s3" country="de" courts="sg"/>
+    <court-class name="v1" country="de" courts="bverfg"/>
+    <court-class name="v2" country="de" courts="lverfg stgh verfg verfgh"/>
+    <court-class name="w1" country="de" courts="bverwg"/>
+    <court-class name="w2" country="de" courts="ovg vgh trdg.nord trdg.sud"/>
+    <court-class name="w3" country="de" courts="vg"/>
+    <court-class name="gs" country="de" courts="gms-ogb"/>
+  </locale>
+
+  <macro name="juris-pretitle">
+    <!-- Fragment to precede title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title">
+    <!-- The title form for full citations (of all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <choose>
+            <if>
+              <conditions match="all">
+                <condition variable="page volume"/>
+                <condition variable="container-title archive" match="none"/>
+              </conditions>
+              <group delimiter=" ">
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </group>
+                <number variable="volume"/>
+              </group>
+            </if>
+            <else>
+              <group no-repeat="authority">
+                <names variable="authority">
+                  <name/>
+                  <institution form="short"/>
+                </names>
+              </group>
+              <choose>
+                <if>
+                  <conditions match="any">
+                    <condition variable="archive URL" match="any"/>
+                    <condition variable="container-title" match="none"/>
+                  </conditions>
+                  <group delimiter=" v. ">
+                    <text variable="genre"/>
+                    <group delimiter=" &#x2013; ">
+                      <date variable="issued" form="text"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+              <group delimiter=" ">
+                <choose>
+                  <if variable="archive">
+                    <text variable="archive"/>
+                  </if>
+                  <else-if variable="URL">
+                    <text variable="URL"/>
+                    <group delimiter=" " prefix="(" suffix=")">
+                      <text term="accessed"/>
+                      <date variable="accessed" form="text"/>
+                    </group>
+                  </else-if>
+                  <else>
+                    <text variable="container-title"/>
+                    <number variable="volume"/>
+                    <date variable="publication-date" date-parts="year" form="numeric" prefix="(" suffix=")"/>
+                  </else>
+                </choose>
+              </group>
+            </else>
+          </choose>
+          <number variable="page"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="container-title archive URL page volume" match="none">
+            <text value="n. v." prefix="(" suffix=")"/>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-pretitle-short">
+    <!-- Fragment to precede short title (rare) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <!-- The title form for subsequent citations (of all types) -->
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=", ">
+          <choose>
+            <if>
+              <!-- Official reporter omitted -->
+              <conditions match="all">
+                <condition variable="page volume"/>
+                <condition variable="container-title archive" match="none"/>
+              </conditions>
+              <group delimiter=" ">
+                <group no-repeat="authority">
+                  <names variable="authority">
+                    <name/>
+                    <institution institution-parts="short">
+                      <institution-part name="short"/>
+                    </institution>
+                  </names>
+                </group>
+                <number variable="volume"/>
+              </group>
+            </if>
+            <else>
+              <!-- Standard form -->
+              <group no-repeat="authority">
+                <names variable="authority">
+                  <name/>
+                  <institution form="short"/>
+                </names>
+              </group>
+              <choose>
+                <if>
+                  <!-- Special reporter, online reporter or unpublished -->
+                  <conditions match="any">
+                    <condition variable="archive URL" match="any"/>
+                    <condition variable="container-title" match="none"/>
+                  </conditions>
+                  <group delimiter=" v. ">
+                    <text variable="genre"/>
+                    <group delimiter=" &#x2013; ">
+                      <date variable="issued" form="text"/>
+                      <number variable="number"/>
+                    </group>
+                  </group>
+                </if>
+              </choose>
+              <group delimiter=" ">
+                <choose>
+                  <if variable="archive">
+                    <text variable="archive"/>
+                  </if>
+                  <else-if variable="URL">
+                    <text variable="URL"/>
+                    <group delimiter=" " prefix="(" suffix=")">
+                      <text term="accessed"/>
+                      <date variable="accessed" form="text"/>
+                    </group>
+                  </else-if>
+                  <else>
+                    <text variable="container-title"/>
+                    <number variable="volume"/>
+                    <date variable="publication-date" date-parts="year" form="numeric" prefix="(" suffix=")"/>
+                  </else>
+                </choose>
+              </group>
+            </else>
+          </choose>
+          <number variable="page"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <!-- Short form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
+    <choose>
+      <if type="legal_case">
+        <choose>
+          <if variable="container-title archive URL page volume" match="none">
+            <text value="n. v." prefix="(" suffix=")"/>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator" form="short"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
+  </macro>
+
+  <citation>
+    <layout>
+    </layout>
+  </citation>
+</style>

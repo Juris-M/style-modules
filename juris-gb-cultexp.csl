@@ -99,8 +99,11 @@
     </choose>
   </macro>
   <macro name="juris-tail">
-    <!-- Full form of the portion of the citation that follows a pinpoint locator, if any (for all types) -->
-    <text value=""/>
+    <choose>
+      <if type="legal_case">
+        <text value="United Kingdom"/>
+      </if>
+    </choose>
   </macro>
   <macro name="juris-pretitle-short">
     <text value=""/>

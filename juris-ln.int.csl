@@ -19,7 +19,7 @@
   
   <macro name="juris-pretitle">
     <!-- Fragment to precede title (rare) -->
-    <text value="[PRETITLE]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-title">
@@ -47,7 +47,7 @@
 
   <macro name="juris-tail">
     <!-- Fragment to precede short title (rare) -->
-    <text value="[JURIS-TAIL]"/>
+    <text value=""/>
   </macro>
 
   <macro name="juris-pretitle-short">
@@ -70,9 +70,16 @@
     <text value="[TAIL-SHORT]"/>
   </macro>
 
-  <macro name="juris-locator">
-    <!-- The label and locator -->
-    <text value="[LOCATOR]"/>
+   <macro name="juris-locator">
+    <group delimiter=" ">
+      <choose>
+        <if locator="page"/>
+        <else>
+          <label variable="locator"/>
+        </else>
+      </choose>
+      <number variable="locator"/>
+    </group>
   </macro>
 
   <citation>

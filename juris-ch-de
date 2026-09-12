@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Switzerland</title>
+    <id>http://citationstylist.org/modules/juris-ch</id>
+    <link href="http://citationstylist.org/modules/juris-ch" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Noam Schank</name>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Switzerland, forms in German.</summary>
+    <updated>2026-09-12T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
+  </info>
+  <locale>
+    <court-class name="b0" country="ch" courts="fsc"/>
+    <court-class name="b1" country="ch" courts="fac fcc"/>
+    <court-class name="bpat" country="ch" courts="fpc"/>
+    <court-class name="k1" country="ch" courts="kantonsgericht obergericht kassationsgericht appellationsgericht tribunal.cantonal tribunale.d.appello cour.de.cassation verwaltungsgericht"/>
+    <court-class name="k2" country="ch" courts="bezirksgericht zwangsmassnahmengericht"/>
+  </locale>
+
+  <macro name="juris-pretitle">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main">
+    <choose>
+      <!-- ===== Published in the official reporter: BGE / BVGE / TPF =====
+           A reporter volume with no manually typed reporter. The abbreviation
+           is institution-part in the jurisdiction data. -->
+      <if>
+        <conditions match="all">
+          <condition variable="volume"/>
+          <condition variable="container-title archive" match="none"/>
+        </conditions>
+        <group delimiter=" ">
+          <names variable="authority">
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <number variable="volume"/>
+          <text variable="division"/>
+          <number variable="page"/>
+        </group>
+      </if>
+      <!-- ===== Unpublished: docket number =====
+           Court abbreviation is institution-entire, falling back to
+           institution-part. -->
+      <else>
+        <group delimiter=", ">
+          <choose>
+            <!-- Bundespatentgericht: comma after the court, month spelled out -->
+            <if court-class="bpat">
+              <names variable="authority">
+                <institution form="short"/>
+              </names>
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <text variable="title"/>
+                <text variable="number"/>
+                <date variable="issued" prefix="vom ">
+                  <date-part name="day" suffix=". "/>
+                  <date-part name="month" form="long" suffix=" "/>
+                  <date-part name="year"/>
+                </date>
+              </group>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <names variable="authority">
+                  <institution form="short"/>
+                </names>
+                <text variable="genre"/>
+                <text variable="title"/>
+                <text variable="number"/>
+                <date variable="issued" prefix="vom ">
+                  <date-part name="day" suffix="."/>
+                  <date-part name="month" form="numeric" suffix="."/>
+                  <date-part name="year"/>
+                </date>
+              </group>
+            </else>
+          </choose>
+          <!-- cantonal / unofficial reporters, e.g. ZR 121 [2022] Nr. 1 S. 1-3 -->
+          <group delimiter=" ">
+            <text variable="container-title"/>
+            <number variable="volume"/>
+            <date variable="publication-date" date-parts="year" form="numeric" prefix="[" suffix="]"/>
+            <number variable="issue" prefix="Nr. "/>
+            <text variable="page" prefix="S. "/>
+          </group>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-pretitle-short">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-title-short">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-main-short">
+    <choose>
+      <if>
+        <conditions match="all">
+          <condition variable="volume"/>
+          <condition variable="container-title archive" match="none"/>
+        </conditions>
+        <group delimiter=" ">
+          <names variable="authority">
+            <institution institution-parts="short">
+              <institution-part name="short"/>
+            </institution>
+          </names>
+          <number variable="volume"/>
+          <text variable="division"/>
+          <number variable="page"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=", ">
+          <choose>
+            <if court-class="bpat">
+              <names variable="authority">
+                <institution form="short"/>
+              </names>
+              <group delimiter=" ">
+                <text variable="genre"/>
+                <text variable="title"/>
+                <text variable="number"/>
+                <date variable="issued" prefix="vom ">
+                  <date-part name="day" suffix=". "/>
+                  <date-part name="month" form="long" suffix=" "/>
+                  <date-part name="year"/>
+                </date>
+              </group>
+            </if>
+            <else>
+              <group delimiter=" ">
+                <names variable="authority">
+                  <institution form="short"/>
+                </names>
+                <text variable="genre"/>
+                <text variable="title"/>
+                <text variable="number"/>
+                <date variable="issued" prefix="vom ">
+                  <date-part name="day" suffix="."/>
+                  <date-part name="month" form="numeric" suffix="."/>
+                  <date-part name="year"/>
+                </date>
+              </group>
+            </else>
+          </choose>
+          <group delimiter=" ">
+            <text variable="container-title"/>
+            <number variable="volume"/>
+            <date variable="publication-date" date-parts="year" form="numeric" prefix="[" suffix="]"/>
+            <number variable="issue" prefix="Nr. "/>
+            <text variable="page" prefix="S. "/>
+          </group>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="juris-tail-short">
+    <text value=""/>
+  </macro>
+
+  <macro name="juris-locator">
+    <choose>
+      <if locator="page">
+        <group delimiter=" ">
+          <text value="S."/>
+          <text variable="locator"/>
+        </group>
+      </if>
+      <else-if locator="note">
+        <group delimiter=" ">
+          <text value="N."/>
+          <text variable="locator"/>
+        </group>
+      </else-if>
+      <else-if locator="paragraph">
+        <group delimiter=" ">
+          <text value="§"/>
+          <text variable="locator"/>
+        </group>
+      </else-if>
+      <else-if locator="section">
+        <group delimiter=" ">
+          <text value="E."/>
+          <text variable="locator"/>
+        </group>
+      </else-if>
+      <else>
+        <group delimiter=" ">
+          <label variable="locator" form="short"/>
+          <text variable="locator"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+</style>

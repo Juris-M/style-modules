@@ -2,15 +2,15 @@
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
   <info>
     <title>Switzerland</title>
-    <id>http://citationstylist.org/modules/juris-ch</id>
-    <link href="http://citationstylist.org/modules/juris-ch" rel="self"/>
+    <id>http://citationstylist.org/modules/juris-ch-de</id>
+    <link href="http://citationstylist.org/modules/juris-ch-de" rel="self"/>
     <link href="http://juris-m.github.io" rel="documentation"/>
     <author>
       <name>Noam Schank</name>
     </author>
     <category citation-format="note"/>
     <category field="law"/>
-    <summary>Juris-M style module for Switzerland, forms in German.</summary>
+    <summary>Juris-M style module for Switzerland, forms in German. Selected with jurisdiction-preference="de".</summary>
     <updated>2026-09-12T00:00:00+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
     <law-module types="legal_case"/>
@@ -22,7 +22,6 @@
     <court-class name="k1" country="ch" courts="kantonsgericht obergericht kassationsgericht appellationsgericht tribunal.cantonal tribunale.d.appello cour.de.cassation verwaltungsgericht"/>
     <court-class name="k2" country="ch" courts="bezirksgericht zwangsmassnahmengericht"/>
   </locale>
-
   <macro name="juris-pretitle">
     <text value=""/>
   </macro>
@@ -54,7 +53,9 @@
       </if>
       <!-- ===== Unpublished: docket number =====
            Court abbreviation is institution-entire, falling back to
-           institution-part. -->
+           institution-part. The case name (title) is deliberately not
+           printed: Swiss decisions are cited without party names, and this
+           leaves the field free to label the item in the Zotero library. -->
       <else>
         <group delimiter=", ">
           <choose>
@@ -65,7 +66,6 @@
               </names>
               <group delimiter=" ">
                 <text variable="genre"/>
-                <text variable="title"/>
                 <text variable="number"/>
                 <date variable="issued" prefix="vom ">
                   <date-part name="day" suffix=". "/>
@@ -80,7 +80,6 @@
                   <institution form="short"/>
                 </names>
                 <text variable="genre"/>
-                <text variable="title"/>
                 <text variable="number"/>
                 <date variable="issued" prefix="vom ">
                   <date-part name="day" suffix="."/>
@@ -104,6 +103,9 @@
   </macro>
 
   <macro name="juris-tail">
+    <!-- Deliberately empty. Anything after the pinpoint (a keyword, a parallel
+         citation) is a house-style decision and belongs in the calling style,
+         not in a jurisdiction module. -->
     <text value=""/>
   </macro>
 
@@ -142,7 +144,6 @@
               </names>
               <group delimiter=" ">
                 <text variable="genre"/>
-                <text variable="title"/>
                 <text variable="number"/>
                 <date variable="issued" prefix="vom ">
                   <date-part name="day" suffix=". "/>
@@ -157,7 +158,6 @@
                   <institution form="short"/>
                 </names>
                 <text variable="genre"/>
-                <text variable="title"/>
                 <text variable="number"/>
                 <date variable="issued" prefix="vom ">
                   <date-part name="day" suffix="."/>
